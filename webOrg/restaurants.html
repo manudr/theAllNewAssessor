@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="../web/bootstrap-3.3.5-cust/css/bootstrap.css">
+    <link rel="stylesheet" href="../web/bootstrap-3.3.5-cust/custom-css/styles.css">
+    <script src="../web/bootstrap-3.3.5-cust/js/bootstrap.min.js"></script>
+    <script src="../web/bootstrap-3.3.5-cust/js/jquery-2.1.4.min.js"></script>
+    <script src="../web/bootstrap-3.3.5-cust/js/bootstrap.js"></script>
+    <script src="../web/bootstrap-3.3.5-cust/custom-js/speech-input.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://www.douglas.co.us/assessor"><img src="../web/images/white-logo-big-new.png" width="280" height="45"></a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="index.jsp">Home</a></li>
+                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Page 1 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Page 1-1</a></li>
+                        <li><a href="#">Page 1-2</a></li>
+                        <li><a href="#">Page 1-3</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Page 2</a></li>
+                <li><a href="#">Page 3</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<br><br><br><br>
+<div class="container">
+    <br>
+    <div class="row">
+        <div class="col-sm-2">
+            <button type="button" class="btn-sm btn-primary btn-block" onclick="window.location = 'schools.html'">
+                Schools
+            </button>
+        </div>
+        <div class="col-sm-2">
+            <button type="button" class="btn-sm btn-primary btn-block" onclick="window.location = 'exploreCounty.html'">
+                Explore County
+            </button>
+        </div>
+        <div class="col-sm-2">
+            <button type="button" class="btn-sm btn-primary btn-block" onclick="window.location = 'exploreMap.jsp'">
+                Explore Map
+            </button>
+        </div>
+        <div class="col-sm-2">
+            <button type="button" class="btn-sm btn-primary btn-block" onclick="window.location = 'policeStations.html'">
+                Police Stations
+            </button>
+        </div>
+        <div class="col-sm-2">
+            <button type="button" class="btn-sm btn-primary btn-block" onclick="window.location = 'fireStations.html'">
+                Fire Stations
+            </button>
+        </div>
+        <div class="col-sm-2">
+            <button type="button" class="btn-sm btn-primary btn-block" onclick="window.location = 'hospitals.html'">
+                Hospitals
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <button type="button" class="btn-sm btn-primary btn-block" onclick="window.location = 'medicalSupplyStores.html'">
+                Medical Supply Stores
+            </button>
+        </div>
+        <div class="col-sm-2">
+            <button type="button" class="btn-sm btn-primary btn-block" onclick="window.location = 'restaurants.html'">
+                Restaurants
+            </button>
+        </div>
+        <div class="col-sm-2">
+            <button type="button" class="btn-sm btn-primary btn-block" onclick="window.location = 'groceryStores.html'">
+                Grocery Stores
+            </button>
+        </div>
+        <div class="col-sm-2">
+            <button type="button" class="btn-sm btn-primary btn-block" onclick="window.location = 'economicAreasMap.html'">
+                Economic Areas
+            </button>
+        </div>
+        <div class="col-sm-2">
+            <button type="button" class="btn-sm btn-primary btn-block" onclick="window.location = 'walkScore.html'">
+                Walk Score
+            </button>
+        </div>
+        <div class="col-sm-2">
+            <button type="button" class="btn-sm btn-primary btn-block" onclick="window.location = 'zipCodeMap.html'">
+                County Zip Codes
+            </button>
+        </div>
+    </div>
+    <br>
+
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        Walk Score
+                    </h4>
+                </div>
+
+                <div class="panel-body">
+                    <html>
+                    <head>
+                        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+                        <script type="text/javascript">
+                            google.load("visualization", "1", {packages:["map"]});
+                            google.setOnLoadCallback(drawChart);
+                            function drawChart() {
+                                var data = google.visualization.arrayToDataTable([
+                                    ['Lat', 'Long', 'Name', 'Population'],
+                                    [39.5194, -104.7658, 'Work', '20000'],
+                                    [37.4289, -122.1697, 'University', '566565'],
+                                    [37.6153, -122.3900, 'Airport', '3434343'],
+                                    [37.4422, -122.1731, 'Shopping', '233545']
+                                ]);
+
+                                var map = new google.visualization.Map(document.getElementById('map_div'));
+                                map.draw(data, {showTip: true});
+                            }
+
+                        </script>
+                    </head>
+
+                    <body>
+                    <div id="map_div" style="width: 100%; height: 700px"></div>
+                    </body>
+                    </html>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+

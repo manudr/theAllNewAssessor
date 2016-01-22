@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="../web/bootstrap-3.3.5-cust/css/bootstrap.css">
+    <link rel="stylesheet" href="../web/bootstrap-3.3.5-cust/custom-css/styles.css">
+    <script src="../web/bootstrap-3.3.5-cust/js/bootstrap.min.js"></script>
+    <script src="../web/bootstrap-3.3.5-cust/js/jquery-2.1.4.min.js"></script>
+    <script src="../web/bootstrap-3.3.5-cust/js/bootstrap.js"></script>
+    <script src="../web/bootstrap-3.3.5-cust/custom-js/speech-input.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://www.douglas.co.us/assessor"><img src="../web/images/white-logo-big-new.png" width="280" height="45"></a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="index.jsp">Home</a></li>
+                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Page 1 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Page 1-1</a></li>
+                        <li><a href="#">Page 1-2</a></li>
+                        <li><a href="#">Page 1-3</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Page 2</a></li>
+                <li><a href="#">Page 3</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<br><br><br>
+<div class="container">
+    <br>
+    <div class="row">
+        <div class="col-sm-2">
+            <button type="button" class="btn-sm btn-primary btn-block" onclick="window.location = 'schools.html'">
+                Schools
+            </button>
+        </div>
+        <div class="col-sm-2">
+            <button type="button" class="btn-sm btn-primary btn-block" onclick="window.location = 'exploreCounty.html'">
+                Explore County
+            </button>
+        </div>
+        <div class="col-sm-2">
+            <button type="button" class="btn-sm btn-primary btn-block" onclick="window.location = 'exploreMap.jsp'">
+                Explore Map
+            </button>
+        </div>
+        <div class="col-sm-2">
+            <button type="button" class="btn-sm btn-primary btn-block" onclick="window.location = 'policeStations.html'">
+                Police Stations
+            </button>
+        </div>
+        <div class="col-sm-2">
+            <button type="button" class="btn-sm btn-primary btn-block" onclick="window.location = 'fireStations.html'">
+                Fire Stations
+            </button>
+        </div>
+        <div class="col-sm-2">
+            <button type="button" class="btn-sm btn-primary btn-block" onclick="window.location = 'hospitals.html'">
+                Hospitals
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <button type="button" class="btn-sm btn-primary btn-block" onclick="window.location = 'medicalSupplyStores.html'">
+                Medical Supply Stores
+            </button>
+        </div>
+        <div class="col-sm-2">
+            <button type="button" class="btn-sm btn-primary btn-block" onclick="window.location = 'restaurants.html'">
+                Restaurants
+            </button>
+        </div>
+        <div class="col-sm-2">
+            <button type="button" class="btn-sm btn-primary btn-block" onclick="window.location = 'groceryStores.html'">
+                Grocery Stores
+            </button>
+        </div>
+        <div class="col-sm-2">
+            <button type="button" class="btn-sm btn-primary btn-block" onclick="window.location = 'economicAreasMap.html'">
+                Economic Areas
+            </button>
+        </div>
+        <div class="col-sm-2">
+            <button type="button" class="btn-sm btn-primary btn-block" onclick="window.location = 'walkScore.html'">
+                Walk Score
+            </button>
+        </div>
+        <div class="col-sm-2">
+            <button type="button" class="btn-sm btn-primary btn-block" onclick="window.location = 'zipCodeMap.html'">
+                County Zip Codes
+            </button>
+        </div>
+    </div>
+    <br>
+
+    <div class="row">
+        <div class="col-sm-10">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        Walk Score
+                    </h4>
+                </div>
+
+                <div class="panel-body">
+                    <script type='text/javascript'>
+                        var ws_wsid = '408c2f5641ad4f4f9a1d3adb2ff3e22e';
+                        var ws_address = '301 Wilcox St Castle Rock CO';
+                        var ws_width = '100%';
+                        var ws_height = '700';
+                        var ws_layout = 'horizontal';
+                        var ws_commute = 'true';
+                        var ws_transit_score = 'true';
+                        var ws_map_modules = 'all';
+                    </script>
+                    <style type='text/css'>#ws-walkscore-tile{position:relative;text-align:left}#ws-walkscore-tile *{float:none;}#ws-foottext, #ws-footer a,#ws-footer a:link{font:11px/14px Verdana,Arial,Helvetica,sans-serif;margin-right:6px;white-space:nowrap;padding:0;color:#000;font-weight:bold;text-decoration:none}#ws-footer a:hover{color:#000;text-decoration:none}#ws-footer a:active{color:#b14900}</style>
+                    <div id='ws-walkscore-tile'>
+                        <div id='ws-footer' style='position:absolute;top:981px;left:8px;width:987px'>
+                            <form id='ws-form'>
+                                <span id='ws-foottext' style='float: left;'>Score <a id='ws-a' href='https://www.redfin.com/how-walk-score-works' target='_blank'>Your Home</a>: </span><input type='text' id='ws-street' style='position:absolute;top:0px;left:170px;width:785px' /><input type='image' id='ws-go' src='//cdn2.walk.sc/2/images/tile/go-btn.gif' height='15' width='26' border='0' alt='get my Walk Score' style='position:absolute;top:0px;right:0px' />
+                            </form>
+                        </div>
+                    </div>
+                    <script type='text/javascript' src='http://www.walkscore.com/tile/show-walkscore-tile.php'></script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
