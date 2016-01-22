@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en" ng-app="myApp">
+<head>
+
+    <meta charset="utf-8">
+    <title>Service App</title>
+    <link rel="stylesheet" href="css/bootstrap.css" />
+    <link rel="stylesheet" href="css/app.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-route.js"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=false&language=en"></script>
+	<script src="js/app.js"></script>
+	<script src="js/service/ItemService.js"></script>
+    <script src="js/service/AccountService.js"></script>
+
+    <script>
+        function addParam(searchString) {
+            if(searchString.length < 3) {
+                window.alert('Please enter strings with at least 3 characters each!');
+                return;
+            } else if (searchString.length >= 3) {
+                var searchStringTokens = searchString.split(' ');
+                var index;
+                for	(index = 0; index < searchStringTokens.length; index++) {
+                    if(searchStringTokens[index].length < 3) {
+                        window.alert('Please enter strings with at least 3 characters each!');
+                        return;
+                    }
+                }
+            }
+            var url = '/apps/theAllNewAssessor/#/parcels/' + document.getElementById('searchString').value;
+            document.getElementById("parcelSearchForm").setAttribute('action', url);
+            document.forms['parcelSearchForm'].submit();
+        }
+    </script>
+</head>
+<body>
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="navbar-header">
+            <a href="http://www.douglas.co.us/assessor"><img src="images/white-logo-big.png" width="75%" height="25%"></a>
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+            <ul class="nav navbar-nav">
+                <li><a href="/apps/theAllNewAssessor/#/parcelSearch/">Home</a></li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="moreChoices">More Choices <span class="caret"></span></a>
+                    <ul class="dropdown-menu" aria-labelledby="moreChoices">
+                        <li><a href="exploreMap.jsp">Search Results On Map</a></li>
+                        <li class="divider"></li>
+                        <li><a href="taxAndNotices.html">Tax and Notices</a></li>
+                        <li class="divider"></li>
+                        <li><a href="historicalValues.html">Historical Values</a></li>
+                        <li class="divider"></li>
+                        <li><a href="sales.html">Sales</a></li>
+                        <li class="divider"></li>
+                        <li><a href="schools.html">Schools</a></li>
+                        <li class="divider"></li>
+                        <li><a href="exploreCounty.html">Explore County</a></li>
+                        <li class="divider"></li>
+                        <li><a href="crimeReport.html">Crime Report</a></li>
+                        <li class="divider"></li>
+                        <li><a href="economicAreasMap.html">Economic Areas Map</a></li>
+                        <li class="divider"></li>
+                        <li><a href="walkScore.html">Walk Score</a></li>
+                        <li class="divider"></li>
+                        <li><a href="zipCodeMap.html">Zip Code Map</a></li>
+                        <li class="divider"></li>
+                        <li><a href="moreAboutProperty.jsp">More About Property</a></li>
+                        <li class="divider"></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#/register">Register</a></li>
+                <li><a href="#/login">Login</a></li>
+            </ul>
+
+        </div>
+    </div>
+
+    <br><br><br><br>
+    <div ng-view></div>
+
+    <div class="navbar-fixed-bottom" style="height: 35px; background-color: #0e715e; color:#ffffff; text-align: center; vertical-align: middle; font-size: 12px;">
+        2015 Douglas County Government | 100 Third Street | Castle Rock, Colorado 80104 | 303.660.7400 | Privacy Policy / Legal
+    </div>
+
+    <script src="js/controller/AccountDetailsController.js"></script>
+    <script src="js/controller/AccountListController.js"></script>
+    <script src="js/controller/ItemListController.js"></script>
+    <script src="js/controller/ItemDetailsController.js"></script>
+    <script src="js/controller/NeighborhoodSalesController.js"></script>
+    <script src="js/controller/MapController.js"></script>
+    <script src="js/controller/TestSortController.js"></script>
+
+</body>
+</html>

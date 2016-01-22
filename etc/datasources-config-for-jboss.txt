@@ -1,0 +1,16 @@
+<datasource jndi-name="java:/jdbc/theAllNewAssessor" pool-name="theAllNewAssessor" enabled="true">
+    <connection-url>jdbc:sqlserver://dvrwsql.dcgd.douglas.co.us:1433;DatabaseName=dvrw</connection-url>
+    <datasource-class>com.microsoft.sqlserver.jdbc.SQLServerXADataSource</datasource-class>
+    <driver>mssql</driver>
+    <pool>
+        <min-pool-size>1</min-pool-size>
+        <max-pool-size>8</max-pool-size>
+    </pool>
+    <security>
+        <user-name>manu</user-name>
+        <password>manu</password>
+    </security>
+    <validation>
+        <valid-connection-checker class-name="org.jboss.jca.adapters.jdbc.extensions.mssql.MSSQLValidConnectionChecker"/>
+    </validation>
+</datasource>

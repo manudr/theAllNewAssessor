@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html ng-app="mapsApp">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Insert title here</title>
+    <link rel="stylesheet" href="css/map.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=false&language=en"></script>
+    <script type="text/javascript" src="js/controller/MapController.js"></script>
+</head>
+<body>
+<div ng-controller="MapCtrl">
+    <div class="row">
+        <div class="col-sm-7">
+            <div id="map"></div>
+        </div>
+
+        <div class="col-sm-2">
+            <table class="table table-hover table-bordered">
+                <tr class="success">
+                    <th colspan="2"><h5>Demographics</h5></th>
+                </tr>
+                <tr>
+                    <th>Total Population</th>
+                    <td>285,465</td>
+                </tr>
+                <tr>
+                    <th>Household Population</th>
+                    <td>284,814</td>
+                </tr>
+                <tr>
+                    <th>Group Quarters</th>
+                    <td>651</td>
+                </tr>
+                <tr>
+                    <th>Households</th>
+                    <td>102,018</td>
+                </tr>
+                <tr>
+                    <th>Total Population in Labor Force</th>
+                    <td>158,453</td>
+                </tr>
+            </table>
+
+            <table class="table table-hover table-bordered">
+                <tr class="success">
+                    <th colspan="2"><h5>Housing & Occupancy</h5></th>
+                </tr>
+                <tr>
+                    <th>Housing Units</th>
+                    <td>106,859</td>
+                </tr>
+                <tr>
+                    <th>Occupied Housing</th>
+                    <td>102,018</td>
+                </tr>
+                <tr>
+                    <th>Owner Occupied Housing</th>
+                    <td>82,230</td>
+                </tr>
+                <tr>
+                    <th>R enter Occupied Housing</th>
+                    <td>102,018</td>
+                </tr>
+                <tr>
+                    <th>Total Population in Labor Force</th>
+                    <td>19,788</td>
+                </tr>
+                <tr>
+                    <th>Vacant Housing</th>
+                    <td>4,841</td>
+                </tr>
+            </table>
+
+
+            <table class="table table-hover table-bordered">
+                <tr class="success">
+                    <th colspan="2"><h5>Average Demographics</h5></th>
+                </tr>
+                <tr>
+                    <th>Average Household S ize</th>
+                    <td>2.8</td>
+                </tr>
+                <tr>
+                    <th>Median Age</th>
+                    <td>36.6</td>
+                </tr>
+                <tr>
+                    <th>Median Household Income</th>
+                    <td>101,108.0</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-sm-3">
+
+            <table class="table table-hover table-bordered">
+                <tr>
+                    <td><img src="images/income.png"></td>
+                </tr>
+            </table>
+            <table class="table table-hover table-bordered">
+                <tr>
+                    <td><img src="images/populationPyramid.png"></td>
+                </tr>
+            </table>
+            <table class="table table-hover table-bordered">
+                <tr>
+                    <td><img src="images/race.png"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

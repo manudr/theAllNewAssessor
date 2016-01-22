@@ -1,0 +1,65 @@
+﻿<!doctype html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="utf-8">
+    <title>Douglas County - Assessor</title>
+    <link rel="stylesheet" href="../css/bootstrap.css" />
+    <link rel="stylesheet" href="../css/styles.css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
+
+    <script src="../app.js"></script>
+    <script src="../service/ItemService.js"></script>
+    <script src="../service/ParcelService.js"></script>
+
+    <script src="../controller/ItemListController.js"></script>
+    <script src="../controller/ItemDetailsController.js"></script>
+    <script src="../controller/ParcelListController.js"></script>
+    <script src="../controller/ParcelDetailsController.js"></script>
+
+    <script src="//maps.googleapis.com/maps/api/js"></script>
+    <script src="../js/ng-maps.js"></script>
+
+    <script>
+
+        function addParam(searchString) {
+            window.location.href = '/apps/theAllNewAssessor/spring4MVCAngularJSRouting/#/parcelSearchResults/' + document.getElementById('searchString').value;
+            var url = "/apps/theAllNewAssessor/spring4MVCAngularJSRouting/#/parcelSearchResults/" + document.getElementById('searchString').value;
+            document.getElementById("parcelSearchForm").setAttribute('action', url);
+            document.forms['parcelSearchForm'].submit();
+        }
+
+    </script>
+
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <div class="panel-title">Real Estate Property Search</div>
+                    </div>
+                    <div class="panel-body">
+                        <form id="parcelSearchForm" name="parcelSearchForm" role="form">
+                            <div class="input-group">
+                                <input type="text" name="searchString" id="searchString" class="form-control"
+                                       placeholder="Say or enter Account#(R1234567), Owner Name(Last Name or First Name), Street Number(10754), Street Name(Parker Road) or State Parcel#(223321205027)"
+                                       required>
+                                    <span class="input-group-btn">
+                                        <input type="submit" class="btn btn-primary" value="Search" onclick="addParam(parcelSearchForm.searchString.value);" >
+                                    </span>
+                            </div>
+                        </form>
+                        <br>
+                        <div>
+                            <a style="color: #375a7f; font-weight: bold;" href="views/searchByMapView.html">Search By Map</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </body>
+</html>

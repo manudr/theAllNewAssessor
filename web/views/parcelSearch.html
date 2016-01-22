@@ -1,0 +1,28 @@
+﻿<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <div class="panel-title">Real Estate Property Search</div>
+                </div>
+                <div class="panel-body">
+                    <form id="parcelSearchForm" name="parcelSearchForm" role="form">
+                        <div class="input-group">
+                            <input type="text" name="searchString" id="searchString" class="form-control"
+                                   placeholder="Enter Account#(R1234567), Owner Name(Last Name or First Name), Street Number(10754), Street Name(Parker Road) or State Parcel#(223321205027)"
+                                   required>
+                            <span class="input-group-btn">
+                                <input type="submit" class="btn btn-primary" value="Search"
+                                       onclick="addParam(parcelSearchForm.searchString.value);" >
+                            </span>
+                        </div>
+                    </form>
+                    <br>
+                    <div>
+                        <a style="color: #375a7f; font-weight: bold;" href="#/searchByMap">Search By Map</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
