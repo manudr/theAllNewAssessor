@@ -1,11 +1,18 @@
 <div ng-controller="watchController">
-    <input type="text" ng-model="testName" placeholder="Enter your name">
     <div class="panel panel-success">
         <div class="panel-heading"><span class="lead">Matching Parcels - ONLY FIRST 2000 ROWS WILL BE DISPLAYED!</span></div>
         <div class="panel-body">
             <div class="table-responsive">
                 <table class="table table-hover table-bordered table-striped">
                     <thead>
+                    <tr colspan="6" class="success">
+                        <input type="text" class="form-control"
+                               name="searchString"
+                               id="searchString"
+                               ng-model="searchString"
+                               placeholder="Enter Account#(R1234567), Owner Name(Last Name or First Name), Street Number(10754), Street Name(Parker Road) or State Parcel#(223321205027)"
+                               required>
+                    </tr>
                     <tr class="success">
                         <br>
                         <th nowrap>

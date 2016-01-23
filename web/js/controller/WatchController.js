@@ -3,11 +3,10 @@
 App.controller('watchController', function($scope, AccountService) {
     var watchController = this;
     watchController.matchedAccounts = [];
-    $scope.testName = "";
+    $scope.searchString = "";
 
-    $scope.$watch("testName", function(newValue, oldValue) {
-        if ($scope.testName.length > 0) {
-            $scope.greeting = "Greetings " + $scope.testName;
+    $scope.$watch("searchString", function(newValue, oldValue) {
+        if ($scope.searchString.length > 0) {
             $scope.matchedAccounts = AccountService.fetchMatchedAccounts(newValue);
             AccountService.fetchMatchedAccounts(newValue).then(function(data) {
                 watchController.matchedAccounts = data;

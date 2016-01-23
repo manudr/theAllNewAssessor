@@ -22,7 +22,7 @@ import java.util.*;
 public class AccountRestService {
     private static Log log = LogFactory.getLog(AccountRestService.class);
     private AccountService accountService = new AccountServiceImpl();
-    private static int maxRows = 5000;
+    private static int maxRows = 500;
 
     @GET
     @Path("/accounts")
