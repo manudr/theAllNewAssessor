@@ -23,6 +23,7 @@ import java.util.List;
 
 public class AccountDAOImpl implements AccountDAO {
     private static Log log = LogFactory.getLog(AccountDAOImpl.class);
+    public static int maxResults = 1000;
 
     public List<Account> getAllAccounts() {
         log.info("getAllAccounts...");
@@ -113,6 +114,7 @@ public class AccountDAOImpl implements AccountDAO {
                     "encompass.TBLACCT TBLACCT " +
                     "join encompass.TBLACCTPROPERTYADDRESS TBLACCTPROPERTYADDRESS on TBLACCTPROPERTYADDRESS.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
                     "where TBLACCT.verend = 99999999999 and TBLACCTPROPERTYADDRESS.verend = 99999999999");
+            query.setMaxResults(maxResults);
             allPropertyAddresses = query.getResultList();
         } catch (Exception ex) {
             throw new RuntimeException(ex);
@@ -143,7 +145,7 @@ public class AccountDAOImpl implements AccountDAO {
                     ") tm on TBLSALEACCT.ACCOUNTNO = tm.ACCOUNTNO and TBLSALEACCT.INVENTORYEFFECTIVEDATE = tm.MaxDate " +
                     "WHERE TBLSALEACCT.verend = 99999999999 " +
                     "AND TBLSALE.verend = 99999999999 AND TBLACCTPROPERTYADDRESS.PROPERTYZIPCODE LIKE '%" + zipCode + "%'", Sale.class);
-            //query.setParameter("zipCode", "'%'" + zipCode + "'%'");
+            query.setMaxResults(maxResults);
             allSalesByZip = query.getResultList();
             log.info("allSalesByZip.size(): " + allSalesByZip.size());
         } catch (Exception ex) {
@@ -187,6 +189,7 @@ public class AccountDAOImpl implements AccountDAO {
                     "and TBLACCTLEGAL.verend = 99999999999 " +
                     "and TBLSUBACCOUNT.verend = 99999999999 " +
                     "order by TBLACCT.ACCOUNTNO asc, TBLACCT.PARCELNO asc");
+            query.setMaxResults(maxResults);
             allSearchableStrings = query.getResultList();
         } catch (Exception ex) {
             throw new RuntimeException(ex);
@@ -215,6 +218,7 @@ public class AccountDAOImpl implements AccountDAO {
                     "where TBLACCT.verend = 99999999999 and TBLACCTPROPERTYADDRESS.verend = 99999999999 " +
                     "and TBLPERSONSECURE.verend = 99999999999 and TBLACCTOWNERADDRESS.verend = 99999999999 " +
                     "order by TBLACCT.ACCOUNTNO asc", BasicAccountInfo.class);
+            query.setMaxResults(maxResults);
             allSearchableParcels = query.getResultList();
         } catch (Exception ex) {
             throw new RuntimeException(ex);
@@ -523,6 +527,7 @@ public class AccountDAOImpl implements AccountDAO {
                     "from ENCOMPASS.TBLSALEACCT GROUP BY TBLSALEACCT.ACCOUNTNO ) tm on TBLSALEACCT.ACCOUNTNO = tm.ACCOUNTNO " +
                     "and TBLSALEACCT.INVENTORYEFFECTIVEDATE = tm.MaxDate WHERE TBLSALEACCT.verend = 99999999999 AND TBLSALE.verend = 99999999999 " +
                     "AND TBLSALE.RECEPTIONNO = :receptionNo ", Sale.class);
+            query.setMaxResults(maxResults);
             query.setParameter("receptionNo", receptionNo);
             List<Sale> saleList = query.getResultList();
             if (saleList.size() > 0) {
@@ -543,6 +548,7 @@ public class AccountDAOImpl implements AccountDAO {
         try {
             Query query = entityManager.createNativeQuery("select * from encompass.TBNSALEINVENTORY TBNSALEINVENTORY " +
                     "where TBNSALEINVENTORY.RECEPTIONNO = :receptionNo ", SaleInventory.class);
+            query.setMaxResults(maxResults);
             query.setParameter("receptionNo", receptionNo);
             List<SaleInventory> saleInventoryList = query.getResultList();
             log.info("saleInventoryList.size(): " + saleInventoryList.size());

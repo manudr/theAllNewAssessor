@@ -5,5 +5,4 @@ App.controller('mainController', function($scope) {
     $scope.sortReverse  = false;  // set the default sort order
     $scope.globalsSearchString   = '';     // set the default search/filter term
     $scope.numResultsMatched = '100';
-    console.log('mainController...', $scope.numResultsMatched);
 });

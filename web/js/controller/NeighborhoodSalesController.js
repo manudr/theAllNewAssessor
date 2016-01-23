@@ -11,6 +11,5 @@ App.controller('neighborhoodSalesController', function($scope, AccountService) {
     AccountService.fetchNeighborhoodSales('80134').then(function(data) {
         neighborhoodSalesController.sales = data;
         $scope.sales = data;
-        console.log('$scope.sales: ', $scope.sales);
     });
 });
