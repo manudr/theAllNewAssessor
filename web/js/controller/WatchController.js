@@ -12,7 +12,6 @@ App.controller('watchController', function($scope, AccountService) {
             AccountService.fetchMatchedAccounts(newValue).then(function(data) {
                 watchController.matchedAccounts = data;
                 $scope.matchedAccounts = data;
-                console.log('watchController.matchedAccounts: ', watchController.matchedAccounts);
             });
         }
     });

@@ -1,7 +1,5 @@
 <div ng-controller="watchController">
     <input type="text" ng-model="testName" placeholder="Enter your name">
-    <p>{{greeting}}</p>
-
     <div class="panel panel-success">
         <div class="panel-heading"><span class="lead">Matching Parcels - ONLY FIRST 2000 ROWS WILL BE DISPLAYED!</span></div>
         <div class="panel-body">
@@ -69,7 +67,6 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {{matchedAccounts}}
                     <tr ng-repeat="account in matchedAccounts | orderBy:sortType:sortReverse" ng-class-odd="'odd'">
                         <td><a href="#/parcelDetails/{{account.accountNo}}">{{account.accountNo}}</a></td>
                         <td>{{account.parcelNo}}</td>
