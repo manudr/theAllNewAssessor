@@ -83,5 +83,8 @@ App.config(['$routeProvider', function($routeProvider) {
                 }]
             }
         })
+        .when('/greetings', {
+            templateUrl: 'views/watchController.html'
+        })
 		.otherwise({redirectTo:'/parcelSearch'});
 }]);
