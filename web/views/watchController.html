@@ -1,0 +1,89 @@
+<div ng-controller="watchController">
+    <input type="text" ng-model="testName" placeholder="Enter your name">
+    <p>{{greeting}}</p>
+
+    <div class="panel panel-success">
+        <div class="panel-heading"><span class="lead">Matching Parcels - ONLY FIRST 2000 ROWS WILL BE DISPLAYED!</span></div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered table-striped">
+                    <thead>
+                    <tr class="success">
+                        <br>
+                        <th nowrap>
+                            <a href="" ng-click="sortType = 'accountNo'; sortReverse = !sortReverse">
+                                ACCOUNT NO
+                                <span ng-show="sortType == 'accountNo' && !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'accountNo' && sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </th>
+                        <th nowrap>
+                            <a href="" ng-click="sortType = 'parcelNo'; sortReverse = !sortReverse">
+                                PARCEL NO
+                                <span ng-show="sortType == 'parcelNo' && !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'parcelNo' && sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </th>
+                        <th nowrap>
+                            <a href="" ng-click="sortType = 'ownerName'; sortReverse = !sortReverse">
+                                OWNER NAME
+                                <span ng-show="sortType == 'ownerName' && !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'ownerName' && sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </th>
+                        <th nowrap>
+                            <a href="" ng-click="sortType = 'propertyAddress'; sortReverse = !sortReverse">
+                                PROPERTY ADDRESS
+                                <span ng-show="sortType == 'propertyAddress' && !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'propertyAddress' && sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </th>
+                        <th nowrap>
+                            <a href="" ng-click="sortType = 'businessName'; sortReverse = !sortReverse">
+                                BUSINESS NAME
+                                <span ng-show="sortType == 'businessName' && !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'businessName' && sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </th>
+                        <th nowrap>
+                            <a href="" ng-click="sortType = 'businessLicense'; sortReverse = !sortReverse">
+                                BUSINESS LICENSE
+                                <span ng-show="sortType == 'businessLicense' && !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'businessLicense' && sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </th>
+                        <th nowrap>
+                            <a href="" ng-click="sortType = 'subdivisionName'; sortReverse = !sortReverse">
+                                SUBDIVISION
+                                <span ng-show="sortType == 'subdivisionName' && !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'subdivisionName' && sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </th>
+                        <th nowrap>
+                            <a href="" ng-click="sortType = 'neighborhood'; sortReverse = !sortReverse">
+                                NEIGHBORHOOD
+                                <span ng-show="sortType == 'neighborhood' && !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'neighborhood' && sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{matchedAccounts}}
+                    <tr ng-repeat="account in matchedAccounts | orderBy:sortType:sortReverse" ng-class-odd="'odd'">
+                        <td><a href="#/parcelDetails/{{account.accountNo}}">{{account.accountNo}}</a></td>
+                        <td>{{account.parcelNo}}</td>
+                        <td>{{account.ownerName}}</td>
+                        <td>{{account.propertyAddress}}</td>
+                        <td>{{account.businessName}}</td>
+                        <td>{{account.businessLicense}}</td>
+                        <td>{{account.subdivisionName}}</td>
+                        <td>{{account.neighborhood}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
