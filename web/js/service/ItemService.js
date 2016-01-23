@@ -5,7 +5,7 @@ App.factory('ItemService', ['$http', '$q', function($http, $q){
 
 
         fetchAllItems: function(category) {
-                return $http.get('/apps/theAllNewAssessor/rservices/accountService/allSearchableStrings/dron')
+                return $http.get('/apps/dcappsmonitor/rservices/accountService/allSearchableStrings/dron')
                         .then(
                                 function(response){
                                     return response.data;
@@ -18,7 +18,7 @@ App.factory('ItemService', ['$http', '$q', function($http, $q){
         },
 
         fetchSpecificItem: function(category,id) {
-            return $http.get('/apps/theAllNewAssessor/rservices/accountService/allSearchableStrings/dron')
+            return $http.get('/apps/dcappsmonitor/rservices/accountService/allSearchableStrings/dron')
                     .then(
                             function(response){
                                 return response.data;

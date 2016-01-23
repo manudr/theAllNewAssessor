@@ -29,7 +29,7 @@
                     }
                 }
             }
-            var url = '/apps/theAllNewAssessor/#/parcels/' + document.getElementById('searchString').value;
+            var url = '/apps/dcappsmonitor/#/parcels/' + document.getElementById('searchString').value;
             document.getElementById("parcelSearchForm").setAttribute('action', url);
             document.forms['parcelSearchForm'].submit();
         }
@@ -47,7 +47,7 @@
         </div>
         <div class="navbar-collapse collapse" id="navbar-main">
             <ul class="nav navbar-nav">
-                <li><a href="/apps/theAllNewAssessor/#/parcelSearch/">Home</a></li>
+                <li><a href="/apps/dcappsmonitor/#/parcelSearch/">Home</a></li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="moreChoices">More Choices <span class="caret"></span></a>
                     <ul class="dropdown-menu" aria-labelledby="moreChoices">
@@ -99,6 +99,7 @@
     <script src="js/controller/NeighborhoodSalesController.js"></script>
     <script src="js/controller/MapController.js"></script>
     <script src="js/controller/TestSortController.js"></script>
+    <script src="js/controller/WatchController.js"></script>
 
 </body>
 </html>
