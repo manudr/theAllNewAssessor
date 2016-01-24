@@ -2,6 +2,7 @@ package us.co.douglas.assessor.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.lang.String;
 import java.sql.Timestamp;
 
 /**
@@ -11,7 +12,10 @@ import java.sql.Timestamp;
 @Entity
 
 public class Sale {
+    private String accountNo;
     private String receptionNo;
+    private String neighborhood;
+    private String subdivision;
     private String grantor;
     private String grantee;
     private String documentDate;
@@ -21,11 +25,11 @@ public class Sale {
     private String goodWillAdjAmount;
     private String otherAdjAmount;
     private String timeAdj;
-    private String accountNo;
     private String jurisdictionId;
     private String inventoryEffectiveDate;
     private String acctAdjSalePrice;
     private String propertyAddress;
+    private String timeAdjustedSalePrice;
 
     @Id
     public String getReceptionNo() {
@@ -147,4 +151,30 @@ public class Sale {
     public void setPropertyAddress(String propertyAddress) {
         this.propertyAddress = propertyAddress;
     }
+
+    public String getNeighborhood() {
+        return neighborhood;
+    }
+
+    public void setNeighborhood(String neighborhood) {
+        this.neighborhood = neighborhood;
+    }
+
+    public String getSubdivision() {
+        return subdivision;
+    }
+
+    public void setSubdivision(String subdivision) {
+        this.subdivision = subdivision;
+    }
+
+    public String getTimeAdjustedSalePrice() {
+        return String.valueOf((new Double(getSalePrice()) - (new Double(getPpAdjAmount()) + new Double(getGoodWillAdjAmount()) + new Double(getOtherAdjAmount())) ) * new Double(getTimeAdj()));
+        //return timeAdjustedSalePrice;
+    }
+
+    public void setTimeAdjustedSalePrice(String timeAdjustedSalePrice) {
+        this.timeAdjustedSalePrice = timeAdjustedSalePrice;
+    }
+
 }

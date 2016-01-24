@@ -111,6 +111,27 @@
                                         </a>
                                     </th>
                                     <th nowrap>
+                                        <a href="" ng-click="sortType = 'neighborhood'; sortReverse = !sortReverse">
+                                            NEIGHBORHOOD
+                                            <span ng-show="sortType == 'neighborhood' && !sortReverse" class="fa fa-caret-down"></span>
+                                            <span ng-show="sortType == 'neighborhood' && sortReverse" class="fa fa-caret-up"></span>
+                                        </a>
+                                    </th>
+                                    <th nowrap>
+                                        <a href="" ng-click="sortType = 'subdivision'; sortReverse = !sortReverse">
+                                            SUBDIVISION
+                                            <span ng-show="sortType == 'subdivision' && !sortReverse" class="fa fa-caret-down"></span>
+                                            <span ng-show="sortType == 'subdivision' && sortReverse" class="fa fa-caret-up"></span>
+                                        </a>
+                                    </th>
+                                    <th nowrap>
+                                        <a href="" ng-click="sortType = 'jurisdictionId'; sortReverse = !sortReverse">
+                                            JURISDICTION ID
+                                            <span ng-show="sortType == 'jurisdictionId' && !sortReverse" class="fa fa-caret-down"></span>
+                                            <span ng-show="sortType == 'jurisdictionId' && sortReverse" class="fa fa-caret-up"></span>
+                                        </a>
+                                    </th>
+                                    <th nowrap>
                                         <a href="" ng-click="sortType = 'saleDate'; sortReverse = !sortReverse">
                                             SALE DATE
                                             <span ng-show="sortType == 'saleDate' && !sortReverse" class="fa fa-caret-down"></span>
@@ -125,39 +146,26 @@
                                         </a>
                                     </th>
                                     <th nowrap>
-                                        <a href="" ng-click="sortType = 'timeAdj'; sortReverse = !sortReverse">
-                                            TIME ADJ
-                                            <span ng-show="sortType == 'timeAdj' && !sortReverse" class="fa fa-caret-down"></span>
-                                            <span ng-show="sortType == 'timeAdj' && sortReverse" class="fa fa-caret-up"></span>
-                                        </a>
-                                    </th>
-                                    <th nowrap>
-                                        <a href="" ng-click="sortType = 'jurisdictionId'; sortReverse = !sortReverse">
-                                            JURISDICTION ID
-                                            <span ng-show="sortType == 'jurisdictionId' && !sortReverse" class="fa fa-caret-down"></span>
-                                            <span ng-show="sortType == 'jurisdictionId' && sortReverse" class="fa fa-caret-up"></span>
-                                        </a>
-                                    </th>
-                                    <th nowrap>
-                                        <a href="" ng-click="sortType = 'grantee'; sortReverse = !sortReverse">
-                                            GRANTEE
-                                            <span ng-show="sortType == 'grantee' && !sortReverse" class="fa fa-caret-down"></span>
-                                            <span ng-show="sortType == 'grantee' && sortReverse" class="fa fa-caret-up"></span>
+                                        <a href="" ng-click="sortType = 'timeAdjustedSalePrice'; sortReverse = !sortReverse">
+                                            TIME ADJUSTED SALE PRICE
+                                            <span ng-show="sortType == 'timeAdjustedSalePrice' && !sortReverse" class="fa fa-caret-down"></span>
+                                            <span ng-show="sortType == 'timeAdjustedSalePrice' && sortReverse" class="fa fa-caret-up"></span>
                                         </a>
                                     </th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr ng-repeat="sale in sales | orderBy:sortType:sortReverse | filter:neighborhoodSalesSearchString" ng-class-odd="'odd'">
-                                    <td><a href="#/parcelDetails/{{sale.accountNo}}">{{sale.accountNo}}</a></td>
-                                    <td>{{sale.receptionNo}}</td>
-                                    <td>{{sale.propertyAddress}}</td>
-                                    <td>{{sale.saleDate}}</td>
-                                    <td>{{sale.salePrice}}</td>
-                                    <td>{{sale.timeAdj}}</td>
-                                    <td>{{sale.jurisdictionId}}</td>
-                                    <td>{{account.grantee}}</td>
-                                </tr>
+                                    <tr ng-repeat="sale in sales | orderBy:sortType:sortReverse | filter:neighborhoodSalesSearchString" ng-class-odd="'odd'">
+                                        <td><a href="#/parcelDetails/{{sale.accountNo}}">{{sale.accountNo}}</a></td>
+                                        <td>{{sale.receptionNo}}</td>
+                                        <td>{{sale.propertyAddress}}</td>
+                                        <td>{{sale.neighborhood}}</td>
+                                        <td>{{sale.subdivision}}</td>
+                                        <td>{{sale.jurisdictionId}}</td>
+                                        <td>{{sale.saleDate}}</td>
+                                        <td>{{sale.salePrice}}</td>
+                                        <td>{{sale.timeAdjustedSalePrice}}</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
