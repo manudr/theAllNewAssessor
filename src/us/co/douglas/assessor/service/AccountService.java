@@ -13,6 +13,6 @@ public interface AccountService {
     public List<Account> getAllAccounts() throws Exception;
     public List<String> getAllPropertyAddresses() throws Exception;
     public List<String> getAllSearchableStrings() throws Exception;
-    public List<Sale> getNeighborhoodSales(String zipCode) throws Exception;
+    public List<Sale> getNeighborhoodSales(String zipCode, String neighborhood, String subdivision) throws Exception;
 
 }

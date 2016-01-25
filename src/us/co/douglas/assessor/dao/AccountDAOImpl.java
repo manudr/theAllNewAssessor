@@ -9,6 +9,7 @@ import us.co.douglas.common.sql.JDBCHelper;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import java.lang.String;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -124,7 +125,7 @@ public class AccountDAOImpl implements AccountDAO {
         return allPropertyAddresses;
     }
 
-    public List<Sale> getNeighborhoodSales(String zipCode) {
+    public List<Sale> getNeighborhoodSales(String zipCode, String neighborhood, String subdivision) {
         log.info("getAllSalesByZip...");
         List<Sale> allSalesByZip = new ArrayList<Sale>();
         EntityManager entityManager = getEntityManager();
@@ -161,7 +162,10 @@ public class AccountDAOImpl implements AccountDAO {
                     "WHERE TBLSALEACCT.VEREND = 99999999999 " +
                     "AND TBLACCTNBHD.VEREND = 99999999999 " +
                     "AND TBLSUBACCOUNT.VEREND = 99999999999 " +
-                    "AND TBLSALE.VEREND = 99999999999 AND TBLACCTPROPERTYADDRESS.PROPERTYZIPCODE LIKE '%" + zipCode + "%'", Sale.class);
+                    "AND TBLSALE.VEREND = 99999999999 " +
+                    "AND TBLACCTNBHD.NBHDCODE  LIKE '%" + neighborhood + "%' " +
+                    "AND TBNSUBDIVISION.SUBNAME  LIKE '%" + subdivision + "%' " +
+                    "AND TBLACCTPROPERTYADDRESS.PROPERTYZIPCODE LIKE '%" + zipCode + "%'", Sale.class);
             query.setMaxResults(maxResults);
             allSalesByZip = query.getResultList();
             log.info("allSalesByZip.size(): " + allSalesByZip.size());

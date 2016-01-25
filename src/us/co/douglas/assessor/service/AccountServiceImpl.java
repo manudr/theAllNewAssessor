@@ -62,7 +62,7 @@ public class AccountServiceImpl implements AccountService {
         return allSearchableStrings;
     }
 
-    public List<Sale> getNeighborhoodSales(String zipCode) throws Exception {
-        return accountDAO.getNeighborhoodSales(zipCode);
+    public List<Sale> getNeighborhoodSales(String zipCode, String neighborhood, String subdivision) throws Exception {
+        return accountDAO.getNeighborhoodSales(zipCode, neighborhood, subdivision);
     }
 }

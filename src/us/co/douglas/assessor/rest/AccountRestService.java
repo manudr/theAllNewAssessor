@@ -137,7 +137,7 @@ public class AccountRestService {
     public List<Sale> getNeighborhoodSales(@PathParam("zipCode") String zipCode) throws Exception {
         log.info("getNeighborhoodSales()...");
         log.info("zipCode: " + zipCode);
-        return accountService.getNeighborhoodSales(zipCode);
+        return accountService.getNeighborhoodSales(zipCode, "116", "CLARKE");
     }
 
 
