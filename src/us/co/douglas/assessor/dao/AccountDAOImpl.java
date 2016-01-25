@@ -114,7 +114,7 @@ public class AccountDAOImpl implements AccountDAO {
                     "from " +
                     "encompass.TBLACCT TBLACCT " +
                     "join encompass.TBLACCTPROPERTYADDRESS TBLACCTPROPERTYADDRESS on TBLACCTPROPERTYADDRESS.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
-                    "where TBLACCT.verend = 99999999999 and TBLACCTPROPERTYADDRESS.verend = 99999999999");
+                    "where TBLACCT.verend = 99999999999 and TBLACCTPROPERTYADDRESS.verend = 99999999999 order by TBLACCT.ACCOUNTNO desc ");
             query.setMaxResults(maxResults);
             allPropertyAddresses = query.getResultList();
         } catch (Exception ex) {
@@ -165,7 +165,14 @@ public class AccountDAOImpl implements AccountDAO {
                     "AND TBLSALE.VEREND = 99999999999 " +
                     "AND TBLACCTNBHD.NBHDCODE  LIKE '%" + neighborhood + "%' " +
                     "AND TBNSUBDIVISION.SUBNAME  LIKE '%" + subdivision + "%' " +
-                    "AND TBLACCTPROPERTYADDRESS.PROPERTYZIPCODE LIKE '%" + zipCode + "%'", Sale.class);
+                    "AND TBLACCTPROPERTYADDRESS.PROPERTYZIPCODE LIKE '%" + zipCode + "%' " +
+                    "ORDER BY SALEDATE DESC", Sale.class);
+
+//            query.setParameter("neighborhood", neighborhood);
+//            query.setParameter("subdivision", subdivision);
+//            query.setParameter("zipCode", zipCode);
+
+
             query.setMaxResults(maxResults);
             allSalesByZip = query.getResultList();
             log.info("allSalesByZip.size(): " + allSalesByZip.size());
@@ -209,7 +216,7 @@ public class AccountDAOImpl implements AccountDAO {
                     "and TBLACCTNBHD.verend = 99999999999 " +
                     "and TBLACCTLEGAL.verend = 99999999999 " +
                     "and TBLSUBACCOUNT.verend = 99999999999 " +
-                    "order by TBLACCT.ACCOUNTNO asc, TBLACCT.PARCELNO asc");
+                    "order by TBLACCT.ACCOUNTNO decs, TBLACCT.PARCELNO desc");
             query.setMaxResults(maxResults);
             allSearchableStrings = query.getResultList();
         } catch (Exception ex) {
@@ -238,7 +245,7 @@ public class AccountDAOImpl implements AccountDAO {
                     "join encompass.TBLPERSONSECURE TBLPERSONSECURE on TBLPERSONSECURE.PERSONCODE = TBLACCTOWNERADDRESS.PERSONCODE " +
                     "where TBLACCT.verend = 99999999999 and TBLACCTPROPERTYADDRESS.verend = 99999999999 " +
                     "and TBLPERSONSECURE.verend = 99999999999 and TBLACCTOWNERADDRESS.verend = 99999999999 " +
-                    "order by TBLACCT.ACCOUNTNO asc", BasicAccountInfo.class);
+                    "order by TBLACCT.ACCOUNTNO desc", BasicAccountInfo.class);
             query.setMaxResults(maxResults);
             allSearchableParcels = query.getResultList();
         } catch (Exception ex) {

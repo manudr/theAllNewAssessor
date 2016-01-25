@@ -83,8 +83,8 @@ App.config(['$routeProvider', function($routeProvider) {
                 }]
             }
         })
-        .when('/greetings', {
-            templateUrl: 'views/watchController.html'
+        .when('/parcelSearchAutoComplete', {
+            templateUrl: 'views/parcelSearchAutoComplete.html'
         })
 		.otherwise({redirectTo:'/parcelSearch'});
 }]);
