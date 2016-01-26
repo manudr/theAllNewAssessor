@@ -26,7 +26,19 @@ App.factory('AccountService', ['$http', '$q', function($http, $q){
             );
         },
 
-        fetchMatchedAccounts: function(searchString) {
+        fetchAllStrings: function() {
+            return $http.get('/apps/dcappsmonitor/rservices/accountService/allSearchableStrings/').then(
+                function(response){
+                    return response.data;
+                },
+                function(errResponse){
+                    console.error('Error while fetching matched accounts...');
+                    return $q.reject(errResponse);
+                }
+            );
+        },
+
+        fetchMatchedStrings: function(searchString) {
             return $http.get('/apps/dcappsmonitor/rservices/accountService/allSearchableStrings/' + searchString).then(
                 function(response){
                     return response.data;

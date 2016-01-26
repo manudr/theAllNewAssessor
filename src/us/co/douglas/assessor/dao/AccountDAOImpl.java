@@ -222,7 +222,7 @@ public class AccountDAOImpl implements AccountDAO {
                     "and TBLACCTLEGAL.verend = 99999999999 " +
                     "and TBLSUBACCOUNT.verend = 99999999999 " +
                     "order by TBLACCT.ACCOUNTNO desc, TBLACCT.PARCELNO desc");
-            //query.setMaxResults(maxResults); This should pull all of them
+            //query.setMaxResults(maxResults); //This should pull all of them // TODO
             allSearchableStrings = query.getResultList();
         } catch (Exception ex) {
             throw new RuntimeException(ex);

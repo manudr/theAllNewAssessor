@@ -70,7 +70,7 @@ App.config(['$routeProvider', function($routeProvider) {
             controller : "AccountListController as accountListCtrl",
             resolve: {
                 async: ['AccountService', '$route', function(AccountService, $route) {
-                    return AccountService.fetchMatchedAccounts($route.current.params.searchString);
+                    return AccountService.fetchMatchedStrings($route.current.params.searchString);
                 }]
             }
         })
@@ -86,5 +86,5 @@ App.config(['$routeProvider', function($routeProvider) {
         .when('/parcelSearchAutoComplete', {
             templateUrl: 'views/parcelSearchAutoComplete.html'
         })
-		.otherwise({redirectTo:'/parcelSearch'});
+		.otherwise({redirectTo:'/parcelSearchAutoComplete'});
 }]);

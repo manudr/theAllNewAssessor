@@ -133,6 +133,40 @@ public class AccountRestService {
     }
 
     @GET
+    @Path("/allSearchableStrings/")
+    public List<BasicAccountInfo> getAllSearchableStrings() throws Exception {
+        log.info("getAllSearchableStrings()...");
+        List<BasicAccountInfo> allBasicAccountInfoObjects = new ArrayList<BasicAccountInfo>();
+        List<String> allSearchableStrings = accountService.getAllSearchableStrings();
+        log.info("allSearchableStrings.size(): " + allSearchableStrings.size());
+        if (allSearchableStrings != null & allSearchableStrings.size() > 0) {
+            for (String searchableString : allSearchableStrings) {
+                BasicAccountInfo basicAccountInfo = new BasicAccountInfo();
+                String[] searchableStringTokens = searchableString.split(":");
+                basicAccountInfo.setAccountNo(searchableStringTokens[0]);
+                basicAccountInfo.setParcelNo(searchableStringTokens[1]);
+                basicAccountInfo.setOwnerName(searchableStringTokens[2]);
+                basicAccountInfo.setBusinessName(searchableStringTokens[3]);
+                basicAccountInfo.setBusinessLicense(searchableStringTokens[4]);
+                basicAccountInfo.setNeighborhood(searchableStringTokens[5]);
+                basicAccountInfo.setNeighborhoodExt(searchableStringTokens[6]);
+                basicAccountInfo.setPropertyStreet(searchableStringTokens[7]);
+                basicAccountInfo.setPropertyCity(searchableStringTokens[8]);
+                basicAccountInfo.setPropertyState("CO");
+                basicAccountInfo.setPropertyZipCode(searchableStringTokens[9]);
+                basicAccountInfo.setOwnerStreet(searchableStringTokens[10]);
+                basicAccountInfo.setOwnerCity(searchableStringTokens[11]);
+                basicAccountInfo.setOwnerState(searchableStringTokens[12]);
+                basicAccountInfo.setOwnerZipCode(searchableStringTokens[13]);
+                basicAccountInfo.setSubdivisionName(searchableStringTokens[14]);
+                allBasicAccountInfoObjects.add(basicAccountInfo);
+            }
+        }
+        log.info("allBasicAccountInfoObjects.size(): " + allBasicAccountInfoObjects.size());
+        return allBasicAccountInfoObjects;
+    }
+
+    @GET
     @Path("/accounts/{accountNo}")
     public Account getAccount(@PathParam("accountNo") String accountNo) throws Exception {
         log.info("getAccount()...");

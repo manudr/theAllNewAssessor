@@ -8,7 +8,7 @@ App.controller('watchController', function($scope, AccountService) {
 
     $scope.$watch("searchString", function(newValue, oldValue) {
         if ($scope.searchString.length > 3) {
-            AccountService.fetchMatchedAccounts(newValue).then(function(data) {
+            AccountService.fetchMatchedStrings(newValue).then(function(data) {
                 watchController.matchedAccounts = data;
                 $scope.matchedAccounts = data;
             });
