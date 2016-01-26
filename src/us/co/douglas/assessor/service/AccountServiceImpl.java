@@ -19,7 +19,7 @@ public class AccountServiceImpl implements AccountService {
     private AccountDAO accountDAO = new AccountDAOImpl();
     private static InMemoryCache<String, List<String>> inMemoryCache = new InMemoryCache(1000000, 1000000, 1000000);
     private static List<String> allSearchableStrings = null;
-    private static Boolean serialized = true; // TODO  change this to false
+    private static Boolean serialized = false; // TODO  change this to false
 
     public Account getAccountByAccountNo(String accountNo) throws Exception{
         log.info("getAccountByAccountNo()...");
