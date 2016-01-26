@@ -162,9 +162,9 @@
                                         <td>{{sale.neighborhood + '-' + sale.neighborhoodExt}}</td>
                                         <td>{{sale.subdivision}}</td>
                                         <td>{{sale.jurisdictionId}}</td>
-                                        <td>{{sale.saleDate}}</td>
-                                        <td>{{sale.salePrice | currency | number}}</td>
-                                        <td>${{sale.timeAdjustedSalePrice | number}}</td>
+                                        <td>{{sale.saleDate | date:"MM/dd/yyyy"}}</td>
+                                        <td>{{sale.salePrice | currency}}</td>
+                                        <td>{{sale.timeAdjustedSalePrice | currency}}</td>
                                     </tr>
                                 </tbody>
                             </table>
