@@ -1,15 +1,28 @@
 'use strict';
 
 App.controller('watchController', function($scope, AccountService) {
-    var watchController = this;
-    watchController.matchedAccounts = [];
+    $scope.checkModel = {
+        matchAll: false,
+        matchAnyWhere: true,
+        matchExact: false
+    };
+    $scope.checkResults = [];
+
+    $scope.$watchCollection("checkModel", function () {
+        $scope.checkResults = [];
+        angular.forEach($scope.checkModel, function (value, key) {
+            if (value) {
+                $scope.checkResults.push(key);
+            }
+        });
+    });
+
     $scope.searchString = "";
     $scope.showParcelSearchResultsTable = true;
 
     $scope.$watch("searchString", function(newValue, oldValue) {
         if ($scope.searchString.length > 3) {
             AccountService.fetchMatchedStrings(newValue).then(function(data) {
-                watchController.matchedAccounts = data;
                 $scope.matchedAccounts = data;
             });
         }

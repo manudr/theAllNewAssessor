@@ -13,6 +13,7 @@ public class Sale {
     private String accountNo;
     private String receptionNo;
     private String neighborhood;
+    private String neighborhoodExt;
     private String subdivision;
     private String grantor;
     private String grantee;
@@ -26,7 +27,10 @@ public class Sale {
     private String jurisdictionId;
     private String inventoryEffectiveDate;
     private String acctAdjSalePrice;
-    private String propertyAddress;
+    private String propertyStreet;
+    private String propertyCity;
+    private String propertyState;
+    private String propertyZipCode;
     private String timeAdjustedSalePrice;
 
     @Id
@@ -142,14 +146,6 @@ public class Sale {
         this.acctAdjSalePrice = acctAdjSalePrice;
     }
 
-    public String getPropertyAddress() {
-        return propertyAddress;
-    }
-
-    public void setPropertyAddress(String propertyAddress) {
-        this.propertyAddress = propertyAddress;
-    }
-
     public String getNeighborhood() {
         return neighborhood;
     }
@@ -175,4 +171,43 @@ public class Sale {
         this.timeAdjustedSalePrice = timeAdjustedSalePrice;
     }
 
+    public String getNeighborhoodExt() {
+        return neighborhoodExt;
+    }
+
+    public void setNeighborhoodExt(String neighborhoodExt) {
+        this.neighborhoodExt = neighborhoodExt;
+    }
+
+    public String getPropertyStreet() {
+        return propertyStreet;
+    }
+
+    public void setPropertyStreet(String propertyStreet) {
+        this.propertyStreet = propertyStreet;
+    }
+
+    public String getPropertyCity() {
+        return propertyCity;
+    }
+
+    public void setPropertyCity(String propertyCity) {
+        this.propertyCity = propertyCity;
+    }
+
+    public String getPropertyState() {
+        return propertyState;
+    }
+
+    public void setPropertyState(String propertyState) {
+        this.propertyState = propertyState;
+    }
+
+    public String getPropertyZipCode() {
+        return propertyZipCode;
+    }
+
+    public void setPropertyZipCode(String propertyZipCode) {
+        this.propertyZipCode = propertyZipCode;
+    }
 }

@@ -156,15 +156,15 @@
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="sale in sales | orderBy:sortType:sortReverse | filter:neighborhoodSalesSearchString" ng-class-odd="'odd'">
-                                        <td><a href="#/parcelDetails/{{sale.accountNo}}">{{sale.accountNo}}</a></td>
+                                        <td><a href="#/parcelDetails/{{sale.accountNo}}/{{sale.propertyZipCode}}/{{sale.neighborhood}}/{{sale.subdivision}}">{{sale.accountNo}}</a></td>
                                         <td>{{sale.receptionNo}}</td>
-                                        <td>{{sale.propertyAddress}}</td>
-                                        <td>{{sale.neighborhood}}</td>
+                                        <td>{{sale.propertyStreet + ' ' + sale.propertyCity + ' ' + sale.propertyState + ' ' + sale.propertyZipCode}}</td>
+                                        <td>{{sale.neighborhood + '-' + sale.neighborhoodExt}}</td>
                                         <td>{{sale.subdivision}}</td>
                                         <td>{{sale.jurisdictionId}}</td>
                                         <td>{{sale.saleDate}}</td>
-                                        <td>{{sale.salePrice | currency}}</td>
-                                        <td>{{sale.timeAdjustedSalePrice | currency}}</td>
+                                        <td>{{sale.salePrice | currency | number}}</td>
+                                        <td>${{sale.timeAdjustedSalePrice | number}}</td>
                                     </tr>
                                 </tbody>
                             </table>
