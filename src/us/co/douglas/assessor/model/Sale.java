@@ -2,8 +2,6 @@ package us.co.douglas.assessor.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.lang.String;
-import java.sql.Timestamp;
 
 /**
  * Created by mdronamr on 12/23/15.

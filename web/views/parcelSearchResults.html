@@ -1,11 +1,13 @@
 <div style="margin:20px;" ng-controller="mainController">
     <div>
         <div style="color: #921e12; font-weight: bold; font-size: medium; padding:5px;">
-            <a href="#/parcelSearch/">Go Back To Parcel Search</a>
+            <a href="#/parcelSearch/">Go Back To Parcel Search</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Number Of Results Matched: </strong>{{numResultsMatched}}
         </div>
+        <!--
         <div ng-controller="mainController">
             <strong>NumResultsMatched: </strong>{{numResultsMatched}}
         </div>
+        -->
     </div>
     <div class="panel panel-success">
         <div class="panel-heading"><span class="lead">Matching Parcels - ONLY FIRST 2000 ROWS WILL BE DISPLAYED!</span></div>
@@ -78,7 +80,7 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="account in accountListCtrl.accounts | orderBy:sortType:sortReverse | filter:globalsSearchString" ng-class-odd="'odd'">
-                        <td><a href="#/parcelDetails/{{account.accountNo}}">{{account.accountNo}}</a></td>
+                        <td><a href="#/parcelDetails/{{account.accountNo}}/{{account.zipCode}}/{{account.neighborhood}}/{{account.subdivisionName}}/">{{account.accountNo}}</a></td>
                         <td>{{account.parcelNo}}</td>
                         <td>{{account.ownerName}}</td>
                         <td>{{account.propertyAddress}}</td>

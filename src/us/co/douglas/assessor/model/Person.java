@@ -1,8 +1,6 @@
 package us.co.douglas.assessor.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import java.lang.Override;
-import java.lang.String;
 
 @XmlRootElement (name="person")
 public class Person {

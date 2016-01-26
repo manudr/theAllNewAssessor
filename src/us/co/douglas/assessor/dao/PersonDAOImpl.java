@@ -1,13 +1,9 @@
 package us.co.douglas.assessor.dao;
 
 import us.co.douglas.assessor.model.Person;
-import us.co.douglas.common.sql.JDBCHelper;
 
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 

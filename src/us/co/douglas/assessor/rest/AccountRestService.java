@@ -9,7 +9,8 @@ import us.co.douglas.assessor.service.AccountService;
 import us.co.douglas.assessor.service.AccountServiceImpl;
 
 import javax.ws.rs.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by mdronamr on 12/22/15.
@@ -104,9 +105,16 @@ public class AccountRestService {
                     basicAccountInfo.setBusinessName(searchableStringTokens[3]);
                     basicAccountInfo.setBusinessLicense(searchableStringTokens[4]);
                     basicAccountInfo.setNeighborhood(searchableStringTokens[5]);
-                    basicAccountInfo.setPropertyAddress(searchableStringTokens[6]);
-                    basicAccountInfo.setOwnerAddress(searchableStringTokens[7]);
-                    basicAccountInfo.setSubdivisionName(searchableStringTokens[8]);
+                    basicAccountInfo.setNeighborhoodExt(searchableStringTokens[6]);
+                    basicAccountInfo.setPropertyStreet(searchableStringTokens[7]);
+                    basicAccountInfo.setPropertyCity(searchableStringTokens[8]);
+                    basicAccountInfo.setPropertyState("CO");
+                    basicAccountInfo.setPropertyZipCode(searchableStringTokens[9]);
+                    basicAccountInfo.setOwnerStreet(searchableStringTokens[10]);
+                    basicAccountInfo.setOwnerCity(searchableStringTokens[11]);
+                    basicAccountInfo.setOwnerState(searchableStringTokens[12]);
+                    basicAccountInfo.setOwnerZipCode(searchableStringTokens[13]);
+                    basicAccountInfo.setSubdivisionName(searchableStringTokens[14]);
                     if (!matchedParcels.contains(basicAccountInfo)) {
                         //log.info("basicAccountInfo: " + basicAccountInfo);
                         matchedParcels.add(basicAccountInfo);
@@ -133,11 +141,11 @@ public class AccountRestService {
     }
 
     @GET
-    @Path("/neighborhoodSales/{zipCode}")
-    public List<Sale> getNeighborhoodSales(@PathParam("zipCode") String zipCode) throws Exception {
+    @Path("/neighborhoodSales/{zipCode}/{neighborhood}/{subdivision}")
+    public List<Sale> getNeighborhoodSales(@PathParam("zipCode") String zipCode, @PathParam("neighborhood") String neighborhood, @PathParam("subdivision") String subdivision) throws Exception {
         log.info("getNeighborhoodSales()...");
         log.info("zipCode: " + zipCode);
-        return accountService.getNeighborhoodSales(zipCode, "116", "CLARKE");
+        return accountService.getNeighborhoodSales(zipCode, neighborhood, subdivision);
     }
 
 

@@ -9,9 +9,16 @@ public class BasicAccountInfo {
     private String ownerName;
     private String businessName;
     private String businessLicense;
-    private String propertyAddress;
-    private String ownerAddress;
+    private String propertyStreet;
+    private String propertyCity;
+    private String propertyState;
+    private String propertyZipCode;
+    private String ownerStreet;
+    private String ownerCity;
+    private String ownerState;
+    private String ownerZipCode;
     private String neighborhood;
+    private String neighborhoodExt;
     private String subdivisionName;
     private String filingDescription;
     private String location;
@@ -60,20 +67,68 @@ public class BasicAccountInfo {
         this.businessLicense = businessLicense;
     }
 
-    public String getPropertyAddress() {
-        return propertyAddress;
+    public String getPropertyStreet() {
+        return propertyStreet;
     }
 
-    public void setPropertyAddress(String propertyAddress) {
-        this.propertyAddress = propertyAddress;
+    public void setPropertyStreet(String propertyStreet) {
+        this.propertyStreet = propertyStreet;
     }
 
-    public String getOwnerAddress() {
-        return ownerAddress;
+    public String getPropertyCity() {
+        return propertyCity;
     }
 
-    public void setOwnerAddress(String ownerAddress) {
-        this.ownerAddress = ownerAddress;
+    public void setPropertyCity(String propertyCity) {
+        this.propertyCity = propertyCity;
+    }
+
+    public String getPropertyState() {
+        return propertyState;
+    }
+
+    public void setPropertyState(String propertyState) {
+        this.propertyState = propertyState;
+    }
+
+    public String getPropertyZipCode() {
+        return propertyZipCode;
+    }
+
+    public void setPropertyZipCode(String propertyZipCode) {
+        this.propertyZipCode = propertyZipCode;
+    }
+
+    public String getOwnerStreet() {
+        return ownerStreet;
+    }
+
+    public void setOwnerStreet(String ownerStreet) {
+        this.ownerStreet = ownerStreet;
+    }
+
+    public String getOwnerCity() {
+        return ownerCity;
+    }
+
+    public void setOwnerCity(String ownerCity) {
+        this.ownerCity = ownerCity;
+    }
+
+    public String getOwnerState() {
+        return ownerState;
+    }
+
+    public void setOwnerState(String ownerState) {
+        this.ownerState = ownerState;
+    }
+
+    public String getOwnerZipCode() {
+        return ownerZipCode;
+    }
+
+    public void setOwnerZipCode(String ownerZipCode) {
+        this.ownerZipCode = ownerZipCode;
     }
 
     public String getNeighborhood() {
@@ -82,6 +137,14 @@ public class BasicAccountInfo {
 
     public void setNeighborhood(String neighborhood) {
         this.neighborhood = neighborhood;
+    }
+
+    public String getNeighborhoodExt() {
+        return neighborhoodExt;
+    }
+
+    public void setNeighborhoodExt(String neighborhoodExt) {
+        this.neighborhoodExt = neighborhoodExt;
     }
 
     public String getSubdivisionName() {
@@ -108,43 +171,4 @@ public class BasicAccountInfo {
         this.location = location;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof BasicAccountInfo)) return false;
-
-        BasicAccountInfo that = (BasicAccountInfo) o;
-
-        if (!accountNo.equals(that.accountNo)) return false;
-        if (!propertyAddress.equals(that.propertyAddress)) return false;
-        if (!businessLicense.equals(that.businessLicense)) return false;
-        if (!businessName.equals(that.businessName)) return false;
-        if (!ownerName.equals(that.ownerName)) return false;
-        if (!parcelNo.equals(that.parcelNo)) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = accountNo.hashCode();
-        result = 31 * result + parcelNo.hashCode();
-        result = 31 * result + ownerName.hashCode();
-        result = 31 * result + businessName.hashCode();
-        result = 31 * result + businessLicense.hashCode();
-        result = 31 * result + propertyAddress.hashCode();
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "BasicAccountInfo{" +
-                "accountNo='" + accountNo + '\'' +
-                ", parcelNo='" + parcelNo + '\'' +
-                ", ownerName='" + ownerName + '\'' +
-                ", businessName='" + businessName + '\'' +
-                ", businessLicense='" + businessLicense + '\'' +
-                ", propertyAddress='" + propertyAddress + '\'' +
-                '}';
-    }
 }

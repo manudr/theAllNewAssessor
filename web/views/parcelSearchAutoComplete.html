@@ -75,14 +75,14 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="account in matchedAccounts | orderBy:sortType:sortReverse" ng-class-odd="'odd'">
-                        <td><a href="#/parcelDetails/{{account.accountNo}}">{{account.accountNo}}</a></td>
+                        <td><a href="#/parcelDetails/{{account.accountNo}}/{{account.propertyZipCode}}/{{account.neighborhood}}/{{account.subdivisionName}}">{{account.accountNo}}</a></td>
                         <td>{{account.parcelNo}}</td>
                         <td>{{account.ownerName}}</td>
-                        <td>{{account.propertyAddress}}</td>
+                        <td>{{account.propertyStreet + ' ' + account.propertyCity + ' ' + account.propertyState + ' ' + account.propertyZipCode}}</td>
                         <td>{{account.businessName}}</td>
                         <td>{{account.businessLicense}}</td>
                         <td>{{account.subdivisionName}}</td>
-                        <td>{{account.neighborhood}}</td>
+                        <td>{{account.neighborhood + '-' + account.neighborhoodExt}}</td>
                     </tr>
                     </tbody>
                 </table>

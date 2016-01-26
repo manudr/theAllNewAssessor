@@ -9,7 +9,6 @@ import us.co.douglas.common.sql.JDBCHelper;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-import java.lang.String;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -195,9 +194,15 @@ public class AccountDAOImpl implements AccountDAO {
                     "ISNULL(TBLPERSONSECURE.NAME1, '') + ' ' + ISNULL(TBLPERSONSECURE.NAME2, '') + ':' + " +
                     "ISNULL(TBLACCT.BUSINESSNAME, '') + ':' + " +
                     "ISNULL(TBLACCT.BUSINESSLICENSE, '') + ':' + " +
-                    "ISNULL(TBLACCTNBHD.NBHDCODE, '') + '-' + ISNULL(TBLACCTNBHD.NBHDEXTENSION, '') + ':' + " +
-                    "ISNULL(TBLACCTPROPERTYADDRESS.STREETNO, '') + ' ' + ISNULL(TBLACCTPROPERTYADDRESS.UNITNAME, '') + ' ' + ISNULL(TBLACCTPROPERTYADDRESS.STREETNAME, '') + ' ' + ISNULL(TBLACCTPROPERTYADDRESS.STREETTYPE, '') + ' ' + ISNULL(TBLACCTPROPERTYADDRESS.PROPERTYCITY, '') + ' ' + ISNULL(TBLACCTPROPERTYADDRESS.PROPERTYZIPCODE, '') + ':' + " +
-                    "ISNULL(TBLADDRESSSECURE.ADDRESS1, '') + ' ' + ISNULL(TBLADDRESSSECURE.ADDRESS2, '') + ' ' + ISNULL(TBLADDRESSSECURE.CITY, '') + ' ' + ISNULL(TBLADDRESSSECURE.STATECODE, '') + ' ' + ISNULL(TBLADDRESSSECURE.ZIPCODE, '') + ' ' + ISNULL(TBLADDRESSSECURE.PROVINCE, '') + ':' + " +
+                    "ISNULL(TBLACCTNBHD.NBHDCODE, '') + ':' + " +
+                    "ISNULL(TBLACCTNBHD.NBHDEXTENSION, '') + ':' + " +
+                    "ISNULL(TBLACCTPROPERTYADDRESS.STREETNO, '') + ' ' + ISNULL(TBLACCTPROPERTYADDRESS.STREETNAME, '') + ' ' + ISNULL(TBLACCTPROPERTYADDRESS.STREETTYPE, '') + ' ' + ISNULL(TBLACCTPROPERTYADDRESS.UNITNAME, '') + ':' + " +
+                    "ISNULL(TBLACCTPROPERTYADDRESS.PROPERTYCITY, '') + ':' + " +
+                    "ISNULL(SUBSTRING(TBLACCTPROPERTYADDRESS.PROPERTYZIPCODE, 1, 5), '') + ':' + " +
+                    "ISNULL(TBLADDRESSSECURE.ADDRESS1, '') + ' ' + ISNULL(TBLADDRESSSECURE.ADDRESS2, '') + ':' + " +
+                    "ISNULL(TBLADDRESSSECURE.CITY, '') + ':' + " +
+                    "ISNULL(TBLADDRESSSECURE.STATECODE, '') + ':' + " +
+                    "ISNULL(TBLADDRESSSECURE.ZIPCODE, '') + ':' + " +
                     "ISNULL(TBNSUBDIVISION.SUBNAME, '') " +
                     "from encompass.TBLACCT TBLACCT " +
                     "join encompass.TBLACCTPROPERTYADDRESS TBLACCTPROPERTYADDRESS on TBLACCTPROPERTYADDRESS.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
@@ -216,8 +221,8 @@ public class AccountDAOImpl implements AccountDAO {
                     "and TBLACCTNBHD.verend = 99999999999 " +
                     "and TBLACCTLEGAL.verend = 99999999999 " +
                     "and TBLSUBACCOUNT.verend = 99999999999 " +
-                    "order by TBLACCT.ACCOUNTNO decs, TBLACCT.PARCELNO desc");
-            query.setMaxResults(maxResults);
+                    "order by TBLACCT.ACCOUNTNO desc, TBLACCT.PARCELNO desc");
+            //query.setMaxResults(maxResults); This should pull all of them
             allSearchableStrings = query.getResultList();
         } catch (Exception ex) {
             throw new RuntimeException(ex);
