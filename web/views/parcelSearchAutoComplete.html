@@ -17,7 +17,7 @@
                                name="searchString"
                                id="searchString"
                                ng-model="searchString"
-                               placeholder="Enter space separated strings containing one or more of these: Account No., Owner Name, Street Number, Street Name or State Parcel No."
+                               placeholder="Enter space separated strings (at least 4 characters each) containing one or more of these: Account No., Parcel No., Owner Name, Business Name, Business License, Street Number, Street Name or City..."
                                required>
                     </tr>
                     <tr class="success">
@@ -44,13 +44,6 @@
                             </a>
                         </th>
                         <th nowrap>
-                            <a href="" ng-click="sortType = 'propertyAddress'; sortReverse = !sortReverse">
-                                PROPERTY ADDRESS
-                                <span ng-show="sortType == 'propertyAddress' && !sortReverse" class="fa fa-caret-down"></span>
-                                <span ng-show="sortType == 'propertyAddress' && sortReverse" class="fa fa-caret-up"></span>
-                            </a>
-                        </th>
-                        <th nowrap>
                             <a href="" ng-click="sortType = 'businessName'; sortReverse = !sortReverse">
                                 BUSINESS NAME
                                 <span ng-show="sortType == 'businessName' && !sortReverse" class="fa fa-caret-down"></span>
@@ -62,6 +55,13 @@
                                 BUSINESS LICENSE
                                 <span ng-show="sortType == 'businessLicense' && !sortReverse" class="fa fa-caret-down"></span>
                                 <span ng-show="sortType == 'businessLicense' && sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </th>
+                        <th nowrap>
+                            <a href="" ng-click="sortType = 'propertyAddress'; sortReverse = !sortReverse">
+                                PROPERTY ADDRESS
+                                <span ng-show="sortType == 'propertyAddress' && !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'propertyAddress' && sortReverse" class="fa fa-caret-up"></span>
                             </a>
                         </th>
                         <th nowrap>
@@ -85,9 +85,9 @@
                         <td><a href="#/parcelDetails/{{account.accountNo}}/{{account.propertyZipCode}}/{{account.neighborhood}}/{{account.subdivisionName}}">{{account.accountNo}}</a></td>
                         <td>{{account.parcelNo}}</td>
                         <td>{{account.ownerName}}</td>
-                        <td>{{account.propertyStreet + ' ' + account.propertyCity + ' ' + account.propertyState + ' ' + account.propertyZipCode}}</td>
                         <td>{{account.businessName}}</td>
                         <td>{{account.businessLicense}}</td>
+                        <td>{{account.propertyStreet + ' ' + account.propertyCity + ' ' + account.propertyState + ' ' + account.propertyZipCode}}</td>
                         <td>{{account.subdivisionName}}</td>
                         <td>{{account.neighborhood + '-' + account.neighborhoodExt}}</td>
                     </tr>
