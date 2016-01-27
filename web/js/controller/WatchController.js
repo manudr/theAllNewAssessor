@@ -6,6 +6,12 @@ App.controller('watchController', function($scope, AccountService) {
         matchAnyWhere: true,
         matchExact: false
     };
+
+    $scope.checkboxModel = {
+        value1 : true,
+        value2 : 'YES'
+    };
+
     $scope.checkResults = [];
 
     $scope.$watchCollection("checkModel", function () {
