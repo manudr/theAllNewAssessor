@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import us.co.douglas.assessor.model.*;
+import us.co.douglas.assessor.util.Util;
 import us.co.douglas.common.sql.JDBCHelper;
 
 import javax.persistence.EntityManager;
@@ -39,11 +40,13 @@ public class AccountDAOImpl implements AccountDAO {
                     "where acct.verend = 99999999999 " +
                     "and appl.verend = 99999999999 " +
                     "and applacct.verend = 99999999999 " +
-                    "and appl.taxyear = 2015 " +
-                    "and applacct.taxyear = 2015 " +
+                    "and appl.taxyear = ? " +
+                    "and applacct.taxyear = ? " +
                     "order by acct.ACCOUNTNO asc";
             log.info("sql: " + sql);
             ps = connection.prepareStatement(sql);
+            JDBCHelper.setString(ps, 1, Util.getTaxYear());
+            JDBCHelper.setString(ps, 2, Util.getTaxYear());
             rs = ps.executeQuery();
             while (rs.next()) {
                 Account account = new Account();
@@ -58,7 +61,7 @@ public class AccountDAOImpl implements AccountDAO {
                 account.setControlMap(JDBCHelper.getString(rs, "CONTROLMAP"));
                 account.setPropertyIdentifier(JDBCHelper.getString(rs, "PROPERTYIDENTIFIER"));
                 account.setSpecialInterestNumber(JDBCHelper.getString(rs, "SPECIALINTERESTNUMBER"));
-                account.setPrimaryUseCodeDescription(JDBCHelper.getString(rs, "PRIMARYUSECODE"));
+                account.setPrimaryUseCode(JDBCHelper.getString(rs, "PRIMARYUSECODE"));
                 account.setStrippedAccountNo(JDBCHelper.getString(rs, "STRIPPEDACCOUNTNO"));
                 account.setJurisdictionId(JDBCHelper.getString(rs, "JURISDICTIONID"));
                 account.setMobileHomeSpace(JDBCHelper.getString(rs, "MOBILEHOMESPACE"));
@@ -273,38 +276,59 @@ public class AccountDAOImpl implements AccountDAO {
         ResultSet rs = null;
         try {
             connection = getRealwareDatabaseConnection();
-
-            String sql = "select distinct " +
-                    "TBLACCT.*, " +
-                    "TBLACCTLEGAL.*, " +
-                    "TBLACCTLEGALLOCATION.*, " +
-                    "TBLACCTNBHD.*, " +
-                    "TBLACCTOWNERADDRESS.*, " +
-                    "TBLACCTPROPERTYADDRESS.*, " +
-                    "TBLACCTREAL.*, " +
-                    "TBLADDRESSSECURE.*, " +
-                    "TBLPERSONSECURE.* " +
-                    "from ENCOMPASS.TBLACCT TBLACCT " +
-                    "left outer join ENCOMPASS.TBLACCTLEGAL TBLACCTLEGAL on  TBLACCTLEGAL.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
-                    "left outer join ENCOMPASS.TBLACCTLEGALLOCATION TBLACCTLEGALLOCATION on TBLACCTLEGALLOCATION.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
-                    "left outer join ENCOMPASS.TBLACCTNBHD TBLACCTNBHD on TBLACCTNBHD.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
-                    "left outer join ENCOMPASS.TBLACCTOWNERADDRESS TBLACCTOWNERADDRESS on TBLACCTOWNERADDRESS.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
-                    "left outer join ENCOMPASS.TBLACCTPROPERTYADDRESS TBLACCTPROPERTYADDRESS on TBLACCTPROPERTYADDRESS.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
-                    "left outer join ENCOMPASS.TBLACCTREAL TBLACCTREAL on TBLACCTREAL.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
-                    "left outer join ENCOMPASS.TBLADDRESSSECURE TBLADDRESSSECURE on TBLADDRESSSECURE.ADDRESSCODE = TBLACCTOWNERADDRESS.ADDRESSCODE " +
-                    "left outer join ENCOMPASS.TBLPERSONSECURE TBLPERSONSECURE on TBLPERSONSECURE.PERSONCODE = TBLACCTOWNERADDRESS.PERSONCODE " +
-                    "where " +
-                    "TBLACCT.verend = 99999999999 " +
-                    "and TBLACCTLEGAL.verend = 99999999999 " +
-                    "and TBLACCTLEGALLOCATION.verend = 99999999999 " +
-                    "and TBLACCTNBHD.verend = 99999999999 " +
-                    "and TBLACCTOWNERADDRESS.verend = 99999999999 " +
-                    "and TBLACCTPROPERTYADDRESS.verend = 99999999999 " +
-                    "and TBLACCTREAL.verend = 99999999999 " +
-                    "and TBLADDRESSSECURE.verend = 99999999999 " +
-                    "and TBLPERSONSECURE.verend = 99999999999 " +
-                    "and TBLACCT.ACCOUNTNO = ?";
-
+            String sql = "SELECT DISTINCT " +
+                    "TBLACCT.ACCOUNTNO AS ACCOUNTNO, TBLACCT.PARCELNO AS PARCELNO, TBLACCT.ACCTSTATUSCODE AS ACCTSTATUSCODE, TBLACCT.ACCTTYPE AS ACCTTYPE, TBLACCT.DEFAULTAPPROACHTYPE AS DEFAULTAPPROACHTYPE, " +
+                    "TBLACCT.ASSIGNEDTO AS ASSIGNEDTO, TBLACCT.DEFAULTTAXDISTRICT AS DEFAULTTAXDISTRICT, TBLACCT.VALUEAREACODE AS VALUEAREACODE, TBLACCT.ASSOCIATEDACCT AS ASSOCIATEDACCT," +
+                    "TBLACCT.APPRAISALTYPE AS APPRAISALTYPE, TBLACCT.ECONOMICAREACODE AS ECONOMICAREACODE, TBLACCT.BUSINESSLICENSE AS BUSINESSLICENSE, " +
+                    "TBLACCT.PRIMARYUSECODE AS PRIMARYUSECODE, TBLACCT.JURISDICTIONID AS JURISDICTIONID, TBLACCT.BUSINESSNAME AS BUSINESSNAME, TBLACCT.PROPERTYCLASSID AS PROPERTYCLASSID," +
+                    "TBLACCTLEGAL.LEGAL AS LEGAL, TBLACCTLEGAL.SHORTDESCRIPTION AS LEGALSHORTDESCRIPTION, TBLACCTLEGALLOCATION.QTRQTR AS QTRQTR, TBLACCTLEGALLOCATION.QTR AS QTR, " +
+                    "TBLACCTLEGALLOCATION.SECTION AS SECTION, TBLACCTLEGALLOCATION.TOWNSHIP AS TOWNSHIP, TBLACCTLEGALLOCATION.RANGE AS RANGE, " +
+                    "TBLACCTLEGALLOCATION.GOVERNMENTLOT AS GOVERNMENTLOT, TBLACCTLEGALLOCATION.GOVERNMENTTRACT AS GOVERNMENTTRACT, TBLACCTLEGALLOCATION.LEGALCOMMENT AS LEGALCOMMENT, " +
+                    "TBLACCTMAILADDRESS.PERSONCODE AS PERSONCODE, TBLACCTMAILADDRESS.INCAREOF AS INCAREOF, TBLACCTMAILADDRESS.ADDRESSCODE AS ADDRESSCODE, " +
+                    "TBLACCTNBHD.NBHDCODE AS NBHDCODE, TBLACCTNBHD.NBHDEXTENSION AS NBHDEXTENSION, TBLACCTNBHD.PROPERTYTYPE AS PROPERTYTYPE, TBLACCTNBHD.NBHDADJUSTMENTVALUE AS NBHDADJUSTMENTVALUE, " +
+                    "TBLACCTOWNERADDRESS.PERSONCODE AS PERSONCODE, TBLACCTOWNERADDRESS.ADDRESSCODE AS ADDRESSCODE, TBLACCTOWNERADDRESS.PRIMARYOWNERFLAG AS PRIMARYOWNERFLAG, " +
+                    "TBLACCTPROPERTYADDRESS.BUILDINGID AS BUILDINGID, TBLACCTPROPERTYADDRESS.PREDIRECTION AS PREDIRECTION, TBLACCTPROPERTYADDRESS.STREETNO AS STREETNO, " +
+                    "TBLACCTPROPERTYADDRESS.UNITNAME AS UNITNAME, TBLACCTPROPERTYADDRESS.POSTDIRECTION AS POSTDIRECTION, " +
+                    "TBLACCTPROPERTYADDRESS.STREETTYPE AS STREETTYPE, TBLACCTPROPERTYADDRESS.STREETNAME AS STREETNAME, TBLACCTPROPERTYADDRESS.PROPERTYZIPCODE AS PROPERTYZIPCODE, " +
+                    "TBLACCTPROPERTYADDRESS.PROPERTYCITY AS PROPERTYCITY, " +
+                    "TBLACCTPROPERTYADDRESS.PROPERTYADDRESSCODE AS PROPERTYADDRESSCODE, TBLACCTPROPERTYADDRESS.LOCATIONID AS LOCATIONID, " +
+                    "TBLACCTREAL.IMPONLYFLAG AS IMPONLYFLAG, TBLACCTREAL.TIFFLAG AS TIFFLAG, TBLACCTREAL.VACANTFLAG AS VACANTFLAG, TBLACCTREAL.LANDWIDTH AS LANDWIDTH, TBLACCTREAL.LANDDEPTH AS LANDDEPTH, " +
+                    "TBLACCTREAL.LANDEASEMENTSF AS LANDEASEMENTSF, " +
+                    "TBLACCTREAL.LANDEXCESSSF AS LANDEXCESSSF, TBLACCTREAL.TRAFFICCOUNT AS TRAFFICCOUNT, TBLACCTREAL.PARKINGSPACES AS PARKINGSPACES, " +
+                    "TBLACCTREAL.ZONINGCODE AS ZONINGCODE, TBLACCTREAL.FLOODFRINGE AS FLOODFRINGE, TBLACCTREAL.FLOODWAY AS FLOODWAY, " +
+                    "TBLACCTREAL.TAPFEE AS TAPFEE, TBLACCTREAL.PLATTEDFLAG AS PLATTEDFLAG, TBLACCTREAL.LANDCERTIFICATIONCODE AS LANDCERTIFICATIONCODE, " +
+                    "TBLACCTREAL.LANDAPPRAISER AS LANDAPPRAISER, TBLACCTREAL.LANDAPPRAISALDATE AS LANDAPPRAISALDATE, TBLACCTREAL.LANDOVERRIDESIZEADJ AS LANDOVERRIDESIZEADJ, " +
+                    "TBLACCTREAL.LANDSIZEADJ AS LANDSIZEADJ, TBLACCTREAL.LANDGROSSSF AS LANDGROSSSF, TBLACCTREAL.LANDGROSSACRES AS LANDGROSSACRES, " +
+                    "TBLACCTREAL.LANDGROSSFF AS LANDGROSSFF, TBLACCTREAL.LANDGROSSUNITCOUNT AS LANDGROSSUNITCOUNT, TBLACCTREAL.DEFAULTLEA AS DEFAULTLEA, " +
+                    "TBLADDRESSSECURE.ADDRESSCODE AS ADDRESSCODE, TBLADDRESSSECURE.ADDRESS1 AS ADDRESS1, TBLADDRESSSECURE.ADDRESS2 AS ADDRESS2, " +
+                    "TBLADDRESSSECURE.CITY AS CITY, TBLADDRESSSECURE.STATECODE AS STATECODE, " +
+                    "TBLADDRESSSECURE.ZIPCODE AS ZIPCODE, TBLADDRESSSECURE.PERSONCODE AS PERSONCODE, TBLADDRESSSECURE.PROVINCE AS PROVINCE, " +
+                    "TBLADDRESSSECURE.COUNTRY AS COUNTRY, TBLADDRESSSECURE.POSTALCODE AS POSTALCODE, TBLADDRESSSECURE.ADDRESSVALIDFLAG AS ADDRESSVALIDFLAG, " +
+                    "TBLPERSONSECURE.PERSONCODE AS PERSONCODE, TBLPERSONSECURE.NAME1 AS NAME1, TBLPERSONSECURE.NAME2 AS NAME2, TBLPERSONSECURE.PHONE AS PHONE, " +
+                    "TBLPERSONSECURE.FAX AS FAX, TBLPERSONSECURE.MOBILE AS MOBILE, " +
+                    "TBLPERSONSECURE.PAGER AS PAGER, TBLPERSONSECURE.EMAILADDRESS AS EMAILADDRESS,  TBLPERSONSECURE.FEDERALIDNO AS FEDERALIDNO, TBLPERSONSECURE.PRIVATEFLAG AS PRIVATEFLAG, " +
+                    "TBLPERSONSECURE.PERSONTYPEID AS PERSONTYPEID " +
+                    "FROM ENCOMPASS.TBLACCT TBLACCT " +
+                    "LEFT OUTER JOIN ENCOMPASS.TBLACCTLEGAL TBLACCTLEGAL ON  TBLACCTLEGAL.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
+                    "LEFT OUTER JOIN ENCOMPASS.TBLACCTLEGALLOCATION TBLACCTLEGALLOCATION ON TBLACCTLEGALLOCATION.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
+                    "LEFT OUTER JOIN ENCOMPASS.TBLACCTNBHD TBLACCTNBHD ON TBLACCTNBHD.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
+                    "LEFT OUTER JOIN ENCOMPASS.TBLACCTOWNERADDRESS TBLACCTOWNERADDRESS ON TBLACCTOWNERADDRESS.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
+                    "LEFT OUTER JOIN ENCOMPASS.TBLACCTMAILADDRESS TBLACCTMAILADDRESS ON TBLACCTMAILADDRESS.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
+                    "LEFT OUTER JOIN ENCOMPASS.TBLACCTPROPERTYADDRESS TBLACCTPROPERTYADDRESS ON TBLACCTPROPERTYADDRESS.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
+                    "LEFT OUTER JOIN ENCOMPASS.TBLACCTREAL TBLACCTREAL ON TBLACCTREAL.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
+                    "LEFT OUTER JOIN ENCOMPASS.TBLADDRESSSECURE TBLADDRESSSECURE ON TBLADDRESSSECURE.ADDRESSCODE = TBLACCTOWNERADDRESS.ADDRESSCODE " +
+                    "LEFT OUTER JOIN ENCOMPASS.TBLPERSONSECURE TBLPERSONSECURE ON TBLPERSONSECURE.PERSONCODE = TBLACCTOWNERADDRESS.PERSONCODE " +
+                    "WHERE " +
+                    "TBLACCT.VEREND = 99999999999 " +
+                    "AND TBLACCTLEGAL.VEREND = 99999999999 " +
+                    "AND TBLACCTLEGALLOCATION.VEREND = 99999999999 " +
+                    "AND TBLACCTNBHD.VEREND = 99999999999 " +
+                    "AND TBLACCTOWNERADDRESS.VEREND = 99999999999 " +
+                    "AND TBLACCTPROPERTYADDRESS.VEREND = 99999999999 " +
+                    "AND TBLACCTREAL.VEREND = 99999999999 " +
+                    "AND TBLADDRESSSECURE.VEREND = 99999999999 " +
+                    "AND TBLPERSONSECURE.VEREND = 99999999999 " +
+                    "AND TBLACCT.ACCOUNTNO = ?";
             log.info("sql: " + sql);
             ps = connection.prepareStatement(sql);
             JDBCHelper.setString(ps, 1, accountNo);
@@ -313,8 +337,8 @@ public class AccountDAOImpl implements AccountDAO {
                 Account account = new Account();
                 account.setAccountNo(JDBCHelper.getString(rs, "ACCOUNTNO"));
                 account.setParcelNo(JDBCHelper.getString(rs, "PARCELNO"));
-                account.setLocalNo(JDBCHelper.getString(rs, "LOCALNO"));
-                account.setMapNo(JDBCHelper.getString(rs, "MAPNO"));
+                //account.setLocalNo(JDBCHelper.getString(rs, "LOCALNO"));
+                //account.setMapNo(JDBCHelper.getString(rs, "MAPNO"));
                 account.setAcctStatus(JDBCHelper.getString(rs, "ACCTSTATUSCODE"));
                 account.setAcctType(JDBCHelper.getString(rs, "ACCTTYPE"));
                 account.setAssignedTo(JDBCHelper.getString(rs, "ASSIGNEDTO"));
@@ -324,27 +348,27 @@ public class AccountDAOImpl implements AccountDAO {
                 account.setDefaultApproachType(JDBCHelper.getString(rs, "DEFAULTAPPROACHTYPE"));
                 account.setDefaultTaxDistrict(JDBCHelper.getString(rs, "DEFAULTTAXDISTRICT"));
                 account.setBusinessLicense(JDBCHelper.getString(rs, "BUSINESSLICENSE"));
-                account.setMapGroup(JDBCHelper.getString(rs, "MAPGROUP"));
-                account.setControlMap(JDBCHelper.getString(rs, "CONTROLMAP"));
-                account.setPropertyIdentifier(JDBCHelper.getString(rs, "PROPERTYIDENTIFIER"));
-                account.setSpecialInterestNumber(JDBCHelper.getString(rs, "SPECIALINTERESTNUMBER"));
-                account.setPrimaryUseCodeDescription(JDBCHelper.getString(rs, "PRIMARYUSECODE"));
-                account.setWard(JDBCHelper.getString(rs, "WARD"));
-                account.setStrippedAccountNo(JDBCHelper.getString(rs, "STRIPPEDACCOUNTNO"));
+                //account.setMapGroup(JDBCHelper.getString(rs, "MAPGROUP"));
+                //account.setControlMap(JDBCHelper.getString(rs, "CONTROLMAP"));
+                //account.setPropertyIdentifier(JDBCHelper.getString(rs, "PROPERTYIDENTIFIER"));
+                //account.setSpecialInterestNumber(JDBCHelper.getString(rs, "SPECIALINTERESTNUMBER"));
+                account.setPrimaryUseCode(JDBCHelper.getString(rs, "PRIMARYUSECODE"));
+                //account.setWard(JDBCHelper.getString(rs, "WARD"));
+                //account.setStrippedAccountNo(JDBCHelper.getString(rs, "STRIPPEDACCOUNTNO"));
                 account.setJurisdictionId(JDBCHelper.getString(rs, "JURISDICTIONID"));
-                account.setCensusTract(JDBCHelper.getString(rs, "CENSUSTRACT"));
-                account.setCensusBlock(JDBCHelper.getString(rs, "CENSUSBLOCK"));
-                account.setMobileHomeSpace(JDBCHelper.getString(rs, "MOBILEHOMESPACE"));
-                account.seteFileFlag(JDBCHelper.getString(rs, "EFILEFLAG"));
+                //account.setCensusTract(JDBCHelper.getString(rs, "CENSUSTRACT"));
+                //account.setCensusBlock(JDBCHelper.getString(rs, "CENSUSBLOCK"));
+                //account.setMobileHomeSpace(JDBCHelper.getString(rs, "MOBILEHOMESPACE"));
+                //account.seteFileFlag(JDBCHelper.getString(rs, "EFILEFLAG"));
                 account.setBusinessName(JDBCHelper.getString(rs, "BUSINESSNAME"));
-                account.setCostHybridPercent(JDBCHelper.getString(rs, "COSTHYBRIDPERCENT"));
-                account.setMarketHybridPercent(JDBCHelper.getString(rs, "MARKETHYBRIDPERCENT"));
-                account.setIncomeHybridPercent(JDBCHelper.getString(rs, "INCOMEHYBRIDPERCENT"));
-                account.setReconciledHybridPercent(JDBCHelper.getString(rs, "RECONCILEDHYBRIDPERCENT"));
-                account.setParcelSequence(JDBCHelper.getString(rs, "PARCELSEQUENCE"));
+                //account.setCostHybridPercent(JDBCHelper.getString(rs, "COSTHYBRIDPERCENT"));
+                //account.setMarketHybridPercent(JDBCHelper.getString(rs, "MARKETHYBRIDPERCENT"));
+                //account.setIncomeHybridPercent(JDBCHelper.getString(rs, "INCOMEHYBRIDPERCENT"));
+                //account.setReconciledHybridPercent(JDBCHelper.getString(rs, "RECONCILEDHYBRIDPERCENT"));
+                //account.setParcelSequence(JDBCHelper.getString(rs, "PARCELSEQUENCE"));
                 account.setPropertyClassId(JDBCHelper.getString(rs, "PROPERTYCLASSID"));
-                account.setSeqId(JDBCHelper.getString(rs, "SEQID"));
-                account.setDetailedReviewDate(JDBCHelper.getString(rs, "DETAILEDREVIEWDATE"));
+                //account.setSeqId(JDBCHelper.getString(rs, "SEQID"));
+                //account.setDetailedReviewDate(JDBCHelper.getString(rs, "DETAILEDREVIEWDATE"));
                 account.setLegal(JDBCHelper.getString(rs, "LEGAL"));
                 account.setQtr(JDBCHelper.getString(rs, "QTR"));
                 account.setSection(JDBCHelper.getString(rs, "SECTION"));
@@ -388,8 +412,8 @@ public class AccountDAOImpl implements AccountDAO {
                 account.setLandDepth(JDBCHelper.getString(rs, "LANDGROSSFF"));
                 account.setLandDepth(JDBCHelper.getString(rs, "LANDGROSSUNITCOUNT"));
                 account.setLandDepth(JDBCHelper.getString(rs, "DEFAULTLEA"));
-                account.setLandDepth(JDBCHelper.getString(rs, "TOTALACCTIMPINTERESTPCT"));
-                account.setLandDepth(JDBCHelper.getString(rs, "TOTALACCTLANDINTERESTPCT"));
+                //account.setLandDepth(JDBCHelper.getString(rs, "TOTALACCTIMPINTERESTPCT"));
+                //account.setLandDepth(JDBCHelper.getString(rs, "TOTALACCTLANDINTERESTPCT"));
                 account.setOwnerAddress(StringUtils.trimToEmpty(JDBCHelper.getString(rs, "ADDRESS1")) + " " +
                         StringUtils.trimToEmpty(JDBCHelper.getString(rs, "ADDRESS2")) + " " +
                         StringUtils.trimToEmpty(JDBCHelper.getString(rs, "CITY")) + " " +
@@ -407,8 +431,8 @@ public class AccountDAOImpl implements AccountDAO {
                 account.setLandDepth(JDBCHelper.getString(rs, "FEDERALIDNO"));
                 account.setLandDepth(JDBCHelper.getString(rs, "PRIVATEFLAG"));
                 account.setLandDepth(JDBCHelper.getString(rs, "PERSONTYPEID"));
-                account.setLandDepth(JDBCHelper.getString(rs, "METAPHONENAME1"));
-                account.setLandDepth(JDBCHelper.getString(rs, "METAPHONENAME2"));
+                //account.setLandDepth(JDBCHelper.getString(rs, "METAPHONENAME1"));
+                //account.setLandDepth(JDBCHelper.getString(rs, "METAPHONENAME2"));
 
                 account.setAppeal(getAppealByAccountNo(accountNo));
 
@@ -434,6 +458,7 @@ public class AccountDAOImpl implements AccountDAO {
         }
     }
 
+
     public Appeal getAppealByAccountNo(String accountNo) {
         log.info("getAppealByAccountNo...");
         Appeal appeal = new Appeal();
@@ -447,11 +472,11 @@ public class AccountDAOImpl implements AccountDAO {
                     "where TBLAPPEALACCT.ACCOUNTNO = ? " +
                     "and TBLAPPEALACCT.verend = 99999999999 " +
                     "and TBLAPPEAL.verend = 99999999999 " +
-                    "order by TBLAPPEAL.taxyear desc";
-
+                    "and TBLAPPEAL.taxyear = ?";
             log.info("sql: " + sql);
             ps = connection.prepareStatement(sql);
             JDBCHelper.setString(ps, 1, accountNo);
+            JDBCHelper.setString(ps, 2, Util.getTaxYear());
             rs = ps.executeQuery();
             while (rs.next()) {
                 appeal.setAppealNo(JDBCHelper.getString(rs, "APPEALNO"));
@@ -585,7 +610,7 @@ public class AccountDAOImpl implements AccountDAO {
                     "AND TBLSALE.VEREND = 99999999999 " +
                     "AND TBLACCTNBHD.VEREND = 99999999999 " +
                     "AND TBLSUBACCOUNT.VEREND = 99999999999 " +
-                    "AND TBLSALE.RECEPTIONNO = :receptionNo ", Sale.class);
+                    "AND TBLSALE.RECEPTIONNO = :receptionNo ORDER BY TBLSALE.SALEDATE DESC ", Sale.class);
             query.setMaxResults(maxResults);
             query.setParameter("receptionNo", receptionNo);
             List<Sale> saleList = query.getResultList();
@@ -648,46 +673,6 @@ public class AccountDAOImpl implements AccountDAO {
         }
         return null;
     }
-
-    public List<Account> getAllAccountsFromODS() {
-        log.info("getAllAccountsFromODS...");
-        List<Account> accounts = new ArrayList<Account>();
-        Connection connection = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-            connection = getAssessorDatabaseConnection();
-            String sql = "select * from ods.account where account_no = 'R0376407'";
-            ps = connection.prepareStatement(sql);
-            rs = ps.executeQuery();
-            if (rs.next()) {
-                Account account = new Account();
-                account.setAccountNo(JDBCHelper.getString(rs, "ACCOUNT_NO"));
-                account.setParcelNo(JDBCHelper.getString(rs, "STATE_PARCEL_NO"));
-                account.setAcctType(JDBCHelper.getString(rs, "ACCOUNT_TYPE_CODE"));
-                account.setAppraisalType(JDBCHelper.getString(rs, "APPRAISALTYPE"));
-                account.setAcctStatus(JDBCHelper.getString(rs, "ACCOUNT_STATUS_CODE"));
-                account.setAssignedTo(JDBCHelper.getString(rs, "ASSIGNED_TO_AREA_EID"));
-                account.setBusinessLicense(JDBCHelper.getString(rs, "BUSINESSLICENSE"));
-                account.setBusinessName(JDBCHelper.getString(rs, "BUSINESSNAME"));
-                account.setCensusBlock(JDBCHelper.getString(rs, "CENSUSBLOCK"));
-                account.setCensusTract(JDBCHelper.getString(rs, "CENSUSTRACT"));
-                account.setControlMap(JDBCHelper.getString(rs, "CONTROLMAP"));
-                account.setCostHybridPercent(JDBCHelper.getString(rs, "COSTHYBRIDPERCENT"));
-                account.setDefaultApproachType(JDBCHelper.getString(rs, "DEFAULTAPPROACHTYPE"));
-                account.setDefaultTaxDistrict(JDBCHelper.getString(rs, "TAX_DISTRICT_NO"));
-                account.setWard(JDBCHelper.getString(rs, "WARD"));
-                accounts.add(account);
-            }
-        } catch (Exception ex) {
-        throw new RuntimeException(ex);
-        } finally {
-        JDBCHelper.close(rs);
-        JDBCHelper.close(ps);
-        JDBCHelper.close(connection);
-        }
-        return accounts;
-        }
 
     private Connection getRealwareDatabaseConnection() {
         Connection connection = null;

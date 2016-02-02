@@ -8,6 +8,7 @@
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <jta-data-source>java:/jdbc/theAllNewAssessor</jta-data-source>
         <class>us.co.douglas.assessor.model.Sale</class>
+        <class>us.co.douglas.assessor.model.Account</class>
         <class>us.co.douglas.assessor.model.SaleAffidavit</class>
         <class>us.co.douglas.assessor.model.SaleInventory</class>
         <properties>
@@ -16,7 +17,7 @@
 
             <property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect" />
             <property name="hibernate.default_schema" value="DVRW_Patch.ENCOMPASS" />
-            <property name="hibernate.show_sql" value="false" />
+            <property name="hibernate.show_sql" value="true" />
         </properties>
     </persistence-unit>
 </persistence>

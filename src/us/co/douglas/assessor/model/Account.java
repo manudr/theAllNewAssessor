@@ -1,11 +1,14 @@
 package us.co.douglas.assessor.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
  * Created by mdronamr on 12/21/15.
  */
+
 public class Account implements Serializable {
     private String accountNo;
     private String parcelNo;
@@ -26,7 +29,7 @@ public class Account implements Serializable {
     private String controlMap;
     private String propertyIdentifier;
     private String specialInterestNumber;
-    private String primaryUseCodeDescription;
+    private String primaryUseCode;
     private String ward;
     private String strippedAccountNo;
     private String jurisdictionId;
@@ -131,9 +134,9 @@ public class Account implements Serializable {
     //private Land land;
     //private AccountStatus accountStatus;
     private Appeal appeal;
+
     private Sale sale;
     private SaleInventory saleInventory;
-
 
     public String getAccountNo() {
         return accountNo;
@@ -287,12 +290,12 @@ public class Account implements Serializable {
         this.specialInterestNumber = specialInterestNumber;
     }
 
-    public String getPrimaryUseCodeDescription() {
-        return primaryUseCodeDescription;
+    public String getPrimaryUseCode() {
+        return primaryUseCode;
     }
 
-    public void setPrimaryUseCodeDescription(String primaryUseCodeDescription) {
-        this.primaryUseCodeDescription = primaryUseCodeDescription;
+    public void setPrimaryUseCode(String primaryUseCode) {
+        this.primaryUseCode = primaryUseCode;
     }
 
     public String getWard() {
@@ -446,7 +449,6 @@ public class Account implements Serializable {
     public void setAppeal(Appeal appeal) {
         this.appeal = appeal;
     }
-
 
     public Sale getSale() {
         return sale;

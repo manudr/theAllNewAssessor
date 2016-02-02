@@ -23,6 +23,12 @@
         </listener-class>
     </listener>
 
+    <listener>
+        <listener-class>
+            us.co.douglas.assessor.util.CacheThreadListener
+        </listener-class>
+    </listener>
+
     <servlet>
         <servlet-name>resteasy-servlet</servlet-name>
         <servlet-class>

@@ -84,9 +84,6 @@ public class AccountRestService {
 
         if (allSearchableStrings != null & allSearchableStrings.size() > 0) {
             for (String searchableString : allSearchableStrings) {
-            //for (int i=0; i<=maxRows; i++) {
-            //    String searchableString = allSearchableStrings.get(i);
-            //    log.info("searchableString: " + searchableString);
                 boolean stringMatches = true;
                 for (String stringToken : stringTokens) {
                     if (!(searchableString.toUpperCase().contains(stringToken.toUpperCase()))) {
@@ -94,11 +91,8 @@ public class AccountRestService {
                     }
                 }
                 if (stringMatches) {
-                    //log.info(searchableString + " matches...");
                     BasicAccountInfo basicAccountInfo = new BasicAccountInfo();
                     String[] searchableStringTokens = searchableString.split(":");
-                    //log.info("searchableString: " + searchableString);
-                    //log.info("searchableString: " + searchableStringTokens[0] + " - " + searchableStringTokens[1] + " - " + searchableStringTokens[2] + " - " + searchableStringTokens[3] + " - " + searchableStringTokens[4] + " - " + searchableStringTokens[5]);
                     basicAccountInfo.setAccountNo(searchableStringTokens[0]);
                     basicAccountInfo.setParcelNo(searchableStringTokens[1]);
                     basicAccountInfo.setOwnerName(searchableStringTokens[2]);
@@ -116,7 +110,6 @@ public class AccountRestService {
                     basicAccountInfo.setOwnerZipCode(searchableStringTokens[13]);
                     basicAccountInfo.setSubdivisionName(searchableStringTokens[14]);
                     if (!matchedParcels.contains(basicAccountInfo)) {
-                        //log.info("basicAccountInfo: " + basicAccountInfo);
                         matchedParcels.add(basicAccountInfo);
                         maxCount++;
                     }
