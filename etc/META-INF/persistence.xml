@@ -7,10 +7,11 @@
     <persistence-unit name="theAllNewAssessor" transaction-type="JTA">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <jta-data-source>java:/jdbc/theAllNewAssessor</jta-data-source>
-        <class>us.co.douglas.assessor.model.Sale</class>
+        <class>us.co.douglas.assessor.model.NeighborhoodSale</class>
         <class>us.co.douglas.assessor.model.Account</class>
-        <class>us.co.douglas.assessor.model.SaleAffidavit</class>
-        <class>us.co.douglas.assessor.model.SaleInventory</class>
+        <class>us.co.douglas.assessor.model.Sale</class>
+        <class>us.co.douglas.assessor.model.PropertyAddress</class>
+        <class>us.co.douglas.assessor.model.OwnerAddress</class>
         <properties>
             <property name="hibernate.transaction.jta.platform"
                       value="org.hibernate.service.jta.platform.internal.JBossAppServerJtaPlatform"/>

@@ -2,9 +2,9 @@ package us.co.douglas.assessor.rest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import us.co.douglas.assessor.model.Account;
 import us.co.douglas.assessor.model.BasicAccountInfo;
-import us.co.douglas.assessor.model.Sale;
+import us.co.douglas.assessor.model.Parcel;
+import us.co.douglas.assessor.model.NeighborhoodSale;
 import us.co.douglas.assessor.service.AccountService;
 import us.co.douglas.assessor.service.AccountServiceImpl;
 
@@ -25,6 +25,7 @@ public class AccountRestService {
     private AccountService accountService = new AccountServiceImpl();
     private static int maxRows = 2000;
 
+    /*
     @GET
     @Path("/accounts")
     public List<Account> getAllAccounts() throws Exception {
@@ -43,6 +44,7 @@ public class AccountRestService {
         log.info("addresses.size(): " + addresses.size());
         return addresses;
     }
+    */
 
     @GET
     @Path("/allSearchableStrings/{searchString}")
@@ -125,6 +127,7 @@ public class AccountRestService {
         return matchedParcels;
     }
 
+    /*
     @GET
     @Path("/allSearchableStrings/")
     public List<BasicAccountInfo> getAllSearchableStrings() throws Exception {
@@ -158,18 +161,19 @@ public class AccountRestService {
         log.info("allBasicAccountInfoObjects.size(): " + allBasicAccountInfoObjects.size());
         return allBasicAccountInfoObjects;
     }
+    */
 
     @GET
-    @Path("/accounts/{accountNo}")
-    public Account getAccount(@PathParam("accountNo") String accountNo) throws Exception {
-        log.info("getAccount()...");
+    @Path("/parcels/{accountNo}")
+    public Parcel getParcel(@PathParam("accountNo") String accountNo) throws Exception {
+        log.info("getParcel()...");
         log.info("accountNo: " + accountNo);
-        return accountService.getAccountByAccountNo(accountNo);
+        return accountService.getParcel(accountNo);
     }
 
     @GET
     @Path("/neighborhoodSales/{zipCode}/{neighborhood}/{subdivision}")
-    public List<Sale> getNeighborhoodSales(@PathParam("zipCode") String zipCode, @PathParam("neighborhood") String neighborhood, @PathParam("subdivision") String subdivision) throws Exception {
+    public List<NeighborhoodSale> getNeighborhoodSales(@PathParam("zipCode") String zipCode, @PathParam("neighborhood") String neighborhood, @PathParam("subdivision") String subdivision) throws Exception {
         log.info("getNeighborhoodSales()...");
         log.info("zipCode: " + zipCode);
         return accountService.getNeighborhoodSales(zipCode, neighborhood, subdivision);

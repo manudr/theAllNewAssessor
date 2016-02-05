@@ -20,7 +20,7 @@ fi
 # Initialize required environment variables specifically for this project
 # -----------------------------------------------------------------------------
 export ANT_HOME=../commonbuild/ant
-#export JAVA_HOME=$JAVA160_HOME
+export JAVA_HOME=$JAVA170_HOME
 
 # -----------------------------------------------------------------------------
 # Validate the required and optional environment variables.

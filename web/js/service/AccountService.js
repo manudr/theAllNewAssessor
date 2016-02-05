@@ -2,37 +2,13 @@
 
 App.factory('AccountService', ['$http', '$q', function($http, $q){
     return {
-        fetchAllAccounts: function() {
-            return $http.get('/apps/dcappsmonitor/rservices/accountService/accounts').then(
-                function(response){
-                    return response.data;
-                },
-                function(errResponse){
-                    console.error('Error while fetching accounts...');
-                    return $q.reject(errResponse);
-                }
-            );
-        },
-
         fetchAccount: function(accountNo) {
-            return $http.get('/apps/dcappsmonitor/rservices/accountService/accounts/' + accountNo).then(
+            return $http.get('/apps/dcappsmonitor/rservices/accountService/parcels/' + accountNo).then(
                 function(response){
                     return response.data;
                 },
                 function(errResponse){
                     console.error('Error while fetching specific account...');
-                    return $q.reject(errResponse);
-                }
-            );
-        },
-
-        fetchAllStrings: function() {
-            return $http.get('/apps/dcappsmonitor/rservices/accountService/allSearchableStrings/').then(
-                function(response){
-                    return response.data;
-                },
-                function(errResponse){
-                    console.error('Error while fetching matched accounts...');
                     return $q.reject(errResponse);
                 }
             );

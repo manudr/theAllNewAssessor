@@ -1,6 +1,5 @@
 package us.co.douglas.assessor.dao;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import us.co.douglas.assessor.model.*;
@@ -20,7 +19,6 @@ import java.util.List;
 /**
  * Created by mdronamr on 12/22/15.
  */
-
 
 public class AccountDAOImpl implements AccountDAO {
     private static Log log = LogFactory.getLog(AccountDAOImpl.class);
@@ -53,35 +51,20 @@ public class AccountDAOImpl implements AccountDAO {
                 account.setAccountNo(JDBCHelper.getString(rs, "ACCOUNTNO"));
                 account.setParcelNo(JDBCHelper.getString(rs, "PARCELNO"));
                 account.setAcctType(JDBCHelper.getString(rs, "ACCTTYPE"));
-                account.setLocalNo(JDBCHelper.getString(rs, "LOCALNO"));
-                account.setMapNo(JDBCHelper.getString(rs, "MAPNO"));
-                account.setValueAreaDescription(JDBCHelper.getString(rs, "VALUEAREACODE"));
+                account.setValueAreaCode(JDBCHelper.getString(rs, "VALUEAREACODE"));
                 account.setEconomicAreaCode(JDBCHelper.getString(rs, "ECONOMICAREACODE"));
-                account.setMapGroup(JDBCHelper.getString(rs, "MAPGROUP"));
-                account.setControlMap(JDBCHelper.getString(rs, "CONTROLMAP"));
                 account.setPropertyIdentifier(JDBCHelper.getString(rs, "PROPERTYIDENTIFIER"));
-                account.setSpecialInterestNumber(JDBCHelper.getString(rs, "SPECIALINTERESTNUMBER"));
                 account.setPrimaryUseCode(JDBCHelper.getString(rs, "PRIMARYUSECODE"));
                 account.setStrippedAccountNo(JDBCHelper.getString(rs, "STRIPPEDACCOUNTNO"));
                 account.setJurisdictionId(JDBCHelper.getString(rs, "JURISDICTIONID"));
                 account.setMobileHomeSpace(JDBCHelper.getString(rs, "MOBILEHOMESPACE"));
                 account.seteFileFlag(JDBCHelper.getString(rs, "EFILEFLAG"));
-                account.setMarketHybridPercent(JDBCHelper.getString(rs, "MARKETHYBRIDPERCENT"));
-                account.setIncomeHybridPercent(JDBCHelper.getString(rs, "INCOMEHYBRIDPERCENT"));
-                account.setReconciledHybridPercent(JDBCHelper.getString(rs, "RECONCILEDHYBRIDPERCENT"));
-                account.setParcelSequence(JDBCHelper.getString(rs, "PARCELSEQUENCE"));
                 account.setPropertyClassId(JDBCHelper.getString(rs, "PROPERTYCLASSID"));
-                account.setSeqId(JDBCHelper.getString(rs, "SEQID"));
-                account.setDetailedReviewDate(JDBCHelper.getString(rs, "DETAILEDREVIEWDATE"));
                 account.setAppraisalType(JDBCHelper.getString(rs, "APPRAISALTYPE"));
-                account.setAcctStatus(JDBCHelper.getString(rs, "ACCTSTATUSCODE"));
+                account.setAcctStatusCode(JDBCHelper.getString(rs, "ACCTSTATUSCODE"));
                 account.setAssignedTo(JDBCHelper.getString(rs, "ASSIGNEDTO"));
                 account.setBusinessLicense(JDBCHelper.getString(rs, "BUSINESSLICENSE"));
                 account.setBusinessName(JDBCHelper.getString(rs, "BUSINESSNAME"));
-                account.setCensusBlock(JDBCHelper.getString(rs, "CENSUSBLOCK"));
-                account.setCensusTract(JDBCHelper.getString(rs, "CENSUSTRACT"));
-                account.setControlMap(JDBCHelper.getString(rs, "CONTROLMAP"));
-                account.setCostHybridPercent(JDBCHelper.getString(rs, "COSTHYBRIDPERCENT"));
                 account.setDefaultApproachType(JDBCHelper.getString(rs, "DEFAULTAPPROACHTYPE"));
                 account.setDefaultTaxDistrict(JDBCHelper.getString(rs, "DEFAULTTAXDISTRICT"));
                 account.setWard(JDBCHelper.getString(rs, "WARD"));
@@ -127,9 +110,9 @@ public class AccountDAOImpl implements AccountDAO {
         return allPropertyAddresses;
     }
 
-    public List<Sale> getNeighborhoodSales(String zipCode, String neighborhood, String subdivision) {
+    public List<NeighborhoodSale> getNeighborhoodSales(String zipCode, String neighborhood, String subdivision) {
         log.info("getAllSalesByZip...");
-        List<Sale> allSalesByZip = new ArrayList<Sale>();
+        List<NeighborhoodSale> allSalesByZip = new ArrayList<NeighborhoodSale>();
         EntityManager entityManager = getEntityManager();
         try {
             Query query = entityManager.createNativeQuery("SELECT DISTINCT TBLSALE.RECEPTIONNO AS RECEPTIONNO, " +
@@ -172,7 +155,7 @@ public class AccountDAOImpl implements AccountDAO {
                     "AND TBLACCTNBHD.NBHDCODE  LIKE '%" + neighborhood + "%' " +
                     "AND TBNSUBDIVISION.SUBNAME  LIKE '%" + subdivision + "%' " +
                     "AND TBLACCTPROPERTYADDRESS.PROPERTYZIPCODE LIKE '%" + zipCode + "%' " +
-                    "ORDER BY SALEDATE DESC", Sale.class);
+                    "ORDER BY SALEDATE DESC", NeighborhoodSale.class);
 
 //            query.setParameter("neighborhood", neighborhood);
 //            query.setParameter("subdivision", subdivision);
@@ -239,75 +222,134 @@ public class AccountDAOImpl implements AccountDAO {
         return allSearchableStrings;
     }
 
-    public List<BasicAccountInfo> getAllSearchableParcels() {
-        log.info("getAllSearchableParcels...");
-        List<BasicAccountInfo> allSearchableParcels = new ArrayList<BasicAccountInfo>();
+    public Parcel getParcel(String accountNo) {
+        log.info("getParcel()...");
+        Parcel parcel = new Parcel();
+        parcel.setAccount(getAccount(accountNo));
+        parcel.setPropertyAddress(getPropertyAddress(accountNo));
+        parcel.setOwnerAddress(getOwnerAddress(accountNo));
+        parcel.setAppeal(getAppeal(accountNo));
+        parcel.setSale(getSale(accountNo));
+        return parcel;
+    }
+
+    public OwnerAddress getOwnerAddress(String accountNo) {
+        log.info("getOwnerAddress()...");
         EntityManager entityManager = getEntityManager();
         try {
-            Query query = entityManager.createNativeQuery("select ISNULL(TBLACCT.ACCOUNTNO, ''), ISNULL(TBLACCT.PARCELNO, ''), " +
-                    "ISNULL(TBLPERSONSECURE.NAME1, '') + ' ' + ISNULL(TBLPERSONSECURE.NAME2, ''), " +
-                    "ISNULL(TBLACCT.BUSINESSNAME, ''), " +
-                    "ISNULL(TBLACCT.BUSINESSLICENSE, ''), " +
-                    "ISNULL(TBLACCTPROPERTYADDRESS.STREETNO, '') + ' ' + ISNULL(TBLACCTPROPERTYADDRESS.UNITNAME, '') + ' ' + " +
-                    "ISNULL(TBLACCTPROPERTYADDRESS.STREETTYPE, '') + ' ' + ISNULL(TBLACCTPROPERTYADDRESS.STREETNAME, '') + ' ' + " +
-                    "ISNULL(SUBSTRING(TBLACCTPROPERTYADDRESS.PROPERTYZIPCODE, 1, 5), '') + ' ' + ISNULL(TBLACCTPROPERTYADDRESS.PROPERTYCITY, '') " +
-                    "from encompass.TBLACCT TBLACCT " +
-                    "join encompass.TBLACCTPROPERTYADDRESS TBLACCTPROPERTYADDRESS on TBLACCTPROPERTYADDRESS.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
+            Query query = entityManager.createNativeQuery("SELECT DISTINCT " +
+                    "TBLACCT.ACCOUNTNO, " +
+                    "(ISNULL(TBLADDRESSSECURE.ADDRESS1, '') + ISNULL(TBLADDRESSSECURE.ADDRESS2, '')) AS streetAddress, " +
+                    "ISNULL(TBLADDRESSSECURE.CITY, '')  AS cityName, " +
+                    "ISNULL(TBLADDRESSSECURE.STATECODE, '')  AS stateName, " +
+                    "ISNULL(SUBSTRING(TBLADDRESSSECURE.ZIPCODE, 1, 5), '')  AS ZIPCODE " +
+                    "FROM " +
+                    "ENCOMPASS.TBLACCT TBLACCT " +
                     "join encompass.TBLACCTOWNERADDRESS TBLACCTOWNERADDRESS on TBLACCTOWNERADDRESS.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
-                    "join encompass.TBLPERSONSECURE TBLPERSONSECURE on TBLPERSONSECURE.PERSONCODE = TBLACCTOWNERADDRESS.PERSONCODE " +
-                    "where TBLACCT.verend = 99999999999 and TBLACCTPROPERTYADDRESS.verend = 99999999999 " +
-                    "and TBLPERSONSECURE.verend = 99999999999 and TBLACCTOWNERADDRESS.verend = 99999999999 " +
-                    "order by TBLACCT.ACCOUNTNO desc", BasicAccountInfo.class);
+                    "join encompass.TBLADDRESSSECURE TBLADDRESSSECURE on TBLADDRESSSECURE.ADDRESSCODE = TBLACCTOWNERADDRESS.ADDRESSCODE " +
+                    "WHERE TBLACCT.VEREND = 99999999999 " +
+                    "AND TBLACCTOWNERADDRESS.VEREND = 99999999999 " +
+                    "AND TBLADDRESSSECURE.VEREND = 99999999999" +
+                    "AND TBLACCT.ACCOUNTNO = :accountNo ", OwnerAddress.class);
             query.setMaxResults(maxResults);
-            allSearchableParcels = query.getResultList();
+            query.setParameter("accountNo", accountNo);
+            List<OwnerAddress> addressList = query.getResultList();
+            if (addressList.size() > 0) {
+                return addressList.get(0);
+            } else {
+                return null;
+            }
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         } finally {
             entityManager.close();
         }
-        return allSearchableParcels;
     }
 
-    public Account getAccountByAccountNo(String accountNo) {
-        log.info("getAccountByAccountNo...");
-        List<Account> accounts = new ArrayList<Account>();
-        Connection connection = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
+    public PropertyAddress getPropertyAddress(String accountNo) {
+        log.info("getPropertyAddress()...");
+        EntityManager entityManager = getEntityManager();
         try {
-            connection = getRealwareDatabaseConnection();
-            String sql = "SELECT DISTINCT " +
-                    "TBLACCT.ACCOUNTNO AS ACCOUNTNO, TBLACCT.PARCELNO AS PARCELNO, TBLACCT.ACCTSTATUSCODE AS ACCTSTATUSCODE, TBLACCT.ACCTTYPE AS ACCTTYPE, TBLACCT.DEFAULTAPPROACHTYPE AS DEFAULTAPPROACHTYPE, " +
-                    "TBLACCT.ASSIGNEDTO AS ASSIGNEDTO, TBLACCT.DEFAULTTAXDISTRICT AS DEFAULTTAXDISTRICT, TBLACCT.VALUEAREACODE AS VALUEAREACODE, TBLACCT.ASSOCIATEDACCT AS ASSOCIATEDACCT," +
-                    "TBLACCT.APPRAISALTYPE AS APPRAISALTYPE, TBLACCT.ECONOMICAREACODE AS ECONOMICAREACODE, TBLACCT.BUSINESSLICENSE AS BUSINESSLICENSE, " +
-                    "TBLACCT.PRIMARYUSECODE AS PRIMARYUSECODE, TBLACCT.JURISDICTIONID AS JURISDICTIONID, TBLACCT.BUSINESSNAME AS BUSINESSNAME, TBLACCT.PROPERTYCLASSID AS PROPERTYCLASSID," +
-                    "TBLACCTLEGAL.LEGAL AS LEGAL, TBLACCTLEGAL.SHORTDESCRIPTION AS LEGALSHORTDESCRIPTION, TBLACCTLEGALLOCATION.QTRQTR AS QTRQTR, TBLACCTLEGALLOCATION.QTR AS QTR, " +
-                    "TBLACCTLEGALLOCATION.SECTION AS SECTION, TBLACCTLEGALLOCATION.TOWNSHIP AS TOWNSHIP, TBLACCTLEGALLOCATION.RANGE AS RANGE, " +
-                    "TBLACCTLEGALLOCATION.GOVERNMENTLOT AS GOVERNMENTLOT, TBLACCTLEGALLOCATION.GOVERNMENTTRACT AS GOVERNMENTTRACT, TBLACCTLEGALLOCATION.LEGALCOMMENT AS LEGALCOMMENT, " +
-                    "TBLACCTMAILADDRESS.PERSONCODE AS PERSONCODE, TBLACCTMAILADDRESS.INCAREOF AS INCAREOF, TBLACCTMAILADDRESS.ADDRESSCODE AS ADDRESSCODE, " +
-                    "TBLACCTNBHD.NBHDCODE AS NBHDCODE, TBLACCTNBHD.NBHDEXTENSION AS NBHDEXTENSION, TBLACCTNBHD.PROPERTYTYPE AS PROPERTYTYPE, TBLACCTNBHD.NBHDADJUSTMENTVALUE AS NBHDADJUSTMENTVALUE, " +
-                    "TBLACCTOWNERADDRESS.PERSONCODE AS PERSONCODE, TBLACCTOWNERADDRESS.ADDRESSCODE AS ADDRESSCODE, TBLACCTOWNERADDRESS.PRIMARYOWNERFLAG AS PRIMARYOWNERFLAG, " +
-                    "TBLACCTPROPERTYADDRESS.BUILDINGID AS BUILDINGID, TBLACCTPROPERTYADDRESS.PREDIRECTION AS PREDIRECTION, TBLACCTPROPERTYADDRESS.STREETNO AS STREETNO, " +
-                    "TBLACCTPROPERTYADDRESS.UNITNAME AS UNITNAME, TBLACCTPROPERTYADDRESS.POSTDIRECTION AS POSTDIRECTION, " +
-                    "TBLACCTPROPERTYADDRESS.STREETTYPE AS STREETTYPE, TBLACCTPROPERTYADDRESS.STREETNAME AS STREETNAME, TBLACCTPROPERTYADDRESS.PROPERTYZIPCODE AS PROPERTYZIPCODE, " +
-                    "TBLACCTPROPERTYADDRESS.PROPERTYCITY AS PROPERTYCITY, " +
-                    "TBLACCTPROPERTYADDRESS.PROPERTYADDRESSCODE AS PROPERTYADDRESSCODE, TBLACCTPROPERTYADDRESS.LOCATIONID AS LOCATIONID, " +
-                    "TBLACCTREAL.IMPONLYFLAG AS IMPONLYFLAG, TBLACCTREAL.TIFFLAG AS TIFFLAG, TBLACCTREAL.VACANTFLAG AS VACANTFLAG, TBLACCTREAL.LANDWIDTH AS LANDWIDTH, TBLACCTREAL.LANDDEPTH AS LANDDEPTH, " +
-                    "TBLACCTREAL.LANDEASEMENTSF AS LANDEASEMENTSF, " +
-                    "TBLACCTREAL.LANDEXCESSSF AS LANDEXCESSSF, TBLACCTREAL.TRAFFICCOUNT AS TRAFFICCOUNT, TBLACCTREAL.PARKINGSPACES AS PARKINGSPACES, " +
-                    "TBLACCTREAL.ZONINGCODE AS ZONINGCODE, TBLACCTREAL.FLOODFRINGE AS FLOODFRINGE, TBLACCTREAL.FLOODWAY AS FLOODWAY, " +
-                    "TBLACCTREAL.TAPFEE AS TAPFEE, TBLACCTREAL.PLATTEDFLAG AS PLATTEDFLAG, TBLACCTREAL.LANDCERTIFICATIONCODE AS LANDCERTIFICATIONCODE, " +
-                    "TBLACCTREAL.LANDAPPRAISER AS LANDAPPRAISER, TBLACCTREAL.LANDAPPRAISALDATE AS LANDAPPRAISALDATE, TBLACCTREAL.LANDOVERRIDESIZEADJ AS LANDOVERRIDESIZEADJ, " +
-                    "TBLACCTREAL.LANDSIZEADJ AS LANDSIZEADJ, TBLACCTREAL.LANDGROSSSF AS LANDGROSSSF, TBLACCTREAL.LANDGROSSACRES AS LANDGROSSACRES, " +
-                    "TBLACCTREAL.LANDGROSSFF AS LANDGROSSFF, TBLACCTREAL.LANDGROSSUNITCOUNT AS LANDGROSSUNITCOUNT, TBLACCTREAL.DEFAULTLEA AS DEFAULTLEA, " +
-                    "TBLADDRESSSECURE.ADDRESSCODE AS ADDRESSCODE, TBLADDRESSSECURE.ADDRESS1 AS ADDRESS1, TBLADDRESSSECURE.ADDRESS2 AS ADDRESS2, " +
-                    "TBLADDRESSSECURE.CITY AS CITY, TBLADDRESSSECURE.STATECODE AS STATECODE, " +
-                    "TBLADDRESSSECURE.ZIPCODE AS ZIPCODE, TBLADDRESSSECURE.PERSONCODE AS PERSONCODE, TBLADDRESSSECURE.PROVINCE AS PROVINCE, " +
-                    "TBLADDRESSSECURE.COUNTRY AS COUNTRY, TBLADDRESSSECURE.POSTALCODE AS POSTALCODE, TBLADDRESSSECURE.ADDRESSVALIDFLAG AS ADDRESSVALIDFLAG, " +
-                    "TBLPERSONSECURE.PERSONCODE AS PERSONCODE, TBLPERSONSECURE.NAME1 AS NAME1, TBLPERSONSECURE.NAME2 AS NAME2, TBLPERSONSECURE.PHONE AS PHONE, " +
-                    "TBLPERSONSECURE.FAX AS FAX, TBLPERSONSECURE.MOBILE AS MOBILE, " +
-                    "TBLPERSONSECURE.PAGER AS PAGER, TBLPERSONSECURE.EMAILADDRESS AS EMAILADDRESS,  TBLPERSONSECURE.FEDERALIDNO AS FEDERALIDNO, TBLPERSONSECURE.PRIVATEFLAG AS PRIVATEFLAG, " +
-                    "TBLPERSONSECURE.PERSONTYPEID AS PERSONTYPEID " +
+            Query query = entityManager.createNativeQuery("SELECT " +
+                    "TBLACCT.ACCOUNTNO, " +
+                    "ISNULL(TBLACCTPROPERTYADDRESS.PREDIRECTION, '') AS PREDIRECTION, " +
+                    "ISNULL(TBLACCTPROPERTYADDRESS.POSTDIRECTION, '') AS POSTDIRECTION, " +
+                    "ISNULL(TBLACCTPROPERTYADDRESS.STREETNO, '') AS STREETNUMBER, " +
+                    "ISNULL(TBLACCTPROPERTYADDRESS.UNITNAME, '') AS UNITNAME, " +
+                    "ISNULL(TBLACCTPROPERTYADDRESS.STREETTYPE, '') AS STREETTYPE, " +
+                    "ISNULL(TBLACCTPROPERTYADDRESS.STREETNAME, '') AS STREETNAME, " +
+                    "ISNULL(SUBSTRING(TBLACCTPROPERTYADDRESS.PROPERTYZIPCODE, 1, 5), '')  AS ZIPCODE, " +
+                    "ISNULL(TBLACCTPROPERTYADDRESS.PROPERTYCITY, '')  AS CITYNAME, " +
+                    "'CO' AS STATENAME " +
+                    "FROM " +
+                    "ENCOMPASS.TBLACCT TBLACCT " +
+                    "JOIN ENCOMPASS.TBLACCTPROPERTYADDRESS TBLACCTPROPERTYADDRESS ON TBLACCTPROPERTYADDRESS.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
+                    "WHERE TBLACCT.VEREND = 99999999999 AND TBLACCTPROPERTYADDRESS.VEREND = 99999999999 " +
+                    "AND TBLACCT.ACCOUNTNO = :accountNo " +
+                    "ORDER BY TBLACCT.ACCOUNTNO DESC", PropertyAddress.class);
+            query.setMaxResults(maxResults);
+            query.setParameter("accountNo", accountNo);
+            List<PropertyAddress> addressList = query.getResultList();
+            if (addressList.size() > 0) {
+                return addressList.get(0);
+            } else {
+                return null;
+            }
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        } finally {
+            entityManager.close();
+        }
+    }
+
+    public Account getAccount(String accountNo) {
+        log.info("getAccount()...");
+        EntityManager entityManager = getEntityManager();
+        try {
+            String sqlQuery = "SELECT DISTINCT " +
+                    "TBLACCT.ACCOUNTNO AS ACCOUNTNO, " +
+                    "TBLACCT.PARCELNO AS PARCELNO, " +
+                    "TBLACCT.ACCTSTATUSCODE AS ACCTSTATUSCODE, " +
+                    "TBLACCT.ACCTTYPE AS ACCTTYPE, " +
+                    "TBLACCT.EFILEFLAG AS EFILEFLAG, " +
+                    "TBLACCT.WARD AS WARD, " +
+                    "TBLACCT.PROPERTYIDENTIFIER AS PROPERTYIDENTIFIER, " +
+                    "TBLACCT.STRIPPEDACCOUNTNO AS STRIPPEDACCOUNTNO, " +
+                    "TBLACCT.DEFAULTAPPROACHTYPE AS DEFAULTAPPROACHTYPE, " +
+                    "TBLACCT.MOBILEHOMESPACE AS MOBILEHOMESPACE, " +
+                    "TBLACCT.ASSIGNEDTO AS ASSIGNEDTO, " +
+                    "TBLACCT.DEFAULTTAXDISTRICT AS DEFAULTTAXDISTRICT, " +
+                    "TBLACCT.VALUEAREACODE AS VALUEAREACODE, " +
+                    "TBLACCT.ASSOCIATEDACCT AS ASSOCIATEDACCT," +
+                    "TBLACCT.APPRAISALTYPE AS APPRAISALTYPE, " +
+                    "TBLACCT.ECONOMICAREACODE AS ECONOMICAREACODE, " +
+                    "TBLACCT.ACCTDATECREATED AS ACCTDATECREATED, " +
+                    "TBLACCT.BUSINESSLICENSE AS BUSINESSLICENSE, " +
+                    "TBLACCT.PRIMARYUSECODE AS PRIMARYUSECODE, " +
+                    "TBLACCT.JURISDICTIONID AS JURISDICTIONID, " +
+                    "TBLACCT.BUSINESSNAME AS BUSINESSNAME, " +
+                    "TBLACCT.PROPERTYCLASSID AS PROPERTYCLASSID," +
+                    "TBLACCTLEGAL.LEGAL AS LEGAL, " +
+                    "TBLACCTLEGAL.SHORTDESCRIPTION AS LEGALSHORTDESCRIPTION, " +
+                    "TBLACCTLEGALLOCATION.QTR AS QTR, " +
+                    "TBLACCTLEGALLOCATION.SECTION AS SECTION, " +
+                    "TBLACCTLEGALLOCATION.TOWNSHIP AS TOWNSHIP, " +
+                    "TBLACCTLEGALLOCATION.RANGE AS RANGE, " +
+                    "TBLACCTNBHD.NBHDCODE AS NBHDCODE, " +
+                    "TBLACCTNBHD.NBHDEXTENSION AS NBHDEXTENSION, " +
+                    "TBLACCTNBHD.PROPERTYTYPE AS PROPERTYTYPE, " +
+                    "TBLACCTREAL.IMPONLYFLAG AS IMPONLYFLAG, " +
+                    "TBLACCTREAL.TIFFLAG AS TIFFLAG, " +
+                    "TBLACCTREAL.VACANTFLAG AS VACANTFLAG, " +
+                    "TBLACCTREAL.PARKINGSPACES AS PARKINGSPACES, " +
+                    "TBLACCTREAL.ZONINGCODE AS ZONINGCODE, " +
+                    "TBLACCTREAL.LANDWIDTH AS LANDWIDTH, " +
+                    "TBLACCTREAL.LANDDEPTH AS LANDDEPTH, " +
+                    "TBLACCTREAL.LANDEXCESSSF AS LANDEXCESSSF, " +
+                    "TBLACCTREAL.LANDGROSSSF AS LANDGROSSSF, " +
+                    "TBLACCTREAL.LANDGROSSACRES AS LANDGROSSACRES, " +
+                    "TBLACCTREAL.DEFAULTLEA AS DEFAULTLEA, " +
+                    "ISNULL(TBNSUBDIVISION.SUBNAME, '') AS SUBDIVISIONNAME " +
                     "FROM ENCOMPASS.TBLACCT TBLACCT " +
                     "LEFT OUTER JOIN ENCOMPASS.TBLACCTLEGAL TBLACCTLEGAL ON  TBLACCTLEGAL.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
                     "LEFT OUTER JOIN ENCOMPASS.TBLACCTLEGALLOCATION TBLACCTLEGALLOCATION ON TBLACCTLEGALLOCATION.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
@@ -318,6 +360,8 @@ public class AccountDAOImpl implements AccountDAO {
                     "LEFT OUTER JOIN ENCOMPASS.TBLACCTREAL TBLACCTREAL ON TBLACCTREAL.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
                     "LEFT OUTER JOIN ENCOMPASS.TBLADDRESSSECURE TBLADDRESSSECURE ON TBLADDRESSSECURE.ADDRESSCODE = TBLACCTOWNERADDRESS.ADDRESSCODE " +
                     "LEFT OUTER JOIN ENCOMPASS.TBLPERSONSECURE TBLPERSONSECURE ON TBLPERSONSECURE.PERSONCODE = TBLACCTOWNERADDRESS.PERSONCODE " +
+                    "LEFT OUTER JOIN ENCOMPASS.TBLSUBACCOUNT TBLSUBACCOUNT ON TBLSUBACCOUNT.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
+                    "LEFT OUTER JOIN ENCOMPASS.TBNSUBDIVISION TBNSUBDIVISION ON TBNSUBDIVISION.SUBNO = TBLSUBACCOUNT.SUBNO " +
                     "WHERE " +
                     "TBLACCT.VEREND = 99999999999 " +
                     "AND TBLACCTLEGAL.VEREND = 99999999999 " +
@@ -327,139 +371,26 @@ public class AccountDAOImpl implements AccountDAO {
                     "AND TBLACCTPROPERTYADDRESS.VEREND = 99999999999 " +
                     "AND TBLACCTREAL.VEREND = 99999999999 " +
                     "AND TBLADDRESSSECURE.VEREND = 99999999999 " +
+                    "AND TBLSUBACCOUNT.VEREND = 99999999999 " +
                     "AND TBLPERSONSECURE.VEREND = 99999999999 " +
-                    "AND TBLACCT.ACCOUNTNO = ?";
-            log.info("sql: " + sql);
-            ps = connection.prepareStatement(sql);
-            JDBCHelper.setString(ps, 1, accountNo);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                Account account = new Account();
-                account.setAccountNo(JDBCHelper.getString(rs, "ACCOUNTNO"));
-                account.setParcelNo(JDBCHelper.getString(rs, "PARCELNO"));
-                //account.setLocalNo(JDBCHelper.getString(rs, "LOCALNO"));
-                //account.setMapNo(JDBCHelper.getString(rs, "MAPNO"));
-                account.setAcctStatus(JDBCHelper.getString(rs, "ACCTSTATUSCODE"));
-                account.setAcctType(JDBCHelper.getString(rs, "ACCTTYPE"));
-                account.setAssignedTo(JDBCHelper.getString(rs, "ASSIGNEDTO"));
-                account.setValueAreaDescription(JDBCHelper.getString(rs, "VALUEAREACODE"));
-                account.setAppraisalType(JDBCHelper.getString(rs, "APPRAISALTYPE"));
-                account.setEconomicAreaCode(JDBCHelper.getString(rs, "ECONOMICAREACODE"));
-                account.setDefaultApproachType(JDBCHelper.getString(rs, "DEFAULTAPPROACHTYPE"));
-                account.setDefaultTaxDistrict(JDBCHelper.getString(rs, "DEFAULTTAXDISTRICT"));
-                account.setBusinessLicense(JDBCHelper.getString(rs, "BUSINESSLICENSE"));
-                //account.setMapGroup(JDBCHelper.getString(rs, "MAPGROUP"));
-                //account.setControlMap(JDBCHelper.getString(rs, "CONTROLMAP"));
-                //account.setPropertyIdentifier(JDBCHelper.getString(rs, "PROPERTYIDENTIFIER"));
-                //account.setSpecialInterestNumber(JDBCHelper.getString(rs, "SPECIALINTERESTNUMBER"));
-                account.setPrimaryUseCode(JDBCHelper.getString(rs, "PRIMARYUSECODE"));
-                //account.setWard(JDBCHelper.getString(rs, "WARD"));
-                //account.setStrippedAccountNo(JDBCHelper.getString(rs, "STRIPPEDACCOUNTNO"));
-                account.setJurisdictionId(JDBCHelper.getString(rs, "JURISDICTIONID"));
-                //account.setCensusTract(JDBCHelper.getString(rs, "CENSUSTRACT"));
-                //account.setCensusBlock(JDBCHelper.getString(rs, "CENSUSBLOCK"));
-                //account.setMobileHomeSpace(JDBCHelper.getString(rs, "MOBILEHOMESPACE"));
-                //account.seteFileFlag(JDBCHelper.getString(rs, "EFILEFLAG"));
-                account.setBusinessName(JDBCHelper.getString(rs, "BUSINESSNAME"));
-                //account.setCostHybridPercent(JDBCHelper.getString(rs, "COSTHYBRIDPERCENT"));
-                //account.setMarketHybridPercent(JDBCHelper.getString(rs, "MARKETHYBRIDPERCENT"));
-                //account.setIncomeHybridPercent(JDBCHelper.getString(rs, "INCOMEHYBRIDPERCENT"));
-                //account.setReconciledHybridPercent(JDBCHelper.getString(rs, "RECONCILEDHYBRIDPERCENT"));
-                //account.setParcelSequence(JDBCHelper.getString(rs, "PARCELSEQUENCE"));
-                account.setPropertyClassId(JDBCHelper.getString(rs, "PROPERTYCLASSID"));
-                //account.setSeqId(JDBCHelper.getString(rs, "SEQID"));
-                //account.setDetailedReviewDate(JDBCHelper.getString(rs, "DETAILEDREVIEWDATE"));
-                account.setLegal(JDBCHelper.getString(rs, "LEGAL"));
-                account.setQtr(JDBCHelper.getString(rs, "QTR"));
-                account.setSection(JDBCHelper.getString(rs, "SECTION"));
-                account.setTownship(JDBCHelper.getString(rs, "TOWNSHIP"));
-                account.setRange(JDBCHelper.getString(rs, "RANGE"));
-                account.setNbhdCode(JDBCHelper.getString(rs, "NBHDCODE"));
-                account.setNbhdExtension(JDBCHelper.getString(rs, "NBHDEXTENSION"));
-                account.setPropertyType(JDBCHelper.getString(rs, "PROPERTYTYPE"));
-                account.setNbhdAdjustmentValue(JDBCHelper.getString(rs, "NBHDADJUSTMENTVALUE"));
-                account.setBuildingId(JDBCHelper.getString(rs, "BUILDINGID"));
-                account.setPreDirection(JDBCHelper.getString(rs, "PREDIRECTION"));
-                account.setPropertyAddress(StringUtils.trimToEmpty(JDBCHelper.getString(rs, "STREETNO")) + " " +
-                        StringUtils.trimToEmpty(JDBCHelper.getString(rs, "UNITNAME")) + " " +
-                        StringUtils.trimToEmpty(JDBCHelper.getString(rs, "POSTDIRECTION")) + " " +
-                        StringUtils.trimToEmpty(JDBCHelper.getString(rs, "STREETNAME")) + " " +
-                        StringUtils.trimToEmpty(JDBCHelper.getString(rs, "STREETTYPE")) + " " +
-                        StringUtils.trimToEmpty(JDBCHelper.getString(rs, "PROPERTYCITY")) + " " +
-                        StringUtils.trimToEmpty(JDBCHelper.getString(rs, "PROPERTYZIPCODE")));
-                account.setImpOnlyFlag(JDBCHelper.getString(rs, "IMPONLYFLAG"));
-                account.setTifFlag(JDBCHelper.getString(rs, "TIFFLAG"));
-                account.setVacantFlag(JDBCHelper.getString(rs, "VACANTFLAG"));
-                account.setLandWidth(JDBCHelper.getString(rs, "LANDWIDTH"));
-                account.setLandDepth(JDBCHelper.getString(rs, "LANDDEPTH"));
-                account.setLandEasementSf(JDBCHelper.getString(rs, "LANDEASEMENTSF"));
-                account.setLandExcessSf(JDBCHelper.getString(rs, "LANDEXCESSSF"));
-                account.setLandDepth(JDBCHelper.getString(rs, "LANDDEPTH"));
-                account.setTrafficCount(JDBCHelper.getString(rs, "TRAFFICCOUNT"));
-                account.setParkingSpaces(JDBCHelper.getString(rs, "PARKINGSPACES"));
-                account.setLandDepth(JDBCHelper.getString(rs, "ZONINGCODE"));
-                account.setLandDepth(JDBCHelper.getString(rs, "FLOODFRINGE"));
-                account.setLandDepth(JDBCHelper.getString(rs, "FLOODWAY"));
-                account.setLandDepth(JDBCHelper.getString(rs, "TAPFEE"));
-                account.setLandDepth(JDBCHelper.getString(rs, "PLATTEDFLAG"));
-                account.setLandDepth(JDBCHelper.getString(rs, "LANDCERTIFICATIONCODE"));
-                account.setLandDepth(JDBCHelper.getString(rs, "LANDAPPRAISER"));
-                account.setLandDepth(JDBCHelper.getString(rs, "LANDAPPRAISALDATE"));
-                account.setLandDepth(JDBCHelper.getString(rs, "LANDOVERRIDESIZEADJ"));
-                account.setLandDepth(JDBCHelper.getString(rs, "LANDSIZEADJ"));
-                account.setLandDepth(JDBCHelper.getString(rs, "LANDGROSSSF"));
-                account.setLandDepth(JDBCHelper.getString(rs, "LANDGROSSACRES"));
-                account.setLandDepth(JDBCHelper.getString(rs, "LANDGROSSFF"));
-                account.setLandDepth(JDBCHelper.getString(rs, "LANDGROSSUNITCOUNT"));
-                account.setLandDepth(JDBCHelper.getString(rs, "DEFAULTLEA"));
-                //account.setLandDepth(JDBCHelper.getString(rs, "TOTALACCTIMPINTERESTPCT"));
-                //account.setLandDepth(JDBCHelper.getString(rs, "TOTALACCTLANDINTERESTPCT"));
-                account.setOwnerAddress(StringUtils.trimToEmpty(JDBCHelper.getString(rs, "ADDRESS1")) + " " +
-                        StringUtils.trimToEmpty(JDBCHelper.getString(rs, "ADDRESS2")) + " " +
-                        StringUtils.trimToEmpty(JDBCHelper.getString(rs, "CITY")) + " " +
-                        StringUtils.trimToEmpty(JDBCHelper.getString(rs, "STATECODE")) + " " +
-                        StringUtils.trimToEmpty(JDBCHelper.getString(rs, "ZIPCODE")) + " " +
-                        StringUtils.trimToEmpty(JDBCHelper.getString(rs, "PROVINCE")) + " " +
-                        StringUtils.trimToEmpty(JDBCHelper.getString(rs, "COUNTRY")) + " " +
-                        StringUtils.trimToEmpty(JDBCHelper.getString(rs, "POSTALCODE")));
-                account.setLandDepth(JDBCHelper.getString(rs, "NAME1") + JDBCHelper.getString(rs, "NAME2"));
-                account.setLandDepth(JDBCHelper.getString(rs, "PHONE"));
-                account.setLandDepth(JDBCHelper.getString(rs, "FAX"));
-                account.setLandDepth(JDBCHelper.getString(rs, "MOBILE"));
-                account.setLandDepth(JDBCHelper.getString(rs, "PAGER"));
-                account.setLandDepth(JDBCHelper.getString(rs, "EMAILADDRESS"));
-                account.setLandDepth(JDBCHelper.getString(rs, "FEDERALIDNO"));
-                account.setLandDepth(JDBCHelper.getString(rs, "PRIVATEFLAG"));
-                account.setLandDepth(JDBCHelper.getString(rs, "PERSONTYPEID"));
-                //account.setLandDepth(JDBCHelper.getString(rs, "METAPHONENAME1"));
-                //account.setLandDepth(JDBCHelper.getString(rs, "METAPHONENAME2"));
-
-                account.setAppeal(getAppealByAccountNo(accountNo));
-
-                String receptionNo = getReceptionNoByAccountNo(accountNo);
-
-                account.setSale(getSale(receptionNo));
-                account.setSaleInventory(getSaleInventoryByReceptionNo(receptionNo));
-
-                accounts.add(account);
+                    "AND TBLACCT.ACCOUNTNO = :accountNo ";
+            Query query = entityManager.createNativeQuery(sqlQuery, Account.class);
+            query.setMaxResults(maxResults);
+            query.setParameter("accountNo", accountNo);
+            List<Account> accountList = query.getResultList();
+            if (accountList.size() > 0) {
+                return accountList.get(0);
+            } else {
+                return null;
             }
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         } finally {
-            JDBCHelper.close(rs);
-            JDBCHelper.close(ps);
-            JDBCHelper.close(connection);
-        }
-
-        if (accounts.size() > 0) {
-            return accounts.get(0);
-        } else {
-            return null;
+            entityManager.close();
         }
     }
 
-
-    public Appeal getAppealByAccountNo(String accountNo) {
+    public Appeal getAppeal(String accountNo) {
         log.info("getAppealByAccountNo...");
         Appeal appeal = new Appeal();
         Connection connection = null;
@@ -572,72 +503,26 @@ public class AccountDAOImpl implements AccountDAO {
         return null;
     }
 
-    private Sale getSale(String receptionNo) {
+    private Sale getSale(String accountNo) {
+        log.info("getSale()...");
         EntityManager entityManager = getEntityManager();
         try {
-            Query query = entityManager.createNativeQuery("SELECT DISTINCT " +
-                    "TBLSALE.RECEPTIONNO AS RECEPTIONNO, " +
-                    "TBLSALE.SALEDATE AS SALEDATE, " +
-                    "TBLSALE.GRANTOR AS GRANTOR, " +
-                    "TBLSALE.GRANTEE AS GRANTEE, " +
-                    "TBLSALE.SALEPRICE AS SALEPRICE, " +
-                    "TBLSALE.PPADJAMOUNT AS PPADJAMOUNT, " +
-                    "ISNULL(TBLACCTPROPERTYADDRESS.STREETNO, '') + ' ' + ISNULL(TBLACCTPROPERTYADDRESS.UNITNAME, '') + ' ' + ISNULL(TBLACCTPROPERTYADDRESS.STREETNAME, '') + ' ' + ISNULL(TBLACCTPROPERTYADDRESS.STREETTYPE, '') AS PROPERTYSTREET, " +
-                    "ISNULL(TBLACCTPROPERTYADDRESS.PROPERTYCITY, '') AS PROPERTYCITY, + " +
-                    "'CO' AS PROPERTYSTATE, + " +
-                    "ISNULL(SUBSTRING(TBLACCTPROPERTYADDRESS.PROPERTYZIPCODE, 1, 5), '') AS PROPERTYZIPCODE, " +
-                    "TBLSALE.GOODWILLADJAMOUNT AS GOODWILLADJAMOUNT, " +
-                    "TBLSALE.DOCUMENTDATE AS DOCUMENTDATE, " +
-                    "TBLSALE.OTHERADJAMOUNT AS OTHERADJAMOUNT, " +
-                    "TBLSALE.TIMEADJ AS TIMEADJ, " +
-                    "TBLSALE.JURISDICTIONID AS JURISDICTIONID, " +
-                    "TBLSALEACCT.ACCOUNTNO AS ACCOUNTNO, " +
-                    "TBLSALEACCT.INVENTORYEFFECTIVEDATE AS INVENTORYEFFECTIVEDATE, " +
-                    "ISNULL(TBLACCTNBHD.NBHDCODE, '') AS NEIGHBORHOOD, + " +
-                    "ISNULL(TBLACCTNBHD.NBHDEXTENSION, '') AS NEIGHBORHOODEXT, " +
-                    "ISNULL(TBNSUBDIVISION.SUBNAME, '') AS SUBDIVISION, " +
-                    "0 AS TIMEADJUSTEDSALEPRICE, " +
-                    "TBLSALEACCT.ACCTADJSALEPRICE AS ACCTADJSALEPRICE " +
-                    "FROM ENCOMPASS.TBLSALEACCT TBLSALEACCT " +
-                    "INNER JOIN ENCOMPASS.TBLSALE TBLSALE ON TBLSALE.RECEPTIONNO = TBLSALEACCT.RECEPTIONNO " +
-                    "INNER JOIN ENCOMPASS.TBLACCTPROPERTYADDRESS TBLACCTPROPERTYADDRESS ON TBLACCTPROPERTYADDRESS.ACCOUNTNO = TBLSALEACCT.ACCOUNTNO " +
-                    "INNER JOIN (SELECT TBLSALEACCT.ACCOUNTNO, MAX(TBLSALEACCT.INVENTORYEFFECTIVEDATE) AS MAXDATE FROM ENCOMPASS.TBLSALEACCT GROUP BY TBLSALEACCT.ACCOUNTNO ) TM ON TBLSALEACCT.ACCOUNTNO = TM.ACCOUNTNO " +
-                    "INNER JOIN ENCOMPASS.TBLACCTNBHD TBLACCTNBHD ON TBLACCTNBHD.ACCOUNTNO = TBLSALEACCT.ACCOUNTNO " +
-                    "INNER JOIN ENCOMPASS.TBLSUBACCOUNT TBLSUBACCOUNT ON TBLSUBACCOUNT.ACCOUNTNO = TBLSALEACCT.ACCOUNTNO " +
-                    "INNER JOIN ENCOMPASS.TBNSUBDIVISION TBNSUBDIVISION ON TBNSUBDIVISION.SUBNO = TBLSUBACCOUNT.SUBNO " +
-                    "AND TBLSALEACCT.INVENTORYEFFECTIVEDATE = TM.MAXDATE " +
+            Query query = entityManager.createNativeQuery("SELECT TBLSALE.*, TBLSALEACCT.*, TBNSALEINVENTORY.* " +
+                    "FROM ENCOMPASS.TBLSALE TBLSALE " +
+                    "JOIN ENCOMPASS.TBLSALEACCT TBLSALEACCT ON TBLSALEACCT.RECEPTIONNO = TBLSALE.RECEPTIONNO " +
+                    "JOIN ENCOMPASS.TBNSALEINVENTORY TBNSALEINVENTORY ON TBNSALEINVENTORY.RECEPTIONNO = TBLSALE.RECEPTIONNO " +
+                    "INNER JOIN " +
+                    "  (SELECT TBLSALEACCT.ACCOUNTNO, MAX(TBLSALEACCT.INVENTORYEFFECTIVEDATE) AS MAXDATE FROM ENCOMPASS.TBLSALEACCT GROUP BY TBLSALEACCT.ACCOUNTNO) TM " +
+                    "  ON TBLSALEACCT.ACCOUNTNO = TM.ACCOUNTNO AND TBLSALEACCT.INVENTORYEFFECTIVEDATE = TM.MAXDATE " +
                     "WHERE TBLSALEACCT.VEREND = 99999999999 " +
                     "AND TBLSALE.VEREND = 99999999999 " +
-                    "AND TBLACCTNBHD.VEREND = 99999999999 " +
-                    "AND TBLSUBACCOUNT.VEREND = 99999999999 " +
-                    "AND TBLSALE.RECEPTIONNO = :receptionNo ORDER BY TBLSALE.SALEDATE DESC ", Sale.class);
+                    "AND TBLSALEACCT.ACCOUNTNO = :accountNo ORDER BY TBLSALE.SALEDATE DESC", Sale.class);
             query.setMaxResults(maxResults);
-            query.setParameter("receptionNo", receptionNo);
+            query.setParameter("accountNo", accountNo);
             List<Sale> saleList = query.getResultList();
+            log.info("saleList: " + saleList.size());
             if (saleList.size() > 0) {
                 return saleList.get(0);
-            } else {
-                return null;
-            }
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-        } finally {
-            entityManager.close();
-        }
-    }
-
-    private SaleInventory getSaleInventoryByReceptionNo(String receptionNo) {
-        log.info("getSaleInventoryByReceptionNo...");
-        EntityManager entityManager = getEntityManager();
-        try {
-            Query query = entityManager.createNativeQuery("select * from encompass.TBNSALEINVENTORY TBNSALEINVENTORY " +
-                    "where TBNSALEINVENTORY.RECEPTIONNO = :receptionNo ", SaleInventory.class);
-            query.setMaxResults(maxResults);
-            query.setParameter("receptionNo", receptionNo);
-            List<SaleInventory> saleInventoryList = query.getResultList();
-            log.info("saleInventoryList.size(): " + saleInventoryList.size());
-            if (saleInventoryList.size() > 0) {
-                return saleInventoryList.get(0);
             } else {
                 return null;
             }
