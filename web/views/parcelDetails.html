@@ -1,36 +1,38 @@
 <div class="container-custom">
     <div class="row">
         <div class="col-sm-12">
-            <div class="alert alert-success">
-                <h5>
-                    <strong>
-                        This property is a {{accountDetailsCtrl.parcel.account.acctType | lowercase}} property on a {{accountDetailsCtrl.parcel.sale.landType | lowercase}} lot.
-                        This property has been added to your favourites.
-                    </strong>
-                </h5>
-                <h5>
-                    <strong>
-                    This property has {{accountDetailsCtrl.parcel.sale.bltAsTotalUnitCount | lowercase}} building<h5 ng-if="{{accountDetailsCtrl.parcel.sale.bltAsTotalUnitCount > 1}}">s</h5>
-                    on a {{accountDetailsCtrl.parcel.sale.landNetSf | number}} square feet lot,
-                    built in {{accountDetailsCtrl.parcel.sale.bltAsYearBuilt | lowercase}}
-                    as a {{accountDetailsCtrl.parcel.sale.bltAsDescription | lowercase}}
-                    with {{accountDetailsCtrl.parcel.sale.impQuality | lowercase}} quality and
-                    with features: {{accountDetailsCtrl.parcel.sale.hvacType | lowercase}},
-                    {{accountDetailsCtrl.parcel.sale.impInterior | lowercase}} as interior,
-                    {{accountDetailsCtrl.parcel.sale.impExterior | lowercase}} as exterior
-                    {{accountDetailsCtrl.parcel.sale.roofCover | lowercase}} as roof cover,
-                    {{accountDetailsCtrl.parcel.sale.roomCount | lowercase}} total rooms,
-                    {{accountDetailsCtrl.parcel.sale.bedRoomCount | lowercase}} bed rooms,
-                    {{accountDetailsCtrl.parcel.sale.bathCount | lowercase}} bath rooms,
-                    {{accountDetailsCtrl.parcel.sale.totalImpSf | number}}</strong> total finished square feet of
-                </h5>
-                <h5 ng-if="{{accountDetailsCtrl.parcel.appeal.appealNo != null}}">This account has an appeal in process. Click <a style="color: #cc3300; font-weight: bold " href="#/appealDetails/{{accountDetailsCtrl.parcel.appeal.appealNo}}">here</a> to view appeal details</h5>
+            <div class="custom-window-for-messages">
+                <h3 style="color: #00663c; font-weight: bold">
+                    This property is a <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.account.acctType | lowercase}}</span> property on built on a <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.landType | lowercase}}</span> lot.
+                </h3>
+                <h4 style="color: #00663c; font-weight: bold">
+                    This property has been added to your favourites.
+                </h4>
+                <h4 style="color: #00663c; font-weight: bold">
+                    This property has <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.bltAsTotalUnitCount | lowercase}}</span> building<span ng-if="{{accountDetailsCtrl.parcel.sale.bltAsTotalUnitCount > 1}}">s</span>
+                    on a <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.landNetSf | number}}</span> square feet lot,
+                    built in <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.bltAsYearBuilt | lowercase}}</span>
+                    as a <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.bltAsDescription | lowercase}}</span>
+                    with <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.impQuality | lowercase}}</span> quality and
+                    with features: <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.hvacType | lowercase}}</span>,
+                    <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.impInterior | lowercase}}</span> as interior,
+                    <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.impExterior | lowercase}}</span> as exterior
+                    <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.roofCover | lowercase}}</span> as roof cover,
+                    has <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.totalImpSf | number}}</span> total finished square feet with
+                    <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.roomCount | lowercase}}</span> total rooms,
+                    <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.bedRoomCount | lowercase}}</span> bed rooms,
+                    <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.bathCount | lowercase}}</span> bath rooms.
+
+                </h4>
+                <h4 ng-if="{{accountDetailsCtrl.parcel.appeal.appealNo != null}}">
+                    This account has an appeal in process. Click <a style="color: #cc3300; font-weight: bold " href="#/appealDetails/{{accountDetailsCtrl.parcel.appeal.appealNo}}">here</a> to view appeal details
+                </h4>
             </div>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-12">
             <div class="panel panel-success">
                 <div class="panel-heading">
                     <h4 class="panel-title">
@@ -38,56 +40,64 @@
                     </h4>
                 </div>
                 <div class="panel-body">
-                    <div class="data-display-header-column">Account Number</div>
-                    <div class="data-display-data-column">{{accountDetailsCtrl.parcel.account.accountNo}}</div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="data-display-header-column">Account Number</div>
+                            <div class="data-display-data-column">{{accountDetailsCtrl.parcel.account.accountNo}}</div>
 
-                    <div class="data-display-header-column">State Parcel Number</div>
-                    <div class="data-display-data-column">{{accountDetailsCtrl.parcel.account.parcelNo}}</div>
+                            <div class="data-display-header-column">State Parcel Number</div>
+                            <div class="data-display-data-column">{{accountDetailsCtrl.parcel.account.parcelNo}}</div>
 
-                    <div class="data-display-header-column">Reception No</div>
-                    <div class="data-display-data-column"><a href="http://apps.douglas.co.us/apps/assessor/landmarkServlet?receptionNo={{accountDetailsCtrl.parcel.sale.receptionNo}}">{{accountDetailsCtrl.parcel.sale.receptionNo}}</a></div>
+                            <div class="data-display-header-column">Reception No</div>
+                            <div class="data-display-data-column"><a href="http://apps.douglas.co.us/apps/assessor/landmarkServlet?receptionNo={{accountDetailsCtrl.parcel.sale.receptionNo}}">{{accountDetailsCtrl.parcel.sale.receptionNo}}</a></div>
 
-                    <div class="data-display-header-column">Account Type</div>
-                    <div class="data-display-data-column">{{accountDetailsCtrl.parcel.account.acctType}}</div>
+                            <div class="data-display-header-column">Account Type</div>
+                            <div class="data-display-data-column">{{accountDetailsCtrl.parcel.account.acctType}}</div>
 
-                    <div class="data-display-header-column">Property Address</div>
-                    <div class="data-display-data-column">
-                        {{accountDetailsCtrl.parcel.propertyAddress.streetNumber}}&nbsp;{{accountDetailsCtrl.parcel.propertyAddress.streetName}}&nbsp;
-                        {{accountDetailsCtrl.parcel.propertyAddress.streetType}}&nbsp;{{accountDetailsCtrl.parcel.propertyAddress.cityName}}&nbsp;
-                        {{accountDetailsCtrl.parcel.propertyAddress.stateName}}&nbsp;{{accountDetailsCtrl.parcel.propertyAddress.zipCode}}
+                            <div class="data-display-header-column">Property Address</div>
+                            <div class="data-display-data-column">
+                                {{accountDetailsCtrl.parcel.propertyAddress.streetNumber}}&nbsp;{{accountDetailsCtrl.parcel.propertyAddress.streetName}}&nbsp;
+                                {{accountDetailsCtrl.parcel.propertyAddress.streetType}}&nbsp;{{accountDetailsCtrl.parcel.propertyAddress.cityName}}&nbsp;
+                                {{accountDetailsCtrl.parcel.propertyAddress.stateName}}&nbsp;{{accountDetailsCtrl.parcel.propertyAddress.zipCode}}
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <div class="data-display-header-column">Owner Name</div>
+                            <div class="data-display-data-column">{{accountDetailsCtrl.parcel.sale.grantee}}</div>
+
+                            <div class="data-display-header-column">Owner Address</div>
+                            <div class="data-display-data-column">
+                                {{accountDetailsCtrl.parcel.ownerAddress.streetAddress}}&nbsp;
+                                {{accountDetailsCtrl.parcel.ownerAddress.cityName}}&nbsp;
+                                {{accountDetailsCtrl.parcel.ownerAddress.stateName}}&nbsp;
+                                {{accountDetailsCtrl.parcel.ownerAddress.zipCode}}
+                            </div>
+
+                            <div class="data-display-header-column">Total Actual Value</div>
+                            <div class="data-display-data-column"><span id="currency-default">{{accountDetailsCtrl.parcel.sale.priorYearTaxRollActualAmt | currency}}</span></div>
+
+                            <div class="data-display-header-column">Total Assessed Value</div>
+                            <div class="data-display-data-column">{{accountDetailsCtrl.parcel.sale.priorYearTaxRollAssessed | currency}}</div>
+
+                            <div class="data-display-header-column">Tax District</div>
+                            <div class="data-display-data-column">{{accountDetailsCtrl.parcel.account.defaultTaxDistrict}}</div>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <div class="data-display-header-column">Tax Rate</div>
+                            <div class="data-display-data-column">Not Available {{accountDetailsCtrl.parcel.account.taxRate}}</div>
+
+                            <div class="data-display-header-column">Subdivision Name</div>
+                            <div class="data-display-data-column">{{accountDetailsCtrl.parcel.account.subdivisionName}}</div>
+
+                            <div class="data-display-header-column">Neighborhood</div>
+                            <div class="data-display-data-column">{{accountDetailsCtrl.parcel.account.nbhdCode}}-{{accountDetailsCtrl.parcel.account.nbhdExtension}}</div>
+
+                            <div class="data-display-header-column">Location Description</div>
+                            <div class="data-display-data-column">{{accountDetailsCtrl.parcel.account.legal}}</div>
+                        </div>
                     </div>
-
-                    <div class="data-display-header-column">Owner Name</div>
-                    <div class="data-display-data-column">{{accountDetailsCtrl.parcel.sale.grantee}}</div>
-
-                    <div class="data-display-header-column">Owner Address</div>
-                    <div class="data-display-data-column">
-                        {{accountDetailsCtrl.parcel.ownerAddress.streetAddress}}&nbsp;
-                        {{accountDetailsCtrl.parcel.ownerAddress.cityName}}&nbsp;
-                        {{accountDetailsCtrl.parcel.ownerAddress.stateName}}&nbsp;
-                        {{accountDetailsCtrl.parcel.ownerAddress.zipCode}}
-                    </div>
-
-                    <div class="data-display-header-column">Total Actual Value</div>
-                    <div class="data-display-data-column"><span id="currency-default">{{accountDetailsCtrl.parcel.sale.priorYearTaxRollActualAmt | currency}}</span></div>
-
-                    <div class="data-display-header-column">Total Assessed Value</div>
-                    <div class="data-display-data-column">{{accountDetailsCtrl.parcel.sale.priorYearTaxRollAssessed | currency}}</div>
-
-                    <div class="data-display-header-column">Tax District</div>
-                    <div class="data-display-data-column">{{accountDetailsCtrl.parcel.account.defaultTaxDistrict}}</div>
-
-                    <div class="data-display-header-column">Tax Rate</div>
-                    <div class="data-display-data-column">{{accountDetailsCtrl.parcel.account.taxRate}}</div>
-
-                    <div class="data-display-header-column">Subdivision Name</div>
-                    <div class="data-display-data-column">{{accountDetailsCtrl.parcel.account.subdivisionName}}</div>
-
-                    <div class="data-display-header-column">Neighborhood</div>
-                    <div class="data-display-data-column">{{accountDetailsCtrl.parcel.account.nbhdCode}}-{{accountDetailsCtrl.parcel.account.nbhdExtension}}</div>
-
-                    <div class="data-display-header-column">Location Description</div>
-                    <div class="data-display-data-column">{{accountDetailsCtrl.parcel.account.legal}}</div>
                 </div>
             </div>
         </div>

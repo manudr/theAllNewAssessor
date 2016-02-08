@@ -51,36 +51,6 @@
     background-color: #e5ffe5;
 }
 
-.col-sm-1-new {
-    float: left;
-    width: 2%;
-}
-
-.col-sm-4-custom {
-    padding: 5px;
-    float: left;
-    background-color: #ffffff;
-    color: #000000;
-    font-weight: normal;
-    width: 60%;
-}
-.col-sm-3-custom {
-    width: 50%;
-}
-.col-sm-2-custom {
-    padding: 5px;
-    float: left;
-    background-color: #afcee9;
-    color: #000000;
-    font-weight: bold;
-    width: 50%;
-}
-
-.col-sm-9-new {
-    float: left;
-    width: 80%;
-}
-
 .small-panel {
     margin-bottom: 20px;
     background-color: #fff;
@@ -137,4 +107,21 @@
     margin: 20px;
     padding-left: 15px;
     padding-right: 15px;
+}
+
+.custom-window-for-messages {
+    padding: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    background-color: #d2f9f2;
+    border-color: #062d26;
+    color: #062d26;
+    border: 1px solid #000000;
+    border-radius: 10px;
+    box-shadow: 3px 3px 10px gray;
+}
+
+.custom-span-for-messages {
+    color: #062d26;
+    font-weight: bold;
 }
