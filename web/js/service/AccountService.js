@@ -26,8 +26,8 @@ App.factory('AccountService', ['$http', '$q', function($http, $q){
             );
         },
 
-        fetchNeighborhoodSales: function(zipCode, neighborhood, subdivision) {
-            return $http.get('/apps/dcappsmonitor/rservices/accountService/neighborhoodSales/' + zipCode + '/' + neighborhood + '/' + subdivision).then(
+        fetchNeighborhoodSales: function(zipCode, neighborhood, neighborhoodExt, subdivision) {
+            return $http.get('/apps/dcappsmonitor/rservices/accountService/neighborhoodSales/' + zipCode + '/' + neighborhood + '/' + neighborhoodExt + '/' + subdivision).then(
                 function(response){
                     return response.data;
                 },

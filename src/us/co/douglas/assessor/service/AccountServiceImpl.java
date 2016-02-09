@@ -71,6 +71,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     public List<NeighborhoodSale> getNeighborhoodSales(String zipCode, String neighborhood, String subdivision) throws Exception {
-        return accountDAO.getNeighborhoodSales(zipCode, neighborhood, subdivision);
+        List<NeighborhoodSale> allNeighborhoodSales = (List<NeighborhoodSale>) InMemoryCache.getCacheMap().get("allNeighborhoodSales");
+        return allNeighborhoodSales;
     }
 }

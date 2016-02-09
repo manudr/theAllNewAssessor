@@ -82,7 +82,9 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="account in matchedAccounts | orderBy:sortType:sortReverse" ng-class-odd="'odd'">
-                        <td><a href="#/parcelDetails/{{account.accountNo}}/{{account.propertyZipCode}}/{{account.neighborhood}}/{{account.subdivisionName}}">{{account.accountNo}}</a></td>
+                        <td>
+                            <a href="#/parcelDetails/{{account.accountNo}}/{{account.propertyZipCode}}/{{account.neighborhood}}/{{account.neighborhoodExt}}/{{account.subdivisionName}}">{{account.accountNo}}</a>
+                        </td>
                         <td>{{account.parcelNo}}</td>
                         <td>{{account.ownerName}}</td>
                         <td>{{account.businessName}}</td>

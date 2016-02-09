@@ -7,7 +7,7 @@ App.controller('neighborhoodSalesController', function($scope, $route, AccountSe
     $scope.sortReverse  = false;  // set the default sort order
     $scope.globalsSearchString   = '';     // set the default search/filter term
 
-    AccountService.fetchNeighborhoodSales($route.current.params.zipCode, $route.current.params.neighborhood, $route.current.params.subdivision).then(function(data) {
+    AccountService.fetchNeighborhoodSales($route.current.params.zipCode, $route.current.params.neighborhood, $route.current.params.neighborhoodExt, $route.current.params.subdivision).then(function(data) {
         neighborhoodSalesController.sales = data;
         $scope.sales = data;
     });

@@ -156,12 +156,6 @@ public class AccountDAOImpl implements AccountDAO {
                     "AND TBNSUBDIVISION.SUBNAME  LIKE '%" + subdivision + "%' " +
                     "AND TBLACCTPROPERTYADDRESS.PROPERTYZIPCODE LIKE '%" + zipCode + "%' " +
                     "ORDER BY SALEDATE DESC", NeighborhoodSale.class);
-
-//            query.setParameter("neighborhood", neighborhood);
-//            query.setParameter("subdivision", subdivision);
-//            query.setParameter("zipCode", zipCode);
-
-
             query.setMaxResults(maxResults);
             allSalesByZip = query.getResultList();
             log.info("allSalesByZip.size(): " + allSalesByZip.size());
@@ -171,6 +165,61 @@ public class AccountDAOImpl implements AccountDAO {
             entityManager.close();
         }
         return allSalesByZip;
+    }
+
+
+    public List<NeighborhoodSale> getAllNeighborhoodSales() {
+        log.info("getNeighborhoodSales...");
+        List<NeighborhoodSale> allNeighborhoodSales = new ArrayList<NeighborhoodSale>();
+        EntityManager entityManager = getEntityManager();
+        try {
+            Query query = entityManager.createNativeQuery("SELECT DISTINCT TBLSALE.RECEPTIONNO AS RECEPTIONNO, " +
+                    "TBLSALE.SALEDATE AS SALEDATE, " +
+                    "TBLSALE.GRANTOR AS GRANTOR, " +
+                    "TBLSALE.GRANTEE AS GRANTEE, " +
+                    "TBLSALE.SALEPRICE AS SALEPRICE, " +
+                    "TBLSALE.PPADJAMOUNT AS PPADJAMOUNT, " +
+                    "ISNULL(TBLACCTPROPERTYADDRESS.STREETNO, '') + ' ' + ISNULL(TBLACCTPROPERTYADDRESS.UNITNAME, '') + ' ' + ISNULL(TBLACCTPROPERTYADDRESS.STREETNAME, '') + ' ' + ISNULL(TBLACCTPROPERTYADDRESS.STREETTYPE, '') as propertyStreet, " +
+                    "ISNULL(TBLACCTPROPERTYADDRESS.PROPERTYCITY, '') as propertyCity, + " +
+                    "'CO' as propertyState, + " +
+                    "ISNULL(SUBSTRING(TBLACCTPROPERTYADDRESS.PROPERTYZIPCODE, 1, 5), '') AS propertyZipCode, " +
+                    "TBLSALE.GOODWILLADJAMOUNT AS GOODWILLADJAMOUNT, " +
+                    "TBLSALE.DOCUMENTDATE AS DOCUMENTDATE, " +
+                    "TBLSALE.OTHERADJAMOUNT AS OTHERADJAMOUNT, " +
+                    "TBLSALE.TIMEADJ AS TIMEADJ, " +
+                    "TBLSALE.JURISDICTIONID AS JURISDICTIONID, " +
+                    "TBLSALEACCT.ACCOUNTNO AS ACCOUNTNO, " +
+                    "TBLSALEACCT.INVENTORYEFFECTIVEDATE AS INVENTORYEFFECTIVEDATE, " +
+                    "TBLSALEACCT.ACCTADJSALEPRICE AS ACCTADJSALEPRICE, " +
+                    "0 AS TIMEADJUSTEDSALEPRICE, " +
+                    "ISNULL(TBLACCTNBHD.NBHDCODE, '') AS NEIGHBORHOOD, + " +
+                    "ISNULL(TBLACCTNBHD.NBHDEXTENSION, '') AS NEIGHBORHOODEXT, " +
+                    "ISNULL(TBNSUBDIVISION.SUBNAME, '') AS SUBDIVISION " +
+                    "FROM ENCOMPASS.TBLSALEACCT TBLSALEACCT " +
+                    "INNER JOIN ENCOMPASS.TBLSALE TBLSALE ON TBLSALE.RECEPTIONNO = TBLSALEACCT.RECEPTIONNO " +
+                    "INNER JOIN ENCOMPASS.TBLACCTPROPERTYADDRESS TBLACCTPROPERTYADDRESS ON TBLACCTPROPERTYADDRESS.ACCOUNTNO = TBLSALEACCT.ACCOUNTNO " +
+                    "INNER JOIN ENCOMPASS.TBLACCTNBHD TBLACCTNBHD ON TBLACCTNBHD.ACCOUNTNO = TBLSALEACCT.ACCOUNTNO " +
+                    "INNER JOIN ENCOMPASS.TBLSUBACCOUNT TBLSUBACCOUNT ON TBLSUBACCOUNT.ACCOUNTNO = TBLSALEACCT.ACCOUNTNO " +
+                    "INNER JOIN ENCOMPASS.TBNSUBDIVISION TBNSUBDIVISION ON TBNSUBDIVISION.SUBNO = TBLSUBACCOUNT.SUBNO " +
+                    "INNER JOIN (" +
+                    "    SELECT TBLSALEACCT.ACCOUNTNO, MAX(TBLSALEACCT.INVENTORYEFFECTIVEDATE) AS MAXDATE " +
+                    "    FROM ENCOMPASS.TBLSALEACCT " +
+                    "    GROUP BY TBLSALEACCT.ACCOUNTNO " +
+                    ") TM ON TBLSALEACCT.ACCOUNTNO = TM.ACCOUNTNO AND TBLSALEACCT.INVENTORYEFFECTIVEDATE = TM.MAXDATE " +
+                    "WHERE TBLSALEACCT.VEREND = 99999999999 " +
+                    "AND TBLACCTNBHD.VEREND = 99999999999 " +
+                    "AND TBLSUBACCOUNT.VEREND = 99999999999 " +
+                    "AND TBLSALE.VEREND = 99999999999 " +
+                    "ORDER BY SALEDATE DESC", NeighborhoodSale.class);
+            //query.setMaxResults(maxResults);
+            allNeighborhoodSales = query.getResultList();
+            log.info("allNeighborhoodSales.size(): " + allNeighborhoodSales.size());
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        } finally {
+            entityManager.close();
+        }
+        return allNeighborhoodSales;
     }
 
     public List<String> getAllSearchableStrings() {
@@ -195,14 +244,14 @@ public class AccountDAOImpl implements AccountDAO {
                     "ISNULL(TBLADDRESSSECURE.ZIPCODE, '') + ':' + " +
                     "ISNULL(TBNSUBDIVISION.SUBNAME, '') " +
                     "from encompass.TBLACCT TBLACCT " +
-                    "join encompass.TBLACCTPROPERTYADDRESS TBLACCTPROPERTYADDRESS on TBLACCTPROPERTYADDRESS.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
-                    "join encompass.TBLACCTOWNERADDRESS TBLACCTOWNERADDRESS on TBLACCTOWNERADDRESS.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
-                    "join encompass.TBLPERSONSECURE TBLPERSONSECURE on TBLPERSONSECURE.PERSONCODE = TBLACCTOWNERADDRESS.PERSONCODE " +
-                    "join encompass.TBLADDRESSSECURE TBLADDRESSSECURE on TBLADDRESSSECURE.ADDRESSCODE = TBLACCTOWNERADDRESS.ADDRESSCODE " +
-                    "join encompass.TBLACCTNBHD TBLACCTNBHD on TBLACCTNBHD.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
-                    "join encompass.TBLACCTLEGAL TBLACCTLEGAL on TBLACCTLEGAL.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
-                    "join encompass.TBLSUBACCOUNT TBLSUBACCOUNT on TBLSUBACCOUNT.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
-                    "join encompass.TBNSUBDIVISION TBNSUBDIVISION on TBNSUBDIVISION.SUBNO = TBLSUBACCOUNT.SUBNO " +
+                    "right outer join encompass.TBLACCTPROPERTYADDRESS TBLACCTPROPERTYADDRESS on TBLACCTPROPERTYADDRESS.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
+                    "right outer join encompass.TBLACCTOWNERADDRESS TBLACCTOWNERADDRESS on TBLACCTOWNERADDRESS.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
+                    "right outer join encompass.TBLPERSONSECURE TBLPERSONSECURE on TBLPERSONSECURE.PERSONCODE = TBLACCTOWNERADDRESS.PERSONCODE " +
+                    "right outer join encompass.TBLADDRESSSECURE TBLADDRESSSECURE on TBLADDRESSSECURE.ADDRESSCODE = TBLACCTOWNERADDRESS.ADDRESSCODE " +
+                    "right outer join encompass.TBLACCTNBHD TBLACCTNBHD on TBLACCTNBHD.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
+                    "right outer join encompass.TBLACCTLEGAL TBLACCTLEGAL on TBLACCTLEGAL.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
+                    "right outer join encompass.TBLSUBACCOUNT TBLSUBACCOUNT on TBLSUBACCOUNT.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
+                    "right outer join encompass.TBNSUBDIVISION TBNSUBDIVISION on TBNSUBDIVISION.SUBNO = TBLSUBACCOUNT.SUBNO " +
                     "where TBLACCT.verend = 99999999999 " +
                     "and TBLADDRESSSECURE.verend = 99999999999 " +
                     "and TBLPERSONSECURE.verend = 99999999999 " +
@@ -214,6 +263,7 @@ public class AccountDAOImpl implements AccountDAO {
                     "order by TBLACCT.ACCOUNTNO desc, TBLACCT.PARCELNO desc");
             //query.setMaxResults(maxResults); //This should pull all of them // TODO
             allSearchableStrings = query.getResultList();
+            log.info("allSearchableStrings.size(): " + allSearchableStrings.size());
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         } finally {

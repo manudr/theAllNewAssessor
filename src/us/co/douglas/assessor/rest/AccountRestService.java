@@ -172,13 +172,19 @@ public class AccountRestService {
     }
 
     @GET
-    @Path("/neighborhoodSales/{zipCode}/{neighborhood}/{subdivision}")
-    public List<NeighborhoodSale> getNeighborhoodSales(@PathParam("zipCode") String zipCode, @PathParam("neighborhood") String neighborhood, @PathParam("subdivision") String subdivision) throws Exception {
+    @Path("/neighborhoodSales/{zipCode}/{neighborhood}/{neighborhoodExt}/{subdivision}")
+    public List<NeighborhoodSale> getNeighborhoodSales(@PathParam("zipCode") String zipCode, @PathParam("neighborhood") String neighborhood, @PathParam("neighborhoodExt") String neighborhoodExt, @PathParam("subdivision") String subdivision) throws Exception {
         log.info("getNeighborhoodSales()...");
-        log.info("zipCode: " + zipCode);
-        return accountService.getNeighborhoodSales(zipCode, neighborhood, subdivision);
+        List<NeighborhoodSale> allNeighborhoodSales = accountService.getNeighborhoodSales(zipCode, neighborhood, subdivision);
+        List<NeighborhoodSale> matchedNeighborhoodSales = new ArrayList<NeighborhoodSale>();
+        for (NeighborhoodSale neighborhoodSale : allNeighborhoodSales) {
+            if (neighborhoodSale.getPropertyZipCode().equalsIgnoreCase(zipCode) &&
+                    neighborhoodSale.getNeighborhood().equalsIgnoreCase(neighborhood) &&
+                    neighborhoodSale.getNeighborhoodExt().equalsIgnoreCase(neighborhoodExt) &&
+                    neighborhoodSale.getSubdivision().equalsIgnoreCase(subdivision)) {
+                matchedNeighborhoodSales.add(neighborhoodSale);
+            }
+        }
+        return matchedNeighborhoodSales;
     }
-
-
-
 }

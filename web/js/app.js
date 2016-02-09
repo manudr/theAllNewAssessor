@@ -20,7 +20,7 @@ App.config(['$routeProvider', function($routeProvider) {
                 }]
             }
         })
-        .when('/parcelDetails/:accountNo/:zipCode/:neighborhood/:subdivision', {
+        .when('/parcelDetails/:accountNo/:zipCode/:neighborhood/:neighborhoodExt/:subdivision', {
             templateUrl: 'views/parcelDetails.html',
             controller : "AccountDetailsController as accountDetailsCtrl",
             resolve: {

@@ -3,11 +3,10 @@
         <div class="col-sm-12">
             <div class="custom-window-for-messages">
                 <h3 style="color: #00663c; font-weight: bold">
-                    This property is a <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.account.acctType | lowercase}}</span> property built on a <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.landType | lowercase}}</span> land.
-                </h3>
-                <h4 style="color: #00663c; font-weight: bold">
+                    This property is a <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.account.acctType | lowercase}}</span> property.
+                    This property was built on a <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.landType | lowercase}}</span> land.
                     This property has been added to your favourites.
-                </h4>
+                </h3>
                 <h4 style="color: #00663c; font-weight: bold">
                     This property has <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.bltAsTotalUnitCount | lowercase}}</span> building<span ng-if="accountDetailsCtrl.parcel.sale.bltAsTotalUnitCount > 1">s</span>
                     on a <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.landNetSf | number}}</span> square feet lot,
@@ -188,7 +187,7 @@
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="sale in sales | orderBy:sortType:sortReverse | filter:neighborhoodSalesSearchString" ng-class-odd="'odd'">
-                                        <td><a href="#/parcelDetails/{{sale.accountNo}}/{{sale.propertyZipCode}}/{{sale.neighborhood}}/{{sale.subdivision}}">{{sale.accountNo}}</a></td>
+                                        <td><a href="#/parcelDetails/{{sale.accountNo}}/{{sale.propertyZipCode}}/{{sale.neighborhood}}/{{sale.neighborhoodExt}}/{{sale.subdivision}}">{{sale.accountNo}}</a></td>
                                         <td>{{sale.receptionNo}}</td>
                                         <td>{{sale.propertyStreet + ' ' + sale.propertyCity + ' ' + sale.propertyState + ' ' + sale.propertyZipCode}}</td>
                                         <td>{{sale.neighborhood + '-' + sale.neighborhoodExt}}</td>
