@@ -55,8 +55,6 @@ public class AccountRestService {
         List<BasicAccountInfo> matchedParcels = new ArrayList<BasicAccountInfo>();
         List<String> allSearchableStrings = accountService.getAllSearchableStrings();
         log.info("allSearchableStrings.size(): " + allSearchableStrings.size());
-        int maxCount = 0;
-
         /*
         if (allSearchableStrings != null & allSearchableStrings.size() > 0) {
             for (String searchableString : allSearchableStrings) {
@@ -113,12 +111,11 @@ public class AccountRestService {
                     basicAccountInfo.setSubdivisionName(searchableStringTokens[14]);
                     if (!matchedParcels.contains(basicAccountInfo)) {
                         matchedParcels.add(basicAccountInfo);
-                        maxCount++;
-                        if (maxCount >= maxRows) {
-                            log.info("Max rows(" + maxRows + ") reached. Stopping the search...");
-                            break;
-                        }
                     }
+                }
+                if (matchedParcels.size() >= maxRows) {
+                    log.info("Max rows(" + maxRows + ") reached. Stopping the search...");
+                    break;
                 }
             }
         }
@@ -183,6 +180,10 @@ public class AccountRestService {
                     neighborhoodSale.getNeighborhoodExt().equalsIgnoreCase(neighborhoodExt) &&
                     neighborhoodSale.getSubdivision().equalsIgnoreCase(subdivision)) {
                 matchedNeighborhoodSales.add(neighborhoodSale);
+            }
+            if (matchedNeighborhoodSales.size() >= maxRows) {
+                log.info("Max rows(" + maxRows + ") reached. Stopping the search...");
+                break;
             }
         }
         return matchedNeighborhoodSales;

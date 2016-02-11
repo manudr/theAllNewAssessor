@@ -211,7 +211,7 @@ public class AccountDAOImpl implements AccountDAO {
                     "AND TBLSUBACCOUNT.VEREND = 99999999999 " +
                     "AND TBLSALE.VEREND = 99999999999 " +
                     "ORDER BY SALEDATE DESC", NeighborhoodSale.class);
-            query.setMaxResults(maxResults);
+            //query.setMaxResults(maxResults);
             allNeighborhoodSales = query.getResultList();
             log.info("allNeighborhoodSales.size(): " + allNeighborhoodSales.size());
         } catch (Exception ex) {
