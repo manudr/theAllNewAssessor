@@ -329,7 +329,7 @@ public class Sale {
         return impCount;
     }
 
-    public void setImpCount(int impCount) {
+    public void setImpCount(Integer impCount) {
         this.impCount = impCount;
     }
 
@@ -337,7 +337,7 @@ public class Sale {
         return bltAsTotalUnitCount;
     }
 
-    public void setBltAsTotalUnitCount(int bltAsTotalUnitCount) {
+    public void setBltAsTotalUnitCount(Integer bltAsTotalUnitCount) {
         this.bltAsTotalUnitCount = bltAsTotalUnitCount;
     }
 
@@ -345,7 +345,7 @@ public class Sale {
         return roomCount;
     }
 
-    public void setRoomCount(int roomCount) {
+    public void setRoomCount(Integer roomCount) {
         this.roomCount = roomCount;
     }
 
@@ -353,7 +353,7 @@ public class Sale {
         return bedRoomCount;
     }
 
-    public void setBedRoomCount(int bedRoomCount) {
+    public void setBedRoomCount(Integer bedRoomCount) {
         this.bedRoomCount = bedRoomCount;
     }
 
@@ -361,7 +361,7 @@ public class Sale {
         return bathCount;
     }
 
-    public void setBathCount(int bathCount) {
+    public void setBathCount(Integer bathCount) {
         this.bathCount = bathCount;
     }
 
@@ -369,7 +369,7 @@ public class Sale {
         return fixtureCount;
     }
 
-    public void setFixtureCount(int fixtureCount) {
+    public void setFixtureCount(Integer fixtureCount) {
         this.fixtureCount = fixtureCount;
     }
 
@@ -377,7 +377,7 @@ public class Sale {
         return totalImpSf;
     }
 
-    public void setTotalImpSf(int totalImpSf) {
+    public void setTotalImpSf(Integer totalImpSf) {
         this.totalImpSf = totalImpSf;
     }
 
@@ -385,7 +385,7 @@ public class Sale {
         return residentialSf;
     }
 
-    public void setResidentialSf(int residentialSf) {
+    public void setResidentialSf(Integer residentialSf) {
         this.residentialSf = residentialSf;
     }
 

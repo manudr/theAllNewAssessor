@@ -114,11 +114,11 @@ public class AccountRestService {
                     if (!matchedParcels.contains(basicAccountInfo)) {
                         matchedParcels.add(basicAccountInfo);
                         maxCount++;
+                        if (maxCount >= maxRows) {
+                            log.info("Max rows(" + maxRows + ") reached. Stopping the search...");
+                            break;
+                        }
                     }
-                }
-                if (maxCount > maxRows) {
-                    log.info("Max rows reached. Stopping the search...");
-                    break;
                 }
             }
         }

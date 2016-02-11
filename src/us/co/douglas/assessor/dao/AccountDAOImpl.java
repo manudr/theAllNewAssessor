@@ -211,7 +211,7 @@ public class AccountDAOImpl implements AccountDAO {
                     "AND TBLSUBACCOUNT.VEREND = 99999999999 " +
                     "AND TBLSALE.VEREND = 99999999999 " +
                     "ORDER BY SALEDATE DESC", NeighborhoodSale.class);
-            //query.setMaxResults(maxResults);
+            query.setMaxResults(maxResults);
             allNeighborhoodSales = query.getResultList();
             log.info("allNeighborhoodSales.size(): " + allNeighborhoodSales.size());
         } catch (Exception ex) {
@@ -261,7 +261,7 @@ public class AccountDAOImpl implements AccountDAO {
                     "and TBLACCTLEGAL.verend = 99999999999 " +
                     "and TBLSUBACCOUNT.verend = 99999999999 " +
                     "order by TBLACCT.ACCOUNTNO desc, TBLACCT.PARCELNO desc");
-            //query.setMaxResults(maxResults); //This should pull all of them // TODO
+            //query.setMaxResults(maxResults); //TODO This should pull all of them
             allSearchableStrings = query.getResultList();
             log.info("allSearchableStrings.size(): " + allSearchableStrings.size());
         } catch (Exception ex) {
