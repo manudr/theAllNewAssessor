@@ -1,7 +1,7 @@
 <div class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <a href="http://www.douglas.co.us/assessor"><img src="images/white-logo-big.png" width="75%" height="25%"></a>
+            <a href="http://www.douglas.co.us/assessor"><img src="../web/images/white-logo-big.png" width="75%" height="25%"></a>
             <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>

@@ -6,6 +6,7 @@ import org.apache.commons.logging.LogFactory;
 import us.co.douglas.assessor.dao.AccountDAO;
 import us.co.douglas.assessor.dao.AccountDAOImpl;
 import us.co.douglas.assessor.model.NeighborhoodSale;
+import us.co.douglas.assessor.model.Parcel;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -22,8 +23,10 @@ public class CacheThreadListener implements Runnable, ServletContextListener {
 
     private static Log log = LogFactory.getLog(CacheThreadListener.class);
     private static AccountDAO accountDAO = new AccountDAOImpl();
-    private static long threadSleepTime = ((1000 * 60) * 60) * 24; //((1000(milli seconds) * 60) * 60(minutes)) * 5(hours)
-    private  static SimpleDateFormat dateFormat = new SimpleDateFormat();
+    private static long threadSleepTime = ((1000 * 60) * 60) * 24; //((1000(milli seconds) * 60) * 60(minutes)) * 24(hours)
+    private static SimpleDateFormat dateFormat = new SimpleDateFormat();
+    private static List<String> allSearchableStrings = null;
+    private static List<NeighborhoodSale> allNeighborhoodSales = null;
 
     @Override
     public void contextDestroyed(ServletContextEvent arg0) {
@@ -40,22 +43,46 @@ public class CacheThreadListener implements Runnable, ServletContextListener {
 
     public void run() {
         try {
+            /*
             while(true) {
                 synchronized(CacheThreadListener.class) {
-                    List<String> allSearchableStrings = accountDAO.getAllSearchableStrings();
-                    //List<String> allSearchableStrings = SerializeDeserializeUtil.deserialize();
+                    allSearchableStrings = accountDAO.getAllSearchableStrings();
+                    SerializeDeserializeUtil.serialize(allSearchableStrings, "allSearchableStrings.ser");
+                    allSearchableStrings = (List<String>)SerializeDeserializeUtil.deserialize("allSearchableStrings.ser");
                     InMemoryCache.getCacheMap().put("allSearchableStrings", allSearchableStrings);
 
-                    List<NeighborhoodSale> allNeighborhoodSales = accountDAO.getAllNeighborhoodSales();
-                    //List<String> allSearchableStrings = SerializeDeserializeUtil.deserialize();
+                    allNeighborhoodSales = accountDAO.getAllNeighborhoodSales();
+                    SerializeDeserializeUtil.serialize(allNeighborhoodSales, "allNeighborhoodSales.ser");
+                    allNeighborhoodSales = (List<NeighborhoodSale>)SerializeDeserializeUtil.deserialize("allNeighborhoodSales.ser");
                     InMemoryCache.getCacheMap().put("allNeighborhoodSales", allNeighborhoodSales);
-
-                    log.info("Updated the cache with data at " + dateFormat.format(Calendar.getInstance().getTime()) + ". Sleeping for " + (threadSleepTime / 60000) / 60 + " hours");
-                    Thread.sleep(threadSleepTime);
+                    int maxAccounts = 250;
+                    int count = 0;
+                    for (String searchableString : allSearchableStrings) {
+                        String[] searchableStringTokens = searchableString.split(":");
+                        String accountNo = searchableStringTokens[0];
+                        Parcel parcel = accountDAO.getParcel(accountNo);
+                        SerializeDeserializeUtil.serialize(parcel, accountNo + ".ser");
+                        count++;
+                        if (count >= maxAccounts) {
+                            break;
+                        }
+                    }
                 }
+                log.info("Updated the cache with data at " + dateFormat.format(Calendar.getInstance().getTime()) + ". Sleeping for " + (threadSleepTime / 60000) / 60 + " hours");
+                Thread.sleep(threadSleepTime);
             }
+            */
+
+            log.info("!!!!!!!!!!!!!!!!!! THREAD HAS BEEN DISABLED !!!!!!!!!!!!!!!!!!");
+
+            allSearchableStrings = (List<String>)SerializeDeserializeUtil.deserialize("allSearchableStrings.ser");
+            InMemoryCache.getCacheMap().put("allSearchableStrings", allSearchableStrings);
+
+            allNeighborhoodSales = (List<NeighborhoodSale>)SerializeDeserializeUtil.deserialize("allNeighborhoodSales.ser");
+            InMemoryCache.getCacheMap().put("allNeighborhoodSales", allNeighborhoodSales);
+
         } catch (Exception e) {
-            log.info("Interrupted.");
+            throw new RuntimeException(e);
         }
     }
 }

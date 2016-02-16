@@ -2,6 +2,7 @@ package us.co.douglas.assessor.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -10,7 +11,7 @@ import java.util.Date;
  */
 
 @Entity
-public class Sale {
+public class Sale implements Serializable {
     private String receptionNo;
     private String grantor;
     private String grantee;

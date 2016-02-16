@@ -172,7 +172,7 @@ public class AccountRestService {
     @Path("/neighborhoodSales/{zipCode}/{neighborhood}/{neighborhoodExt}/{subdivision}")
     public List<NeighborhoodSale> getNeighborhoodSales(@PathParam("zipCode") String zipCode, @PathParam("neighborhood") String neighborhood, @PathParam("neighborhoodExt") String neighborhoodExt, @PathParam("subdivision") String subdivision) throws Exception {
         log.info("getNeighborhoodSales()...");
-        List<NeighborhoodSale> allNeighborhoodSales = accountService.getNeighborhoodSales(zipCode, neighborhood, subdivision);
+        List<NeighborhoodSale> allNeighborhoodSales = accountService.getAllNeighborhoodSales();
         List<NeighborhoodSale> matchedNeighborhoodSales = new ArrayList<NeighborhoodSale>();
         for (NeighborhoodSale neighborhoodSale : allNeighborhoodSales) {
             if (neighborhoodSale.getPropertyZipCode().equalsIgnoreCase(zipCode) &&

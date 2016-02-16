@@ -6,6 +6,7 @@ import us.co.douglas.assessor.dao.AccountDAO;
 import us.co.douglas.assessor.dao.AccountDAOImpl;
 import us.co.douglas.assessor.model.*;
 import us.co.douglas.assessor.util.InMemoryCache;
+import us.co.douglas.assessor.util.SerializeDeserializeUtil;
 
 import java.util.List;
 
@@ -17,8 +18,16 @@ public class AccountServiceImpl implements AccountService {
     private AccountDAO accountDAO = new AccountDAOImpl();
     private static Boolean serialized = false; // TODO  change this to false
 
-    public Parcel getParcel(String accountNo) {
-        return accountDAO.getParcel(accountNo);
+    /*
+    public List<String> getAllAccountStrings() throws Exception {
+        return accountDAO.getAllAccountStrings();
+    }
+    */
+
+    public Parcel getParcel(String accountNo) throws Exception {
+        //return accountDAO.getParcel(accountNo);
+        Parcel parcel = (Parcel) SerializeDeserializeUtil.deserialize(accountNo + ".ser");
+        return  parcel;
     }
 
     public PropertyAddress getPropertyAddress(String accountNo) throws Exception {
@@ -43,34 +52,12 @@ public class AccountServiceImpl implements AccountService {
         return propertyAddresses;
     }
 
-    /*
-    public List<String> getAllSearchableStrings() throws Exception{
-        log.info("getAllSearchableStrings()...");
-        if (allSearchableStrings == null) {
-            log.info("allSearchableStrings is null...");
-            if ( !serialized) {
-                allSearchableStrings = accountDAO.getAllSearchableStrings();
-                SerializeDeserializeUtil.serialize(allSearchableStrings);
-                serialized = true;
-                log.info("serialized allSearchableStrings...");
-            }
-            allSearchableStrings = SerializeDeserializeUtil.deserialize();
-            inMemoryCache.put("allSearchableStrings", allSearchableStrings);
-        } else {
-            log.info("allSearchableStrings is not null...");
-            allSearchableStrings = inMemoryCache.get("allSearchableStrings");
-        }
-        log.info("allSearchableStrings.size(): " + allSearchableStrings.size());
-        return allSearchableStrings;
-    }
-    */
-
     public List<String> getAllSearchableStrings() throws Exception{
          List<String> allSearchableStrings = (List<String>) InMemoryCache.getCacheMap().get("allSearchableStrings");
          return allSearchableStrings;
     }
 
-    public List<NeighborhoodSale> getNeighborhoodSales(String zipCode, String neighborhood, String subdivision) throws Exception {
+    public List<NeighborhoodSale> getAllNeighborhoodSales() throws Exception {
         List<NeighborhoodSale> allNeighborhoodSales = (List<NeighborhoodSale>) InMemoryCache.getCacheMap().get("allNeighborhoodSales");
         return allNeighborhoodSales;
     }

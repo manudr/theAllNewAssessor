@@ -1,44 +1,48 @@
 <div class="container-custom">
     <div class="row">
         <div class="col-sm-12">
-            <div class="custom-window-for-messages">
-                <h3 style="color: #00663c; font-weight: bold">
-                    This property is a <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.account.acctType | lowercase}}</span> property.
-                    This property was built on a <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.landType | lowercase}}</span> land.
-                    This property has been added to your favourites.
-                </h3>
-                <h4 style="color: #00663c; font-weight: bold">
-                    This property has <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.bltAsTotalUnitCount | lowercase}}</span> building<span ng-if="accountDetailsCtrl.parcel.sale.bltAsTotalUnitCount > 1">s</span>
-                    on a <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.landNetSf | number}}</span> square feet lot,
-                    built in <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.bltAsYearBuilt | lowercase}}</span>
-                    as a <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.bltAsDescription | lowercase}}</span>
-                    with <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.impQuality | lowercase}}</span> quality and
-                    with features: <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.hvacType | lowercase}}</span>,
-                    <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.impInterior | lowercase}}</span> as interior,
-                    <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.impExterior | lowercase}}</span> as exterior
-                    <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.roofCover | lowercase}}</span> as roof cover,
-                    has <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.totalImpSf | number}}</span> total finished square feet with
-                    <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.roomCount | lowercase}}</span> total rooms,
-                    <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.bedRoomCount | lowercase}}</span> bed rooms,
-                    <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.bathCount | lowercase}}</span> bath rooms.
 
-                </h4>
-                <h4 ng-if="accountDetailsCtrl.parcel.appeal.appealNo != null">
-                    This account has an appeal in process. Click <a style="color: #cc3300; font-weight: bold " href="#/appealDetails/{{accountDetailsCtrl.parcel.appeal.appealNo}}">here</a> to view appeal details
-                </h4>
+            <div ng-controller="DemoCtrl">
+                    <div collapse-toggler class="panel-heading panel-title">+Property Highlights</div>
+                    <div class="collapse custom-window-for-messages">
+                        <h3 style="color: #00663c; font-weight: bold">
+                            This property is a <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.account.acctType | lowercase}}</span> property.
+                            This property was built on a <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.landType | lowercase}}</span> land.
+                            This property has been added to your favourites.
+                        </h3>
+                        <h4 style="color: #00663c; font-weight: bold">
+                            This property has <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.bltAsTotalUnitCount | lowercase}}</span> building<span ng-if="accountDetailsCtrl.parcel.sale.bltAsTotalUnitCount > 1">s</span>
+                            on a <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.landNetSf | number}}</span> square feet lot,
+                            built in <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.bltAsYearBuilt | lowercase}}</span>
+                            as a <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.bltAsDescription | lowercase}}</span>
+                            with <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.impQuality | lowercase}}</span> quality and
+                            with features: <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.hvacType | lowercase}}</span>,
+                            <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.impInterior | lowercase}}</span> as interior,
+                            <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.impExterior | lowercase}}</span> as exterior
+                            <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.roofCover | lowercase}}</span> as roof cover,
+                            has <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.totalImpSf | number}}</span> total finished square feet with
+                            <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.roomCount | lowercase}}</span> total rooms,
+                            <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.bedRoomCount | lowercase}}</span> bed rooms,
+                            <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.bathCount | lowercase}}</span> bath rooms.
+
+                        </h4>
+                        <h4 ng-if="accountDetailsCtrl.parcel.appeal.appealNo != null">
+                            This account has an appeal in process. Click <a style="color: #cc3300; font-weight: bold " href="#/appealDetails/{{accountDetailsCtrl.parcel.appeal.appealNo}}">here</a> to view appeal details
+                        </h4>
+                    </div>
             </div>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-12" ng-controller="DemoCtrl">
             <div class="panel panel-success">
-                <div class="panel-heading">
+                <div collapse-toggler class="panel-heading">
                     <h4 class="panel-title">
-                        Account Details
+                        Parcel Details
                     </h4>
                 </div>
-                <div class="panel-body">
+                <div class="collapse panel-body">
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="data-display-header-column">Account Number</div>
@@ -101,7 +105,7 @@
             </div>
         </div>
     </div>
-
+    <br>
     <div class="row">
         <div class="col-sm-12">
             <div class="panel panel-success">

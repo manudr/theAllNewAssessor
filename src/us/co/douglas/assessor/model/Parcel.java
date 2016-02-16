@@ -1,9 +1,11 @@
 package us.co.douglas.assessor.model;
 
+import java.io.Serializable;
+
 /**
  * Created by mdronamr on 2/3/16.
  */
-public class Parcel {
+public class Parcel implements Serializable {
     Account account;
     Appeal appeal;
     Sale sale;

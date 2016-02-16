@@ -2,13 +2,14 @@ package us.co.douglas.assessor.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 /**
  * Created by mdronamr on 12/24/15.
  */
 
 @Entity
-public class PropertyAddress {
+public class PropertyAddress implements Serializable {
     private String accountNo;
     private String streetNumber;
     private String streetName;

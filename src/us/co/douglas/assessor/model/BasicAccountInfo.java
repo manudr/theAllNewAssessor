@@ -1,9 +1,11 @@
 package us.co.douglas.assessor.model;
 
+import java.io.Serializable;
+
 /**
  * Created by mdronamr on 12/29/15.
  */
-public class BasicAccountInfo {
+public class BasicAccountInfo implements Serializable {
     private String accountNo;
     private String parcelNo;
     private String ownerName;

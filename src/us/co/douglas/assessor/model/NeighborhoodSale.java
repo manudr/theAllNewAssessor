@@ -2,6 +2,7 @@ package us.co.douglas.assessor.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -9,7 +10,7 @@ import java.util.Date;
  */
 
 @Entity
-public class NeighborhoodSale {
+public class NeighborhoodSale implements Serializable {
     private String accountNo;
     private String receptionNo;
     private String neighborhood;

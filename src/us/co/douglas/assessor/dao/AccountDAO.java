@@ -8,6 +8,8 @@ import java.util.List;
  * Created by mdronamr on 12/22/15.
  */
 public interface AccountDAO {
+
+    //public List<String> getAllAccountStrings() throws Exception;
     public Parcel getParcel(String accountNo);
     public Account getAccount(String accountNo) throws Exception;
     public List<Account> getAllAccounts() throws Exception;
