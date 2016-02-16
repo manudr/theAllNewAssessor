@@ -43,7 +43,6 @@ public class CacheThreadListener implements Runnable, ServletContextListener {
 
     public void run() {
         try {
-            /*
             while(true) {
                 synchronized(CacheThreadListener.class) {
                     allSearchableStrings = accountDAO.getAllSearchableStrings();
@@ -71,8 +70,8 @@ public class CacheThreadListener implements Runnable, ServletContextListener {
                 log.info("Updated the cache with data at " + dateFormat.format(Calendar.getInstance().getTime()) + ". Sleeping for " + (threadSleepTime / 60000) / 60 + " hours");
                 Thread.sleep(threadSleepTime);
             }
-            */
 
+            /*
             log.info("!!!!!!!!!!!!!!!!!! THREAD HAS BEEN DISABLED !!!!!!!!!!!!!!!!!!");
 
             allSearchableStrings = (List<String>)SerializeDeserializeUtil.deserialize("allSearchableStrings.ser");
@@ -80,6 +79,7 @@ public class CacheThreadListener implements Runnable, ServletContextListener {
 
             allNeighborhoodSales = (List<NeighborhoodSale>)SerializeDeserializeUtil.deserialize("allNeighborhoodSales.ser");
             InMemoryCache.getCacheMap().put("allNeighborhoodSales", allNeighborhoodSales);
+            */
 
         } catch (Exception e) {
             throw new RuntimeException(e);
