@@ -25,7 +25,7 @@
 
     <listener>
         <listener-class>
-            us.co.douglas.assessor.util.CacheThreadListener
+            us.co.douglas.assessor.util.CacheListener
         </listener-class>
     </listener>
 
