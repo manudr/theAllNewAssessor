@@ -1,5 +1,7 @@
 package us.co.douglas.assessor.util;
 
+import jcifs.smb.NtlmPasswordAuthentication;
+import jcifs.smb.SmbFile;
 import org.apache.commons.collections4.map.LRUMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -27,6 +29,7 @@ public class CacheThreadListener implements Runnable, ServletContextListener {
     private static SimpleDateFormat dateFormat = new SimpleDateFormat();
     private static List<String> allSearchableStrings = null;
     private static List<NeighborhoodSale> allNeighborhoodSales = null;
+    int maxAccounts = 50;
 
     @Override
     public void contextDestroyed(ServletContextEvent arg0) {
@@ -43,6 +46,7 @@ public class CacheThreadListener implements Runnable, ServletContextListener {
 
     public void run() {
         try {
+            /*
             while(true) {
                 synchronized(CacheThreadListener.class) {
                     allSearchableStrings = accountDAO.getAllSearchableStrings();
@@ -54,32 +58,43 @@ public class CacheThreadListener implements Runnable, ServletContextListener {
                     SerializeDeserializeUtil.serialize(allNeighborhoodSales, "allNeighborhoodSales.ser");
                     allNeighborhoodSales = (List<NeighborhoodSale>)SerializeDeserializeUtil.deserialize("allNeighborhoodSales.ser");
                     InMemoryCache.getCacheMap().put("allNeighborhoodSales", allNeighborhoodSales);
-                    int maxAccounts = 250;
-                    int count = 0;
                     for (String searchableString : allSearchableStrings) {
                         String[] searchableStringTokens = searchableString.split(":");
                         String accountNo = searchableStringTokens[0];
                         Parcel parcel = accountDAO.getParcel(accountNo);
                         SerializeDeserializeUtil.serialize(parcel, accountNo + ".ser");
-                        count++;
-                        if (count >= maxAccounts) {
-                            break;
-                        }
                     }
                 }
                 log.info("Updated the cache with data at " + dateFormat.format(Calendar.getInstance().getTime()) + ". Sleeping for " + (threadSleepTime / 60000) / 60 + " hours");
                 Thread.sleep(threadSleepTime);
             }
+            */
 
             /*
+            NtlmPasswordAuthentication auth = new NtlmPasswordAuthentication("DCGD", "mdronamr", "P@rk3rMarc0tt");
+            SmbFile allSearchableStringsFile = new SmbFile("smb://PRNAS01/mdronamr/docs/allSearchableStrings.ser", auth);
+            SmbFile allNeighborhoodSalesFile = new SmbFile("smb://PRNAS01/mdronamr/docs/allNeighborhoodSales.ser", auth);
+
             log.info("!!!!!!!!!!!!!!!!!! THREAD HAS BEEN DISABLED !!!!!!!!!!!!!!!!!!");
 
-            allSearchableStrings = (List<String>)SerializeDeserializeUtil.deserialize("allSearchableStrings.ser");
+            allSearchableStrings = (List<String>)SerializeDeserializeUtil.deserialize(allSearchableStringsFile);
+            log.info("allSearchableStrings.size(): " + allSearchableStrings.size());
             InMemoryCache.getCacheMap().put("allSearchableStrings", allSearchableStrings);
 
-            allNeighborhoodSales = (List<NeighborhoodSale>)SerializeDeserializeUtil.deserialize("allNeighborhoodSales.ser");
+            allNeighborhoodSales = (List<NeighborhoodSale>)SerializeDeserializeUtil.deserialize(allNeighborhoodSalesFile);
+            log.info("allNeighborhoodSales.size(): " + allNeighborhoodSales.size());
             InMemoryCache.getCacheMap().put("allNeighborhoodSales", allNeighborhoodSales);
             */
+
+
+            log.info("!!!!!!!!!!!!!!!!!! THREAD HAS BEEN DISABLED !!!!!!!!!!!!!!!!!!");
+
+            allSearchableStrings = (List<String>)SerializeDeserializeUtil.deserialize("/Users/admin/development/jsonDocs/allSearchableStrings.ser");
+            InMemoryCache.getCacheMap().put("allSearchableStrings", allSearchableStrings);
+
+            allNeighborhoodSales = (List<NeighborhoodSale>)SerializeDeserializeUtil.deserialize("/Users/admin/development/jsonDocs/allNeighborhoodSales.ser");
+            InMemoryCache.getCacheMap().put("allNeighborhoodSales", allNeighborhoodSales);
+
 
         } catch (Exception e) {
             throw new RuntimeException(e);

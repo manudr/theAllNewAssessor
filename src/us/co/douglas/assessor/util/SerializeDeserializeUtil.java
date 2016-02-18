@@ -1,12 +1,10 @@
 package us.co.douglas.assessor.util;
 
+import jcifs.smb.SmbFile;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
 /**
  * Created by mdronamr on 1/11/16.
@@ -36,6 +34,20 @@ public class SerializeDeserializeUtil {
             Object obj = in.readObject();
             in.close();
             fileIn.close();
+            return obj;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static Object deserialize(SmbFile smbFile) {
+        try {
+            InputStream fileIn = smbFile.getInputStream();
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            Object obj = in.readObject();
+            in.close();
+            fileIn.close();
+            log.info("Deserialize Successful: ");
             return obj;
         } catch (Exception e) {
             throw new RuntimeException(e);

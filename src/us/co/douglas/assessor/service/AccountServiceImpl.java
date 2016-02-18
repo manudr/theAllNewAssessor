@@ -26,7 +26,7 @@ public class AccountServiceImpl implements AccountService {
 
     public Parcel getParcel(String accountNo) throws Exception {
         //return accountDAO.getParcel(accountNo);
-        Parcel parcel = (Parcel) SerializeDeserializeUtil.deserialize(accountNo + ".ser");
+        Parcel parcel = (Parcel) SerializeDeserializeUtil.deserialize("/Users/admin/development/jsonDocs/" + accountNo + ".ser");
         return  parcel;
     }
 
