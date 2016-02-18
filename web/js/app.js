@@ -25,7 +25,7 @@ App.config(['$routeProvider', function($routeProvider) {
             controller : "AccountDetailsController as accountDetailsCtrl",
             resolve: {
                 async: ['AccountService','$route', function(AccountService , $route) {
-                    return AccountService.fetchAccount($route.current.params.accountNo);
+                    return AccountService.fetchParcel($route.current.params.accountNo);
                 }]
             }
         })

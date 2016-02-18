@@ -2,7 +2,7 @@
 
 App.factory('AccountService', ['$http', '$q', function($http, $q){
     return {
-        fetchAccount: function(accountNo) {
+        fetchParcel: function(accountNo) {
             return $http.get('/apps/dcappsmonitor/rservices/accountService/parcels/' + accountNo).then(
                 function(response){
                     return response.data;
