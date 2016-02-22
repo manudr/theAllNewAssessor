@@ -3,9 +3,16 @@
         <div class="panel-heading"><span class="lead">ONLY FIRST 2000 MATCHING PARCELS WILL BE DISPLAYED!</span></div>
         <div class="panel-body">
             <label style="color: #cc3300; font-weight: bold; font-size: 15px;">
-                <input type="radio" name="searchCriteria" ng-model="searchCriteria.value">&nbsp;&nbsp;&nbsp;Match All
+                <input type="radio"
+                       name="searchCriteria"
+                       value="matchAll"
+                       ng-model="searchCriteria">&nbsp;&nbsp;&nbsp;Match All
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="radio" name="searchCriteria" ng-model="searchCriteria.value">&nbsp;&nbsp;&nbsp;Match Any Where
+
+                <input type="radio"
+                       name="searchCriteria"
+                       value="matchAnyWhere"
+                       ng-model="searchCriteria">&nbsp;&nbsp;&nbsp;Match Any Where
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <a style="color: #375a7f; font-size: 15px; font-weight: bold;" href="#/searchByMap">Search By Map</a>
             </label>
@@ -13,7 +20,8 @@
                 <table class="table table-hover table-bordered table-striped" ng-if="showParcelSearchResultsTable == true">
                     <thead>
                     <tr colspan="6" class="success">
-                        <input type="text" class="form-control"
+                        <input type="text"
+                               class="form-control"
                                name="searchString"
                                id="searchString"
                                ng-model="searchString"

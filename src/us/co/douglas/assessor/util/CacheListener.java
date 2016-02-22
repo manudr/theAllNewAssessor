@@ -9,7 +9,10 @@ import us.co.douglas.assessor.model.NeighborhoodSale;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by mdronamr on 2/2/16.
@@ -29,7 +32,8 @@ public class CacheListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent arg0) {
         log.info("ServletContextListener started");
         if (startThreads) {
-            log.info("Starting all the threads!!!");
+            log.info("!!!!!!!!!!!!!!!!!! STARTING ALL THE THREADS !!!!!!!!!!!!!!!!!!");
+
             AllSearchableStringsThread allSearchableStringsThread = new AllSearchableStringsThread();
             Thread allSearchableStringsT = new Thread(allSearchableStringsThread);
             allSearchableStringsT.start();
@@ -37,12 +41,13 @@ public class CacheListener implements ServletContextListener {
             AllNeighborhoodSalesThread allNeighborhoodSalesThread = new AllNeighborhoodSalesThread();
             Thread allNeighborhoodSalesT = new Thread(allNeighborhoodSalesThread);
             allNeighborhoodSalesT.start();
-
-            AllParcelsThread allParcelsThread = new AllParcelsThread();
-            Thread allParcelsT = new Thread(allParcelsThread);
-            allParcelsT.start();
         } else {
-            log.info("All the threads are disabled!!!");
+            log.info("!!!!!!!!!!!!!!!!!! ALL THREADS HAVE BEEN DISABLED !!!!!!!!!!!!!!!!!!");
+            List<String> allSearchableStrings = (List<String>)SerializeDeserializeUtil.deserialize("/Users/admin/development/jsonDocs/allSearchableStrings.ser");
+            InMemoryCache.getCacheMap().put("allSearchableStrings", allSearchableStrings);
+
+            List<NeighborhoodSale> allNeighborhoodSales = (List<NeighborhoodSale>)SerializeDeserializeUtil.deserialize("/Users/admin/development/jsonDocs/allNeighborhoodSales.ser");
+            InMemoryCache.getCacheMap().put("allNeighborhoodSales", allNeighborhoodSales);
         }
     }
 }

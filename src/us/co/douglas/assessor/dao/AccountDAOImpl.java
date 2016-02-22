@@ -24,25 +24,6 @@ public class AccountDAOImpl implements AccountDAO {
     private static Log log = LogFactory.getLog(AccountDAOImpl.class);
     public static int maxResults = 1000;
 
-    /*
-    public List<String> getAllAccountStrings() throws Exception {
-        log.info("getAllAccounts...");
-        List<String> accounts = new ArrayList<String>();
-        EntityManager entityManager = getEntityManager();
-        try {
-            Query query = entityManager.createNativeQuery("SELECT DISTINCT TBLACCT.ACCOUNTNO FROM ENCOMPASS.TBLACCT TBLACCT " +
-                    "WHERE TBLACCT.VEREND = 99999999999 ORDER BY TBLACCT.ACCOUNTNO DESC ");
-            query.setMaxResults(maxResults);
-            accounts = query.getResultList();
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-        } finally {
-            entityManager.close();
-        }
-        return accounts;
-    }
-    */
-
     public List<Account> getAllAccounts() {
         log.info("getAllAccounts...");
         List<Account> accounts = new ArrayList<Account>();

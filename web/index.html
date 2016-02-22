@@ -14,27 +14,6 @@
     <script src="http://maps.googleapis.com/maps/api/js?language=en"></script>
 	<script src="js/app.js"></script>
     <script src="js/service/AccountService.js"></script>
-
-    <script>
-        function addParam(searchString) {
-            if(searchString.length < 3) {
-                window.alert('Please enter strings with at least 3 characters each!');
-                return;
-            } else if (searchString.length >= 3) {
-                var searchStringTokens = searchString.split(' ');
-                var index;
-                for	(index = 0; index < searchStringTokens.length; index++) {
-                    if(searchStringTokens[index].length < 3) {
-                        window.alert('Please enter strings with at least 3 characters each!');
-                        return;
-                    }
-                }
-            }
-            var url = '/apps/dcappsmonitor/#/parcels/' + document.getElementById('searchString').value;
-            document.getElementById("parcelSearchForm").setAttribute('action', url);
-            document.forms['parcelSearchForm'].submit();
-        }
-    </script>
 </head>
 <body>
     <div class="navbar navbar-default navbar-fixed-top">

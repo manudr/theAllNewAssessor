@@ -20,20 +20,25 @@ public class AllParcelsThread implements Runnable {
     private static AccountDAO accountDAO = new AccountDAOImpl();
     private static long threadSleepTime = ((1000 * 60) * 60) * 24; //((1000(milli seconds) * 60) * 60(minutes)) * 24(hours)
     private static SimpleDateFormat dateFormat = new SimpleDateFormat();
+    private List<String> accountNumList;
+
+    public AllParcelsThread(List accountNumList) {
+        this.accountNumList = accountNumList;
+    }
 
     public void run() {
         try {
             while(true) {
-                synchronized(AllNeighborhoodSalesThread.class) {
-                    List<String> allSearchableStrings = (List<String>) InMemoryCache.getCacheMap().get("allSearchableStrings");
-                    for (String searchableString : allSearchableStrings) {
+                synchronized(AllParcelsThread.class) {
+                    for (String searchableString : accountNumList) {
                         String[] searchableStringTokens = searchableString.split(":");
                         String accountNo = searchableStringTokens[0];
+                        log.info("******* accountNo: " + accountNo);
                         Parcel parcel = accountDAO.getParcel(accountNo);
                         SerializeDeserializeUtil.serialize(parcel, "/Users/admin/development/jsonDocs/" + accountNo + ".ser");
                     }
                 }
-                log.info("Updated the cache with data at " + dateFormat.format(Calendar.getInstance().getTime()) + ". Sleeping for " + (threadSleepTime / 60000) / 60 + " hours");
+                log.info("Updated the cache with parcels at " + dateFormat.format(Calendar.getInstance().getTime()) + ". Sleeping for " + (threadSleepTime / 60000) / 60 + " hours");
                 Thread.sleep(threadSleepTime);
             }
         } catch (Exception e) {

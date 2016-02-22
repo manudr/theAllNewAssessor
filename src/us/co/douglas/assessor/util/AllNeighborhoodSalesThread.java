@@ -26,11 +26,11 @@ public class AllNeighborhoodSalesThread implements Runnable {
             while(true) {
                 synchronized(AllNeighborhoodSalesThread.class) {
                     allNeighborhoodSales = accountDAO.getAllNeighborhoodSales();
-                    SerializeDeserializeUtil.serialize(allNeighborhoodSales, "/Users/admin/development/jsonDocs/allNeighborhoodSales.ser");
-                    allNeighborhoodSales = (List<NeighborhoodSale>)SerializeDeserializeUtil.deserialize("/Users/admin/development/jsonDocs/allNeighborhoodSales.ser");
                     InMemoryCache.getCacheMap().put("allNeighborhoodSales", allNeighborhoodSales);
+                    SerializeDeserializeUtil.serialize(allNeighborhoodSales, "/Users/admin/development/jsonDocs/allNeighborhoodSales.ser");
+                    InMemoryCache.getCacheMap().put("allNeighborhoodSalesCached", true);
                 }
-                log.info("Updated the cache with data at " + dateFormat.format(Calendar.getInstance().getTime()) + ". Sleeping for " + (threadSleepTime / 60000) / 60 + " hours");
+                log.info("Updated the cache with allNeighborhoodSales at " + dateFormat.format(Calendar.getInstance().getTime()) + ". Sleeping for " + (threadSleepTime / 60000) / 60 + " hours");
                 Thread.sleep(threadSleepTime);
             }
         } catch (Exception e) {
