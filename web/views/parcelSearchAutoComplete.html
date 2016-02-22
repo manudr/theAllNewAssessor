@@ -24,6 +24,7 @@
                                class="form-control"
                                name="searchString"
                                id="searchString"
+                               ng-change="searchStringChangedFunction()"
                                ng-model="searchString"
                                placeholder="Enter space separated strings (at least 4 characters each) containing one or more of these: Account No., Parcel No., Owner Name, Business Name, Business License, Street Number, Street Name or City..."
                                required>

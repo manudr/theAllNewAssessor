@@ -20,7 +20,6 @@ public class SerializeDeserializeUtil {
             out.writeObject(obj);
             out.close();
             fileOut.close();
-            log.info("Serialization Successful...");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -30,7 +29,6 @@ public class SerializeDeserializeUtil {
         try {
             FileInputStream fileIn = new FileInputStream(fileName);
             ObjectInputStream in = new ObjectInputStream(fileIn);
-            log.info("Deserialize Successful: ");
             Object obj = in.readObject();
             in.close();
             fileIn.close();
@@ -47,7 +45,6 @@ public class SerializeDeserializeUtil {
             Object obj = in.readObject();
             in.close();
             fileIn.close();
-            log.info("Deserialize Successful: ");
             return obj;
         } catch (Exception e) {
             throw new RuntimeException(e);
