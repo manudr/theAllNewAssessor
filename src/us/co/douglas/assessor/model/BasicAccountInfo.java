@@ -15,15 +15,15 @@ public class BasicAccountInfo implements Serializable {
     private String propertyCity;
     private String propertyState;
     private String propertyZipCode;
-    private String ownerStreet;
-    private String ownerCity;
-    private String ownerState;
-    private String ownerZipCode;
+    //private String ownerStreet;
+    //private String ownerCity;
+    //private String ownerState;
+    //private String ownerZipCode;
     private String neighborhood;
     private String neighborhoodExt;
     private String subdivisionName;
-    private String filingDescription;
-    private String location;
+    //private String filingDescription;
+    //private String location;
 
     public BasicAccountInfo() {
 
@@ -101,6 +101,7 @@ public class BasicAccountInfo implements Serializable {
         this.propertyZipCode = propertyZipCode;
     }
 
+    /*
     public String getOwnerStreet() {
         return ownerStreet;
     }
@@ -132,6 +133,7 @@ public class BasicAccountInfo implements Serializable {
     public void setOwnerZipCode(String ownerZipCode) {
         this.ownerZipCode = ownerZipCode;
     }
+    */
 
     public String getNeighborhood() {
         return neighborhood;
@@ -157,6 +159,7 @@ public class BasicAccountInfo implements Serializable {
         this.subdivisionName = subdivisionName;
     }
 
+    /*
     public String getFilingDescription() {
         return filingDescription;
     }
@@ -172,5 +175,5 @@ public class BasicAccountInfo implements Serializable {
     public void setLocation(String location) {
         this.location = location;
     }
-
+    */
 }

@@ -54,11 +54,12 @@ public class AccountRestService {
                             basicAccountInfo.setPropertyCity(searchableStringTokens[8]);
                             basicAccountInfo.setPropertyState("CO");
                             basicAccountInfo.setPropertyZipCode(searchableStringTokens[9]);
-                            basicAccountInfo.setOwnerStreet(searchableStringTokens[10]);
-                            basicAccountInfo.setOwnerCity(searchableStringTokens[11]);
-                            basicAccountInfo.setOwnerState(searchableStringTokens[12]);
-                            basicAccountInfo.setOwnerZipCode(searchableStringTokens[13]);
-                            basicAccountInfo.setSubdivisionName(searchableStringTokens[14]);
+                            basicAccountInfo.setSubdivisionName(searchableStringTokens[10]);
+                            //basicAccountInfo.setOwnerStreet(searchableStringTokens[11]);
+                            //basicAccountInfo.setOwnerCity(searchableStringTokens[12]);
+                            //basicAccountInfo.setOwnerState(searchableStringTokens[13]);
+                            //basicAccountInfo.setOwnerZipCode(searchableStringTokens[14]);
+
                             if (!matchedParcels.contains(basicAccountInfo)) {
                                 matchedParcels.add(basicAccountInfo);
                             }
@@ -87,11 +88,11 @@ public class AccountRestService {
                         basicAccountInfo.setPropertyCity(searchableStringTokens[8]);
                         basicAccountInfo.setPropertyState("CO");
                         basicAccountInfo.setPropertyZipCode(searchableStringTokens[9]);
-                        basicAccountInfo.setOwnerStreet(searchableStringTokens[10]);
-                        basicAccountInfo.setOwnerCity(searchableStringTokens[11]);
-                        basicAccountInfo.setOwnerState(searchableStringTokens[12]);
-                        basicAccountInfo.setOwnerZipCode(searchableStringTokens[13]);
-                        basicAccountInfo.setSubdivisionName(searchableStringTokens[14]);
+                        basicAccountInfo.setSubdivisionName(searchableStringTokens[10]);
+                        //basicAccountInfo.setOwnerStreet(searchableStringTokens[11]);
+                        //basicAccountInfo.setOwnerCity(searchableStringTokens[12]);
+                        //basicAccountInfo.setOwnerState(searchableStringTokens[13]);
+                        //basicAccountInfo.setOwnerZipCode(searchableStringTokens[14]);
                         if (!matchedParcels.contains(basicAccountInfo)) {
                             matchedParcels.add(basicAccountInfo);
                         }

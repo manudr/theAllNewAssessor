@@ -238,11 +238,11 @@ public class AccountDAOImpl implements AccountDAO {
                     "ISNULL(TBLACCTPROPERTYADDRESS.STREETNO, '') + ' ' + ISNULL(TBLACCTPROPERTYADDRESS.STREETNAME, '') + ' ' + ISNULL(TBLACCTPROPERTYADDRESS.STREETTYPE, '') + ' ' + ISNULL(TBLACCTPROPERTYADDRESS.UNITNAME, '') + ':' + " +
                     "ISNULL(TBLACCTPROPERTYADDRESS.PROPERTYCITY, '') + ':' + " +
                     "ISNULL(SUBSTRING(TBLACCTPROPERTYADDRESS.PROPERTYZIPCODE, 1, 5), '') + ':' + " +
-                    "ISNULL(TBLADDRESSSECURE.ADDRESS1, '') + ' ' + ISNULL(TBLADDRESSSECURE.ADDRESS2, '') + ':' + " +
-                    "ISNULL(TBLADDRESSSECURE.CITY, '') + ':' + " +
-                    "ISNULL(TBLADDRESSSECURE.STATECODE, '') + ':' + " +
-                    "ISNULL(TBLADDRESSSECURE.ZIPCODE, '') + ':' + " +
                     "ISNULL(TBNSUBDIVISION.SUBNAME, '') " +
+                    //"ISNULL(TBLADDRESSSECURE.ADDRESS1, '') + ' ' + ISNULL(TBLADDRESSSECURE.ADDRESS2, '') + ':' + " +
+                    //"ISNULL(TBLADDRESSSECURE.CITY, '') + ':' + " +
+                    //"ISNULL(TBLADDRESSSECURE.STATECODE, '') + ':' + " +
+                    //"ISNULL(TBLADDRESSSECURE.ZIPCODE, '') + ':' + " +
                     "from encompass.TBLACCT TBLACCT " +
                     "right outer join encompass.TBLACCTPROPERTYADDRESS TBLACCTPROPERTYADDRESS on TBLACCTPROPERTYADDRESS.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
                     "right outer join encompass.TBLACCTOWNERADDRESS TBLACCTOWNERADDRESS on TBLACCTOWNERADDRESS.ACCOUNTNO = TBLACCT.ACCOUNTNO " +

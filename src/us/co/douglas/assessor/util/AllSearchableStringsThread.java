@@ -20,7 +20,7 @@ public class AllSearchableStringsThread implements Runnable {
     private static long threadSleepTime = ((1000 * 60) * 60) * 24; //((1000(milli seconds) * 60) * 60(minutes)) * 24(hours)
     private static SimpleDateFormat dateFormat = new SimpleDateFormat();
     private static List<String> allSearchableStrings = null;
-    private static Integer maxAccountsPerThread = 15;
+    private static Integer maxAccountsPerThread = 25;
 
     public void run() {
         try {
@@ -35,7 +35,7 @@ public class AllSearchableStringsThread implements Runnable {
                 List<List> accountNumListOfLists = new ArrayList<List>();
                 List<String> accountNumList = new ArrayList<String>();
                 for (String searchableString : allSearchableStrings) {
-                    if (accountNumList.size() >= maxAccountsPerThread) {
+                    if (accountNumList.size() > maxAccountsPerThread) {
                         //Reached maxAccountsPerThread so add this to main list and create a new list
                         accountNumListOfLists.add(accountNumList);
                         accountNumList = new ArrayList<String>();
@@ -45,11 +45,12 @@ public class AllSearchableStringsThread implements Runnable {
                     }
                 }
                 log.info("Number of lists in main list: " + accountNumListOfLists.size());
-                for (List list : accountNumListOfLists) {
-                    AllParcelsThread allParcelsThread = new AllParcelsThread(list);
+
+                //for (List list : accountNumListOfLists) { //TODO remove the comments //
+                    AllParcelsThread allParcelsThread = new AllParcelsThread(accountNumListOfLists.get(1000));
                     Thread allParcelsT = new Thread(allParcelsThread);
                     allParcelsT.start();
-                }
+                //}
                 log.info("Updated the cache with allSearchableStrings at " + dateFormat.format(Calendar.getInstance().getTime()) + ". Sleeping for " + (threadSleepTime / 60000) / 60 + " hours");
                 Thread.sleep(threadSleepTime);
             }
