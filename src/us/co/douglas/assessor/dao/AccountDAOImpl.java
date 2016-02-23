@@ -624,15 +624,6 @@ public class AccountDAOImpl implements AccountDAO {
         return connection;
     }
 
-    private MongoClient getMongoDBConnection() {
-        try {
-            return MongoDBConnectionUtil.getConnection();
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-
-        }
-    }
-
     private Connection getAssessorDatabaseConnection() {
         Connection connection = null;
         try {
