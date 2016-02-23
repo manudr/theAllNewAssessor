@@ -21,7 +21,7 @@ import java.util.Map;
 public class CacheListener implements ServletContextListener {
 
     private static Log log = LogFactory.getLog(CacheListener.class);
-    private static Boolean startThreads = true;
+    private static Boolean startThreads = false;
 
     @Override
     public void contextDestroyed(ServletContextEvent arg0) {

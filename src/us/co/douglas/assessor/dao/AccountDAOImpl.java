@@ -1,8 +1,10 @@
 package us.co.douglas.assessor.dao;
 
+import com.mongodb.MongoClient;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import us.co.douglas.assessor.model.*;
+import us.co.douglas.assessor.util.MongoDBConnectionUtil;
 import us.co.douglas.assessor.util.Util;
 import us.co.douglas.common.sql.JDBCHelper;
 
@@ -620,6 +622,15 @@ public class AccountDAOImpl implements AccountDAO {
 
         }
         return connection;
+    }
+
+    private MongoClient getMongoDBConnection() {
+        try {
+            return MongoDBConnectionUtil.getConnection();
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+
+        }
     }
 
     private Connection getAssessorDatabaseConnection() {

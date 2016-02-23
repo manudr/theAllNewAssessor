@@ -27,20 +27,8 @@ public class SerializeDeserializeUtil {
 
     public static Object deserialize(String fileName) {
         try {
+            MongoDBConnectionUtil.getConnection();
             FileInputStream fileIn = new FileInputStream(fileName);
-            ObjectInputStream in = new ObjectInputStream(fileIn);
-            Object obj = in.readObject();
-            in.close();
-            fileIn.close();
-            return obj;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static Object deserialize(SmbFile smbFile) {
-        try {
-            InputStream fileIn = smbFile.getInputStream();
             ObjectInputStream in = new ObjectInputStream(fileIn);
             Object obj = in.readObject();
             in.close();
