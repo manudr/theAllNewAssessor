@@ -16,5 +16,6 @@ public interface AccountService {
     public List<Account> getAllAccounts() throws Exception;
     public List<String> getAllPropertyAddresses() throws Exception;
     public List<String> getAllSearchableStrings() throws Exception;
+    public List<BasicAccountInfo> getAllSearchableParcels() throws Exception;
     public List<NeighborhoodSale> getAllNeighborhoodSales() throws Exception;
 }
