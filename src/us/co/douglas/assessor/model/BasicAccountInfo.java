@@ -1,10 +1,14 @@
 package us.co.douglas.assessor.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
  * Created by mdronamr on 12/29/15.
  */
+
+@Entity
 public class BasicAccountInfo implements Serializable {
     private String accountNo;
     private String parcelNo;
@@ -15,20 +19,14 @@ public class BasicAccountInfo implements Serializable {
     private String propertyCity;
     private String propertyState;
     private String propertyZipCode;
-    //private String ownerStreet;
-    //private String ownerCity;
-    //private String ownerState;
-    //private String ownerZipCode;
-    private String neighborhood;
-    private String neighborhoodExt;
+    private String neighborhoodCodeAndExt;
     private String subdivisionName;
-    //private String filingDescription;
-    //private String location;
 
     public BasicAccountInfo() {
 
     }
 
+    @Id
     public String getAccountNo() {
         return accountNo;
     }
@@ -135,20 +133,12 @@ public class BasicAccountInfo implements Serializable {
     }
     */
 
-    public String getNeighborhood() {
-        return neighborhood;
+    public String getNeighborhoodCodeAndExt() {
+        return neighborhoodCodeAndExt;
     }
 
-    public void setNeighborhood(String neighborhood) {
-        this.neighborhood = neighborhood;
-    }
-
-    public String getNeighborhoodExt() {
-        return neighborhoodExt;
-    }
-
-    public void setNeighborhoodExt(String neighborhoodExt) {
-        this.neighborhoodExt = neighborhoodExt;
+    public void setNeighborhoodCodeAndExt(String neighborhoodCodeAndExt) {
+        this.neighborhoodCodeAndExt = neighborhoodCodeAndExt;
     }
 
     public String getSubdivisionName() {
@@ -176,4 +166,21 @@ public class BasicAccountInfo implements Serializable {
         this.location = location;
     }
     */
+
+    @Override
+    public String toString() {
+        return "BasicAccountInfo{" +
+                "accountNo='" + accountNo + '\'' +
+                ", parcelNo='" + parcelNo + '\'' +
+                ", ownerName='" + ownerName + '\'' +
+                ", businessName='" + businessName + '\'' +
+                ", businessLicense='" + businessLicense + '\'' +
+                ", propertyStreet='" + propertyStreet + '\'' +
+                ", propertyCity='" + propertyCity + '\'' +
+                ", propertyState='" + propertyState + '\'' +
+                ", propertyZipCode='" + propertyZipCode + '\'' +
+                ", neighborhoodCodeAndExt='" + neighborhoodCodeAndExt + '\'' +
+                ", subdivisionName='" + subdivisionName + '\'' +
+                '}';
+    }
 }

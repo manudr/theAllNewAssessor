@@ -6,13 +6,13 @@
                 <input type="radio"
                        name="searchCriteria"
                        value="matchAll"
-                       ng-model="searchCriteria">&nbsp;&nbsp;&nbsp;Match All
+                       ng-model="searchCriteria">&nbsp;&nbsp;&nbsp;Filter by matching all the Strings (More accurate results!)
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                 <input type="radio"
                        name="searchCriteria"
                        value="matchAnyWhere"
-                       ng-model="searchCriteria">&nbsp;&nbsp;&nbsp;Match Any Where
+                       ng-model="searchCriteria">&nbsp;&nbsp;&nbsp;Filter by matching any string in any field
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <a style="color: #375a7f; font-size: 15px; font-weight: bold;" href="#/searchByMap">Search By Map</a>
             </label>
@@ -88,26 +88,26 @@
                             </a>
                         </th>
                         <th nowrap>
-                            <a href="" ng-click="sortType = 'neighborhood'; sortReverse = !sortReverse">
+                            <a href="" ng-click="sortType = 'neighborhoodCodeAndExt'; sortReverse = !sortReverse">
                                 NEIGHBORHOOD
-                                <span ng-show="sortType == 'neighborhood' && !sortReverse" class="fa fa-caret-down"></span>
-                                <span ng-show="sortType == 'neighborhood' && sortReverse" class="fa fa-caret-up"></span>
+                                <span ng-show="sortType == 'neighborhoodCodeAndExt' && !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'neighborhoodCodeAndExt' && sortReverse" class="fa fa-caret-up"></span>
                             </a>
                         </th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="account in matchedAccounts | orderBy:sortType:sortReverse" ng-class-odd="'odd'">
+                    <tr ng-repeat="parcel in matchedParcels | orderBy:sortType:sortReverse" ng-class-odd="'odd'">
                         <td>
-                            <a href="#/parcelDetails/{{account.accountNo}}/{{account.propertyZipCode}}/{{account.neighborhood}}/{{account.neighborhoodExt}}/{{account.subdivisionName}}">{{account.accountNo}}</a>
+                            <a href="#/parcelDetails/{{parcel.accountNo}}/{{parcel.propertyZipCode}}/{{parcel.neighborhoodCodeAndExt}}/{{parcel.subdivisionName}}">{{parcel.accountNo}}</a>
                         </td>
-                        <td>{{account.parcelNo}}</td>
-                        <td>{{account.ownerName}}</td>
-                        <td>{{account.businessName}}</td>
-                        <td>{{account.businessLicense}}</td>
-                        <td>{{account.propertyStreet + ' ' + account.propertyCity + ' ' + account.propertyState + ' ' + account.propertyZipCode}}</td>
-                        <td>{{account.subdivisionName}}</td>
-                        <td>{{account.neighborhood + '-' + account.neighborhoodExt}}</td>
+                        <td>{{parcel.parcelNo}}</td>
+                        <td>{{parcel.ownerName}}</td>
+                        <td>{{parcel.businessName}}</td>
+                        <td>{{parcel.businessLicense}}</td>
+                        <td>{{parcel.propertyStreet + ' ' + parcel.propertyCity + ' ' + parcel.propertyState + ' ' + parcel.propertyZipCode}}</td>
+                        <td>{{parcel.subdivisionName}}</td>
+                        <td>{{parcel.neighborhoodCodeAndExt}}</td>
                     </tr>
                     </tbody>
                 </table>
