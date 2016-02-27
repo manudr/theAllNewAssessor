@@ -26,8 +26,7 @@ public class AccountServiceImpl implements AccountService {
 
     public Parcel getParcel(String accountNo) throws Exception {
         //return accountDAO.getParcel(accountNo);
-        Parcel parcel = (Parcel) SerializeDeserializeUtil.deserialize("/Users/admin/development/jsonDocs/" + accountNo + ".ser");
-        return  parcel;
+        return (Parcel)SerializeDeserializeUtil.deserialize("/Users/admin/development/jsonDocs/" + accountNo + ".ser");
     }
 
     public PropertyAddress getPropertyAddress(String accountNo) throws Exception {
@@ -43,22 +42,22 @@ public class AccountServiceImpl implements AccountService {
     }
 
     public List<Account> getAllAccounts() throws Exception{
-        List<Account> accounts = accountDAO.getAllAccounts();
-        return accounts;
+        return accountDAO.getAllAccounts();
     }
 
     public List<String> getAllPropertyAddresses() throws Exception{
-        List<String> propertyAddresses = accountDAO.getAllPropertyAddresses();
-        return propertyAddresses;
+        return accountDAO.getAllPropertyAddresses();
     }
 
-    public List<String> getAllSearchableStrings() throws Exception{
-         List<String> allSearchableStrings = (List<String>) InMemoryCache.getCacheMap().get("allSearchableStrings");
-         return allSearchableStrings;
+    public List<String> getAllSearchableStrings() throws Exception {
+        return (List<String>) InMemoryCache.getCacheMap().get("allSearchableStrings");
+    }
+
+    public List<BasicAccountInfo> getAllSearchableParcels() throws Exception {
+        return (List<BasicAccountInfo>) InMemoryCache.getCacheMap().get("allSearchableParcels");
     }
 
     public List<NeighborhoodSale> getAllNeighborhoodSales() throws Exception {
-        List<NeighborhoodSale> allNeighborhoodSales = (List<NeighborhoodSale>) InMemoryCache.getCacheMap().get("allNeighborhoodSales");
-        return allNeighborhoodSales;
+        return (List<NeighborhoodSale>) InMemoryCache.getCacheMap().get("allNeighborhoodSales");
     }
 }
