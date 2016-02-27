@@ -4,6 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import us.co.douglas.assessor.dao.AccountDAO;
 import us.co.douglas.assessor.dao.AccountDAOImpl;
+import us.co.douglas.assessor.model.BasicAccountInfo;
 import us.co.douglas.assessor.model.NeighborhoodSale;
 
 import java.text.SimpleDateFormat;
@@ -20,7 +21,8 @@ public class AllSearchableStringsThread implements Runnable {
     private static long threadSleepTime = ((1000 * 60) * 60) * 24; //((1000(milli seconds) * 60) * 60(minutes)) * 24(hours)
     private static SimpleDateFormat dateFormat = new SimpleDateFormat();
     private static List<String> allSearchableStrings = null;
-    private static Integer maxAccountsPerThread = 25;
+    private static List<BasicAccountInfo> allSearchableParcels = null;
+    private static Integer maxAccountsPerThread = 1;
 
     public void run() {
         try {
@@ -30,12 +32,17 @@ public class AllSearchableStringsThread implements Runnable {
                     InMemoryCache.getCacheMap().put("allSearchableStrings", allSearchableStrings);
                     SerializeDeserializeUtil.serialize(allSearchableStrings, "/Users/admin/development/jsonDocs/allSearchableStrings.ser");
                     InMemoryCache.getCacheMap().put("allSearchableStringsCached", true);
+
+                    allSearchableParcels = accountDAO.getAllSearchableParcels();
+                    InMemoryCache.getCacheMap().put("allSearchableParcels", allSearchableParcels);
+                    SerializeDeserializeUtil.serialize(allSearchableParcels, "/Users/admin/development/jsonDocs/allSearchableParcels.ser");
+                    InMemoryCache.getCacheMap().put("allSearchableParcelsCached", true);
                 }
 
                 List<List> accountNumListOfLists = new ArrayList<List>();
                 List<String> accountNumList = new ArrayList<String>();
                 for (String searchableString : allSearchableStrings) {
-                    if (accountNumList.size() > maxAccountsPerThread) {
+                    if (accountNumList.size() >= maxAccountsPerThread) {
                         //Reached maxAccountsPerThread so add this to main list and create a new list
                         accountNumListOfLists.add(accountNumList);
                         accountNumList = new ArrayList<String>();
@@ -47,7 +54,7 @@ public class AllSearchableStringsThread implements Runnable {
                 log.info("Number of lists in main list: " + accountNumListOfLists.size());
 
                 //for (List list : accountNumListOfLists) { //TODO remove the comments //
-                    AllParcelsThread allParcelsThread = new AllParcelsThread(accountNumListOfLists.get(1000));
+                    AllParcelsThread allParcelsThread = new AllParcelsThread(accountNumListOfLists.get(120));
                     Thread allParcelsT = new Thread(allParcelsThread);
                     allParcelsT.start();
                 //}
