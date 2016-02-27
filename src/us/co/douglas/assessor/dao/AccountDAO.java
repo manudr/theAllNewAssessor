@@ -15,6 +15,7 @@ public interface AccountDAO {
     public List<Account> getAllAccounts() throws Exception;
     public List<String> getAllPropertyAddresses() throws Exception;
     public List<String> getAllSearchableStrings() throws Exception;
+    public List<BasicAccountInfo> getAllSearchableParcels() throws Exception;
     public List<NeighborhoodSale> getNeighborhoodSales(String zipCode, String neighborhood, String subdivision) throws Exception;
     public List<NeighborhoodSale> getAllNeighborhoodSales() throws Exception;
     public PropertyAddress getPropertyAddress(String accountNo) throws Exception;
