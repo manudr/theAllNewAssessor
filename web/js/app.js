@@ -2,7 +2,7 @@
 
 var App = angular.module('myApp',['ngRoute']);
 
-App.config(['$routeProvider', function($routeProvider) {
+App.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 	$routeProvider
         .when('/parcelSearch', {
             templateUrl: 'views/parcelSearch.html'
