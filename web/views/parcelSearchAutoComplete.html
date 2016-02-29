@@ -6,13 +6,13 @@
                 <input type="radio"
                        name="searchCriteria"
                        value="matchAll"
-                       ng-model="searchCriteria">&nbsp;&nbsp;&nbsp;Filter by matching all the Strings (More accurate results!)
+                       ng-model="searchCriteria">&nbsp;&nbsp;&nbsp;Match all the strings with any of the fields! (More accurate results!)
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                 <input type="radio"
                        name="searchCriteria"
                        value="matchAnyWhere"
-                       ng-model="searchCriteria">&nbsp;&nbsp;&nbsp;Filter by matching any string in any field
+                       ng-model="searchCriteria">&nbsp;&nbsp;&nbsp;Match any of strings with any of the fields!
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <a style="color: #375a7f; font-size: 15px; font-weight: bold;" href="#/searchByMap">Search By Map</a>
             </label>
@@ -99,7 +99,7 @@
                     <tbody>
                     <tr ng-repeat="parcel in matchedParcels | orderBy:sortType:sortReverse" ng-class-odd="'odd'">
                         <td>
-                            <a href="#/parcelDetails/{{parcel.accountNo}}/{{parcel.propertyZipCode}}/{{parcel.neighborhoodCodeAndExt}}/{{parcel.subdivisionName}}">{{parcel.accountNo}}</a>
+                            <a href="#/parcelDetails/{{parcel.accountNo}}/{{parcel.propertyZipCode}}/{{parcel.neighborhoodCode}}/{{parcel.neighborhoodExt}}/{{parcel.subdivisionName}}">{{parcel.accountNo}}</a>
                         </td>
                         <td>{{parcel.parcelNo}}</td>
                         <td>{{parcel.ownerName}}</td>
@@ -107,7 +107,7 @@
                         <td>{{parcel.businessLicense}}</td>
                         <td>{{parcel.propertyStreet + ' ' + parcel.propertyCity + ' ' + parcel.propertyState + ' ' + parcel.propertyZipCode}}</td>
                         <td>{{parcel.subdivisionName}}</td>
-                        <td>{{parcel.neighborhoodCodeAndExt}}</td>
+                        <td>{{parcel.neighborhoodCode}}-{{parcel.neighborhoodExt}}</td>
                     </tr>
                     </tbody>
                 </table>

@@ -6,6 +6,7 @@ import us.co.douglas.assessor.dao.AccountDAO;
 import us.co.douglas.assessor.dao.AccountDAOImpl;
 import us.co.douglas.assessor.model.*;
 import us.co.douglas.assessor.util.InMemoryCache;
+import us.co.douglas.assessor.util.MongoDBConnectionUtil;
 import us.co.douglas.assessor.util.SerializeDeserializeUtil;
 
 import java.util.List;
@@ -24,9 +25,10 @@ public class AccountServiceImpl implements AccountService {
     }
     */
 
-    public Parcel getParcel(String accountNo) throws Exception {
+    public String getParcel(String accountNo) throws Exception {
         //return accountDAO.getParcel(accountNo);
-        return (Parcel)SerializeDeserializeUtil.deserialize("/Users/admin/development/jsonDocs/" + accountNo + ".ser");
+        //return (Parcel)SerializeDeserializeUtil.deserialize("/Users/admin/development/jsonDocs/" + accountNo + ".ser");
+        return MongoDBConnectionUtil.getParcelByAccountNo(accountNo);
     }
 
     public PropertyAddress getPropertyAddress(String accountNo) throws Exception {

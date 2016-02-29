@@ -15,8 +15,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by mdronamr on 12/22/15.
@@ -241,10 +240,6 @@ public class AccountDAOImpl implements AccountDAO {
                     "ISNULL(TBLACCTPROPERTYADDRESS.PROPERTYCITY, '') + ':' + " +
                     "ISNULL(SUBSTRING(TBLACCTPROPERTYADDRESS.PROPERTYZIPCODE, 1, 5), '') + ':' + " +
                     "ISNULL(TBNSUBDIVISION.SUBNAME, '') " +
-                    //"ISNULL(TBLADDRESSSECURE.ADDRESS1, '') + ' ' + ISNULL(TBLADDRESSSECURE.ADDRESS2, '') + ':' + " +
-                    //"ISNULL(TBLADDRESSSECURE.CITY, '') + ':' + " +
-                    //"ISNULL(TBLADDRESSSECURE.STATECODE, '') + ':' + " +
-                    //"ISNULL(TBLADDRESSSECURE.ZIPCODE, '') + ':' + " +
                     "from encompass.TBLACCT TBLACCT " +
                     "right outer join encompass.TBLACCTPROPERTYADDRESS TBLACCTPROPERTYADDRESS on TBLACCTPROPERTYADDRESS.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
                     "right outer join encompass.TBLACCTOWNERADDRESS TBLACCTOWNERADDRESS on TBLACCTOWNERADDRESS.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
@@ -636,6 +631,52 @@ public class AccountDAOImpl implements AccountDAO {
     }
 
     public EntityManager getEntityManager (){
-            return Persistence.createEntityManagerFactory("theAllNewAssessor").createEntityManager();
+        return Persistence.createEntityManagerFactory("theAllNewAssessor").createEntityManager();
+    }
+
+    public List<BasicAccountInfo> getAllSearchableParcels() {
+        log.info("getAllSearchableParcels...");
+        List<BasicAccountInfo> allSearchableParcels = new ArrayList<BasicAccountInfo>();
+        EntityManager entityManager = getEntityManager();
+        try {
+            Query query = entityManager.createNativeQuery("select " +
+                    "ISNULL(TBLACCT.ACCOUNTNO, '') as accountNo, " +
+                    "ISNULL(TBLACCT.PARCELNO, '') as parcelNo, " +
+                    "ISNULL(TBLPERSONSECURE.NAME1, '') + ' ' + ISNULL(TBLPERSONSECURE.NAME2, '') as ownerName, " +
+                    "ISNULL(TBLACCT.BUSINESSNAME, '') as businessName, " +
+                    "ISNULL(TBLACCT.BUSINESSLICENSE, '') as businessLicense, " +
+                    "ISNULL(TBLACCTNBHD.NBHDCODE, '') as neighborhoodCode, " +
+                    "ISNULL(TBLACCTNBHD.NBHDEXTENSION, '') as neighborhoodExt, " +
+                    "ISNULL(TBLACCTPROPERTYADDRESS.STREETNO, '') + ' ' + ISNULL(TBLACCTPROPERTYADDRESS.STREETNAME, '') + ' ' + ISNULL(TBLACCTPROPERTYADDRESS.STREETTYPE, '') + ' ' + ISNULL(TBLACCTPROPERTYADDRESS.UNITNAME, '') as propertyStreet, " +
+                    "ISNULL(TBLACCTPROPERTYADDRESS.PROPERTYCITY, '') as propertyCity, " +
+                    "'CO' as propertyState, + " +
+                    "ISNULL(SUBSTRING(TBLACCTPROPERTYADDRESS.PROPERTYZIPCODE, 1, 5), '') as propertyZipCode, " +
+                    "ISNULL(TBNSUBDIVISION.SUBNAME, '') as subdivisionName " +
+                    "from encompass.TBLACCT TBLACCT " +
+                    "right outer join encompass.TBLACCTPROPERTYADDRESS TBLACCTPROPERTYADDRESS on TBLACCTPROPERTYADDRESS.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
+                    "right outer join encompass.TBLACCTOWNERADDRESS TBLACCTOWNERADDRESS on TBLACCTOWNERADDRESS.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
+                    "right outer join encompass.TBLPERSONSECURE TBLPERSONSECURE on TBLPERSONSECURE.PERSONCODE = TBLACCTOWNERADDRESS.PERSONCODE " +
+                    "right outer join encompass.TBLADDRESSSECURE TBLADDRESSSECURE on TBLADDRESSSECURE.ADDRESSCODE = TBLACCTOWNERADDRESS.ADDRESSCODE " +
+                    "right outer join encompass.TBLACCTNBHD TBLACCTNBHD on TBLACCTNBHD.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
+                    "right outer join encompass.TBLACCTLEGAL TBLACCTLEGAL on TBLACCTLEGAL.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
+                    "right outer join encompass.TBLSUBACCOUNT TBLSUBACCOUNT on TBLSUBACCOUNT.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
+                    "right outer join encompass.TBNSUBDIVISION TBNSUBDIVISION on TBNSUBDIVISION.SUBNO = TBLSUBACCOUNT.SUBNO " +
+                    "where TBLACCT.verend = 99999999999 " +
+                    "and TBLADDRESSSECURE.verend = 99999999999 " +
+                    "and TBLPERSONSECURE.verend = 99999999999 " +
+                    "and TBLACCTOWNERADDRESS.verend = 99999999999 " +
+                    "and TBLACCTPROPERTYADDRESS.verend = 99999999999 " +
+                    "and TBLACCTNBHD.verend = 99999999999 " +
+                    "and TBLACCTLEGAL.verend = 99999999999 " +
+                    "and TBLSUBACCOUNT.verend = 99999999999 " +
+                    "order by TBLACCT.ACCOUNTNO asc", BasicAccountInfo.class);
+            allSearchableParcels = query.getResultList();
+            log.info("allSearchableParcels.size(): " + allSearchableParcels.size());
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        } finally {
+            entityManager.close();
+        }
+        return allSearchableParcels;
     }
 }

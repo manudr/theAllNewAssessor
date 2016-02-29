@@ -19,7 +19,8 @@ public class BasicAccountInfo implements Serializable {
     private String propertyCity;
     private String propertyState;
     private String propertyZipCode;
-    private String neighborhoodCodeAndExt;
+    private String neighborhoodCode;
+    private String neighborhoodExt;
     private String subdivisionName;
 
     public BasicAccountInfo() {
@@ -133,12 +134,20 @@ public class BasicAccountInfo implements Serializable {
     }
     */
 
-    public String getNeighborhoodCodeAndExt() {
-        return neighborhoodCodeAndExt;
+    public String getNeighborhoodCode() {
+        return neighborhoodCode;
     }
 
-    public void setNeighborhoodCodeAndExt(String neighborhoodCodeAndExt) {
-        this.neighborhoodCodeAndExt = neighborhoodCodeAndExt;
+    public void setNeighborhoodCode(String neighborhoodCode) {
+        this.neighborhoodCode = neighborhoodCode;
+    }
+
+    public String getNeighborhoodExt() {
+        return neighborhoodExt;
+    }
+
+    public void setNeighborhoodExt(String neighborhoodExt) {
+        this.neighborhoodExt = neighborhoodExt;
     }
 
     public String getSubdivisionName() {
@@ -179,7 +188,8 @@ public class BasicAccountInfo implements Serializable {
                 ", propertyCity='" + propertyCity + '\'' +
                 ", propertyState='" + propertyState + '\'' +
                 ", propertyZipCode='" + propertyZipCode + '\'' +
-                ", neighborhoodCodeAndExt='" + neighborhoodCodeAndExt + '\'' +
+                ", neighborhoodExt='" + neighborhoodExt + '\'' +
+                ", neighborhoodExt='" + neighborhoodExt + '\'' +
                 ", subdivisionName='" + subdivisionName + '\'' +
                 '}';
     }

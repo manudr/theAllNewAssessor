@@ -1,10 +1,17 @@
 package us.co.douglas.assessor.util;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.bson.Document;
+import org.codehaus.jackson.map.ObjectMapper;
 import us.co.douglas.assessor.dao.AccountDAO;
 import us.co.douglas.assessor.dao.AccountDAOImpl;
 import us.co.douglas.assessor.model.NeighborhoodSale;
+import us.co.douglas.assessor.model.Parcel;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -21,7 +28,7 @@ import java.util.Map;
 public class CacheListener implements ServletContextListener {
 
     private static Log log = LogFactory.getLog(CacheListener.class);
-    private static Boolean startThreads = false;
+    private static Boolean startThreads = true;
 
     @Override
     public void contextDestroyed(ServletContextEvent arg0) {

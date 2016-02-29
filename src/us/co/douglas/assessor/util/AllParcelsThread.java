@@ -1,7 +1,13 @@
 package us.co.douglas.assessor.util;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.bson.Document;
+import org.codehaus.jackson.map.ObjectMapper;
 import us.co.douglas.assessor.dao.AccountDAO;
 import us.co.douglas.assessor.dao.AccountDAOImpl;
 import us.co.douglas.assessor.model.NeighborhoodSale;
@@ -35,7 +41,8 @@ public class AllParcelsThread implements Runnable {
                         String accountNo = searchableStringTokens[0];
                         log.info("******* accountNo: " + accountNo);
                         Parcel parcel = accountDAO.getParcel(accountNo);
-                        SerializeDeserializeUtil.serialize(parcel, "/Users/admin/development/jsonDocs/" + accountNo + ".ser");
+                        //SerializeDeserializeUtil.serialize(parcel, "/Users/admin/development/jsonDocs/" + accountNo + ".ser");
+                        MongoDBConnectionUtil.insertParcel(parcel);
                     }
                 }
                 log.info("Updated the cache with parcels at " + dateFormat.format(Calendar.getInstance().getTime()) + ". Sleeping for " + (threadSleepTime / 60000) / 60 + " hours");

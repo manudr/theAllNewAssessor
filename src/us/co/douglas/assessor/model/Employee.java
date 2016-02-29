@@ -10,6 +10,16 @@ public class Employee {
     private String type;
     private String firstName;
     private String lastName;
+    private Parcel parcel;
+
+    @JsonProperty
+    public Parcel getParcel() {
+        return parcel;
+    }
+
+    public void setParcel(Parcel parcel) {
+        this.parcel = parcel;
+    }
 
     @JsonProperty("_id")
     public String getEmployeeId() {

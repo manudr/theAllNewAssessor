@@ -8,11 +8,27 @@
                     </h4>
                 </div>
                 <div class="collapse panel-body">
-                    <h3 style="color: #00663c; font-weight: bold">
-                        This property is a <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.account.acctType | lowercase}}</span> property.
-                        This property was built on a <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.landType | lowercase}}</span> land.
-                        This property has been added to your favourites.
-                    </h3>
+                    <ul>
+                        <span ng-if="accountDetailsCtrl.parcel.account.acctType != null">
+                            <li>
+                            This property is a <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.account.acctType | lowercase}}</span> property.
+                            </li>
+                        </span>
+
+                        <span ng-if="accountDetailsCtrl.parcel.sale.landType != null">
+                            <li>
+                                This property was built on a <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.landType | lowercase}}</span> land.
+                            </li>
+                        </span>
+
+                        <span ng-if="accountDetailsCtrl.parcel.sale.landType != null">
+                            <li>
+                                This property has been added to your favourites.
+                            </li>
+                        </span>
+
+                    </ul>
+
                     <h4 style="color: #00663c; font-weight: bold">
                         This property has <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.bltAsTotalUnitCount | lowercase}}</span> building<span ng-if="accountDetailsCtrl.parcel.sale.bltAsTotalUnitCount > 1">s</span>
                         on a <span class="custom-span-for-messages">{{accountDetailsCtrl.parcel.sale.landNetSf | number}}</span> square feet lot,

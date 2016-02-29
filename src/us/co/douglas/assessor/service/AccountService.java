@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface AccountService {
     //public List<String> getAllAccountStrings() throws Exception;
-    public Parcel getParcel(String accountNo) throws Exception;
+    public String getParcel(String accountNo) throws Exception;
     public PropertyAddress getPropertyAddress(String accountNo) throws Exception;
     public OwnerAddress getOwnerAddress(String accountNo) throws Exception;
     public Account getAccount(String accountNo) throws Exception;

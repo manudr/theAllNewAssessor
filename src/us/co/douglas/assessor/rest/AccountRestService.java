@@ -25,6 +25,7 @@ public class AccountRestService {
     private static int maxRows = 2000;
     private static Boolean matchAnyWhere = false;
     private static Boolean matchAll = true;
+    private static List<BasicAccountInfo> allSearchableParcels = null;
 
     @GET
     @Path("/allSearchableStrings/{searchString}")
@@ -38,7 +39,7 @@ public class AccountRestService {
         log.info("allSearchableStrings.size(): " + allSearchableStrings.size());
         if (allSearchableStrings != null & allSearchableStrings.size() > 0) {
             for (String searchableString : allSearchableStrings) {
-                if (matchAnyWhere) { //If matchAnyWhere is true
+                if (matchAnyWhere) { //If any string matches with any of the columns
                     for (String stringToken : stringTokens) {
                         if ((searchableString.toUpperCase().contains(stringToken.toUpperCase()))) {
                             BasicAccountInfo basicAccountInfo = new BasicAccountInfo();
@@ -48,17 +49,13 @@ public class AccountRestService {
                             basicAccountInfo.setOwnerName(searchableStringTokens[2]);
                             basicAccountInfo.setBusinessName(searchableStringTokens[3]);
                             basicAccountInfo.setBusinessLicense(searchableStringTokens[4]);
-                            basicAccountInfo.setNeighborhood(searchableStringTokens[5]);
+                            basicAccountInfo.setNeighborhoodCode(searchableStringTokens[5]);
                             basicAccountInfo.setNeighborhoodExt(searchableStringTokens[6]);
                             basicAccountInfo.setPropertyStreet(searchableStringTokens[7]);
                             basicAccountInfo.setPropertyCity(searchableStringTokens[8]);
                             basicAccountInfo.setPropertyState("CO");
                             basicAccountInfo.setPropertyZipCode(searchableStringTokens[9]);
                             basicAccountInfo.setSubdivisionName(searchableStringTokens[10]);
-                            //basicAccountInfo.setOwnerStreet(searchableStringTokens[11]);
-                            //basicAccountInfo.setOwnerCity(searchableStringTokens[12]);
-                            //basicAccountInfo.setOwnerState(searchableStringTokens[13]);
-                            //basicAccountInfo.setOwnerZipCode(searchableStringTokens[14]);
 
                             if (!matchedParcels.contains(basicAccountInfo)) {
                                 matchedParcels.add(basicAccountInfo);
@@ -66,7 +63,7 @@ public class AccountRestService {
                             break;
                         }
                     }
-                } else if (matchAll) { //If matchAll is true
+                } else if (matchAll) { //If all the strings match with any of the columns
                     Boolean stringMatches = true;
                     for (String stringToken : stringTokens) {
                         if (!(searchableString.toUpperCase().contains(stringToken.toUpperCase()))) {
@@ -82,17 +79,13 @@ public class AccountRestService {
                         basicAccountInfo.setOwnerName(searchableStringTokens[2]);
                         basicAccountInfo.setBusinessName(searchableStringTokens[3]);
                         basicAccountInfo.setBusinessLicense(searchableStringTokens[4]);
-                        basicAccountInfo.setNeighborhood(searchableStringTokens[5]);
+                        basicAccountInfo.setNeighborhoodCode(searchableStringTokens[5]);
                         basicAccountInfo.setNeighborhoodExt(searchableStringTokens[6]);
                         basicAccountInfo.setPropertyStreet(searchableStringTokens[7]);
                         basicAccountInfo.setPropertyCity(searchableStringTokens[8]);
                         basicAccountInfo.setPropertyState("CO");
                         basicAccountInfo.setPropertyZipCode(searchableStringTokens[9]);
                         basicAccountInfo.setSubdivisionName(searchableStringTokens[10]);
-                        //basicAccountInfo.setOwnerStreet(searchableStringTokens[11]);
-                        //basicAccountInfo.setOwnerCity(searchableStringTokens[12]);
-                        //basicAccountInfo.setOwnerState(searchableStringTokens[13]);
-                        //basicAccountInfo.setOwnerZipCode(searchableStringTokens[14]);
                         if (!matchedParcels.contains(basicAccountInfo)) {
                             matchedParcels.add(basicAccountInfo);
                         }
@@ -112,7 +105,7 @@ public class AccountRestService {
 
     @GET
     @Path("/parcels/{accountNo}")
-    public Parcel getParcel(@PathParam("accountNo") String accountNo) throws Exception {
+    public String getParcel(@PathParam("accountNo") String accountNo) throws Exception {
         log.info("getParcel()...");
         log.info("accountNo: " + accountNo);
         return accountService.getParcel(accountNo);

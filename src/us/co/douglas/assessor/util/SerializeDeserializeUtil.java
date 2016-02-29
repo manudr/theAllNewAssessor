@@ -27,7 +27,6 @@ public class SerializeDeserializeUtil {
 
     public static Object deserialize(String fileName) {
         try {
-            //MongoDBConnectionUtil.main(null);
             FileInputStream fileIn = new FileInputStream(fileName);
             ObjectInputStream in = new ObjectInputStream(fileIn);
             Object obj = in.readObject();
