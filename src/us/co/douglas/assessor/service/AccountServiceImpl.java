@@ -25,10 +25,10 @@ public class AccountServiceImpl implements AccountService {
     }
     */
 
-    public String getParcel(String accountNo) throws Exception {
+    public Parcel getParcel(String accountNo) throws Exception {
         //return accountDAO.getParcel(accountNo);
-        //return (Parcel)SerializeDeserializeUtil.deserialize("/Users/admin/development/jsonDocs/" + accountNo + ".ser");
-        return MongoDBConnectionUtil.getParcelByAccountNo(accountNo);
+        return (Parcel)SerializeDeserializeUtil.deserialize("/Users/admin/development/jsonDocs/" + accountNo + ".ser");
+        //return MongoDBConnectionUtil.getParcelByAccountNo(accountNo);
     }
 
     public PropertyAddress getPropertyAddress(String accountNo) throws Exception {

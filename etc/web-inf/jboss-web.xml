@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jboss-web>
-  <context-root>apps/dcappsmonitor</context-root>
+  <context-root>apps/theAllNewAssessor</context-root>
   <security-domain>DCSecurity</security-domain>
   <resource-ref>
     <res-ref-name>mail/assessor</res-ref-name>         

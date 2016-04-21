@@ -1,0 +1,17 @@
+
+
+.footerStyle {
+    height: 35px;
+    background-color: #009933;
+    color:#ffffff;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 12px;
+}
+
+.navbarStyle {
+    background-color: #009933;
+    color: #ffffff;
+    font-weight: normal;
+    font-size: 12px;
+}

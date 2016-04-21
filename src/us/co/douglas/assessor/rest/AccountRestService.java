@@ -8,7 +8,11 @@ import us.co.douglas.assessor.model.NeighborhoodSale;
 import us.co.douglas.assessor.service.AccountService;
 import us.co.douglas.assessor.service.AccountServiceImpl;
 
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
+import javax.ws.rs.Path;
+import javax.ws.rs.GET;
+import javax.ws.rs.PathParam;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,7 +109,7 @@ public class AccountRestService {
 
     @GET
     @Path("/parcels/{accountNo}")
-    public String getParcel(@PathParam("accountNo") String accountNo) throws Exception {
+    public Parcel getParcel(@PathParam("accountNo") String accountNo) throws Exception {
         log.info("getParcel()...");
         log.info("accountNo: " + accountNo);
         return accountService.getParcel(accountNo);

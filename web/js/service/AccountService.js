@@ -3,7 +3,7 @@
 App.factory('AccountService', ['$http', '$q', function($http, $q){
     return {
         fetchParcel: function(accountNo) {
-            return $http.get('/apps/dcappsmonitor/rservices/accountService/parcels/' + accountNo).then(
+            return $http.get('/apps/theAllNewAssessor/rservices/accountService/parcels/' + accountNo).then(
                 function(response){
                     return response.data;
                 },
@@ -15,7 +15,7 @@ App.factory('AccountService', ['$http', '$q', function($http, $q){
         },
 
         fetchMatchedStrings: function(searchString) {
-            return $http.get('/apps/dcappsmonitor/rservices/accountService/allSearchableStrings/' + searchString).then(
+            return $http.get('/apps/theAllNewAssessor/rservices/accountService/allSearchableStrings/' + searchString).then(
                 function(response){
                     return response.data;
                 },
@@ -27,7 +27,7 @@ App.factory('AccountService', ['$http', '$q', function($http, $q){
         },
 
         fetchNeighborhoodSales: function(zipCode, neighborhood, neighborhoodExt, subdivision) {
-            return $http.get('/apps/dcappsmonitor/rservices/accountService/neighborhoodSales/' + zipCode + '/' + neighborhood + '/' + neighborhoodExt + '/' + subdivision).then(
+            return $http.get('/apps/theAllNewAssessor/rservices/accountService/neighborhoodSales/' + zipCode + '/' + neighborhood + '/' + neighborhoodExt + '/' + subdivision).then(
                 function(response){
                     return response.data;
                 },

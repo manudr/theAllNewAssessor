@@ -71,7 +71,7 @@
 
     <target name="undeploy">
         <jboss-cli failonerror="false">
-            <arg line="'undeploy  dcappsmonitor.war'" />
+            <arg line="'undeploy  theAllNewAssessor.war'" />
         </jboss-cli>
     </target>
 

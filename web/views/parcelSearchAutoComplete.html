@@ -2,7 +2,7 @@
     <div class="panel panel-success">
         <div class="panel-heading"><span class="lead">ONLY FIRST 2000 MATCHING PARCELS WILL BE DISPLAYED!</span></div>
         <div class="panel-body">
-            <label style="color: #cc3300; font-weight: bold; font-size: 15px;">
+            <label>
                 <input type="radio"
                        name="searchCriteria"
                        value="matchAll"
@@ -14,7 +14,7 @@
                        value="matchAnyWhere"
                        ng-model="searchCriteria">&nbsp;&nbsp;&nbsp;Match any of strings with any of the fields!
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <a style="color: #375a7f; font-size: 15px; font-weight: bold;" href="#/searchByMap">Search By Map</a>
+                <a>Search By Map</a>
             </label>
             <div class="table-responsive">
                 <table class="table table-hover table-bordered table-striped" ng-if="showParcelSearchResultsTable == true">
@@ -31,7 +31,7 @@
                     </tr>
 
                     <tr colspan="6" class="success">
-                        <label style="color: #cc3300; margin: 10px; font-weight: bold; font-size: 15px;" ng-if="showResultsCount == true">
+                        <label ng-if="showResultsCount == true">
                             Found {{resultsCount}} results matched your search!
                         </label>
                     </tr>
