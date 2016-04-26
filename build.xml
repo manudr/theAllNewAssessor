@@ -47,6 +47,7 @@
 
             <classes dir="${classes}"/>
 
+
             <classes dir="${etc}">
                 <include name="META-INF/persistence.xml"/>
             </classes>

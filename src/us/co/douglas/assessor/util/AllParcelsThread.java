@@ -41,8 +41,8 @@ public class AllParcelsThread implements Runnable {
                         String accountNo = searchableStringTokens[0];
                         log.info("******* accountNo: " + accountNo);
                         Parcel parcel = accountDAO.getParcel(accountNo);
-                        //SerializeDeserializeUtil.serialize(parcel, "/Users/admin/development/jsonDocs/" + accountNo + ".ser");
-                        MongoDBConnectionUtil.insertParcel(parcel);
+                        SerializeDeserializeUtil.serialize(parcel, "/Users/admin/development/jsonDocs/" + accountNo + ".ser");
+                        //MongoDBConnectionUtil.insertParcel(parcel);
                     }
                 }
                 log.info("Updated the cache with parcels at " + dateFormat.format(Calendar.getInstance().getTime()) + ". Sleeping for " + (threadSleepTime / 60000) / 60 + " hours");

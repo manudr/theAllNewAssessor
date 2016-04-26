@@ -1,100 +1,109 @@
-<div class="container-custom" ng-controller="watchController">
-    <div class="panel panel-success">
-        <div class="panel-heading"><span class="lead">ONLY FIRST 2000 MATCHING PARCELS WILL BE DISPLAYED!</span></div>
+<div ng-controller="watchController">
+    <div class="panel panel-default">
+        <div class="panel-heading">ONLY FIRST 2000 MATCHING PARCELS WILL BE DISPLAYED!</div>
         <div class="panel-body">
-            <label>
-                <input type="radio"
-                       name="searchCriteria"
-                       value="matchAll"
-                       ng-model="searchCriteria">&nbsp;&nbsp;&nbsp;Match all the strings with any of the fields! (More accurate results!)
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <div class="row">
+                <div class="col-lg-5">
+                    Match all strings&nbsp;&nbsp;
+                    <input type="radio"
+                           name="searchCriteria"
+                           value="matchAll"
+                           ng-model="searchCriteria">
+                </div>
+                <div class="col-lg-5">
+                    Match any string any where&nbsp;&nbsp;
+                    <input type="radio"
+                           name="searchCriteria"
+                           value="matchAnyWhere"
+                           ng-model="searchCriteria">
+                </div>
+                <div class="col-lg-2">
+                    Search By Map
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-lg-12">
+                    <input type="text"
+                           class="form-control"
+                           name="searchString"
+                           id="searchString"
+                           ng-change="searchStringChangedFunction()"
+                           ng-model="searchString"
+                           placeholder="Enter space separated strings (at least 4 characters each) containing one or more of these: Account No., Parcel No., Owner Name, Business Name, Business License, Street Number, Street Name or City..."
+                           required>
+                </div>
+            </div>
+            <br>
 
-                <input type="radio"
-                       name="searchCriteria"
-                       value="matchAnyWhere"
-                       ng-model="searchCriteria">&nbsp;&nbsp;&nbsp;Match any of strings with any of the fields!
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <a>Search By Map</a>
-            </label>
             <div class="table-responsive">
-                <table class="table table-hover table-bordered table-striped" ng-if="showParcelSearchResultsTable == true">
+                <table class="table table-hover table-bordered" ng-if="showParcelSearchResultsTable == true">
                     <thead>
-                    <tr colspan="6" class="success">
-                        <input type="text"
-                               class="form-control"
-                               name="searchString"
-                               id="searchString"
-                               ng-change="searchStringChangedFunction()"
-                               ng-model="searchString"
-                               placeholder="Enter space separated strings (at least 4 characters each) containing one or more of these: Account No., Parcel No., Owner Name, Business Name, Business License, Street Number, Street Name or City..."
-                               required>
-                    </tr>
+                        <tr colspan="6">
+                            <label ng-if="showResultsCount == true">
+                                Found {{resultsCount}} results matched your search!
+                            </label>
+                        </tr>
 
-                    <tr colspan="6" class="success">
-                        <label ng-if="showResultsCount == true">
-                            Found {{resultsCount}} results matched your search!
-                        </label>
-                    </tr>
-
-                    <tr class="success">
-                        <br>
-                        <th nowrap>
-                            <a href="" ng-click="sortType = 'accountNo'; sortReverse = !sortReverse">
-                                ACCOUNT NO
-                                <span ng-show="sortType == 'accountNo' && !sortReverse" class="fa fa-caret-down"></span>
-                                <span ng-show="sortType == 'accountNo' && sortReverse" class="fa fa-caret-up"></span>
-                            </a>
-                        </th>
-                        <th nowrap>
-                            <a href="" ng-click="sortType = 'parcelNo'; sortReverse = !sortReverse">
-                                PARCEL NO
-                                <span ng-show="sortType == 'parcelNo' && !sortReverse" class="fa fa-caret-down"></span>
-                                <span ng-show="sortType == 'parcelNo' && sortReverse" class="fa fa-caret-up"></span>
-                            </a>
-                        </th>
-                        <th nowrap>
-                            <a href="" ng-click="sortType = 'ownerName'; sortReverse = !sortReverse">
-                                OWNER NAME
-                                <span ng-show="sortType == 'ownerName' && !sortReverse" class="fa fa-caret-down"></span>
-                                <span ng-show="sortType == 'ownerName' && sortReverse" class="fa fa-caret-up"></span>
-                            </a>
-                        </th>
-                        <th nowrap>
-                            <a href="" ng-click="sortType = 'businessName'; sortReverse = !sortReverse">
-                                BUSINESS NAME
-                                <span ng-show="sortType == 'businessName' && !sortReverse" class="fa fa-caret-down"></span>
-                                <span ng-show="sortType == 'businessName' && sortReverse" class="fa fa-caret-up"></span>
-                            </a>
-                        </th>
-                        <th nowrap>
-                            <a href="" ng-click="sortType = 'businessLicense'; sortReverse = !sortReverse">
-                                BUSINESS LICENSE
-                                <span ng-show="sortType == 'businessLicense' && !sortReverse" class="fa fa-caret-down"></span>
-                                <span ng-show="sortType == 'businessLicense' && sortReverse" class="fa fa-caret-up"></span>
-                            </a>
-                        </th>
-                        <th nowrap>
-                            <a href="" ng-click="sortType = 'propertyAddress'; sortReverse = !sortReverse">
-                                PROPERTY ADDRESS
-                                <span ng-show="sortType == 'propertyAddress' && !sortReverse" class="fa fa-caret-down"></span>
-                                <span ng-show="sortType == 'propertyAddress' && sortReverse" class="fa fa-caret-up"></span>
-                            </a>
-                        </th>
-                        <th nowrap>
-                            <a href="" ng-click="sortType = 'subdivisionName'; sortReverse = !sortReverse">
-                                SUBDIVISION
-                                <span ng-show="sortType == 'subdivisionName' && !sortReverse" class="fa fa-caret-down"></span>
-                                <span ng-show="sortType == 'subdivisionName' && sortReverse" class="fa fa-caret-up"></span>
-                            </a>
-                        </th>
-                        <th nowrap>
-                            <a href="" ng-click="sortType = 'neighborhoodCodeAndExt'; sortReverse = !sortReverse">
-                                NEIGHBORHOOD
-                                <span ng-show="sortType == 'neighborhoodCodeAndExt' && !sortReverse" class="fa fa-caret-down"></span>
-                                <span ng-show="sortType == 'neighborhoodCodeAndExt' && sortReverse" class="fa fa-caret-up"></span>
-                            </a>
-                        </th>
-                    </tr>
+                        <tr>
+                            <br>
+                            <th nowrap>
+                                <a href="" ng-click="sortType = 'accountNo'; sortReverse = !sortReverse">
+                                    ACCOUNT NO
+                                    <span ng-show="sortType == 'accountNo' && !sortReverse" class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType == 'accountNo' && sortReverse" class="fa fa-caret-up"></span>
+                                </a>
+                            </th>
+                            <th nowrap>
+                                <a href="" ng-click="sortType = 'parcelNo'; sortReverse = !sortReverse">
+                                    PARCEL NO
+                                    <span ng-show="sortType == 'parcelNo' && !sortReverse" class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType == 'parcelNo' && sortReverse" class="fa fa-caret-up"></span>
+                                </a>
+                            </th>
+                            <th nowrap>
+                                <a href="" ng-click="sortType = 'ownerName'; sortReverse = !sortReverse">
+                                    OWNER NAME
+                                    <span ng-show="sortType == 'ownerName' && !sortReverse" class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType == 'ownerName' && sortReverse" class="fa fa-caret-up"></span>
+                                </a>
+                            </th>
+                            <th nowrap>
+                                <a href="" ng-click="sortType = 'businessName'; sortReverse = !sortReverse">
+                                    BUSINESS NAME
+                                    <span ng-show="sortType == 'businessName' && !sortReverse" class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType == 'businessName' && sortReverse" class="fa fa-caret-up"></span>
+                                </a>
+                            </th>
+                            <th nowrap>
+                                <a href="" ng-click="sortType = 'businessLicense'; sortReverse = !sortReverse">
+                                    BUSINESS LICENSE
+                                    <span ng-show="sortType == 'businessLicense' && !sortReverse" class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType == 'businessLicense' && sortReverse" class="fa fa-caret-up"></span>
+                                </a>
+                            </th>
+                            <th nowrap>
+                                <a href="" ng-click="sortType = 'propertyAddress'; sortReverse = !sortReverse">
+                                    PROPERTY ADDRESS
+                                    <span ng-show="sortType == 'propertyAddress' && !sortReverse" class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType == 'propertyAddress' && sortReverse" class="fa fa-caret-up"></span>
+                                </a>
+                            </th>
+                            <th nowrap>
+                                <a href="" ng-click="sortType = 'subdivisionName'; sortReverse = !sortReverse">
+                                    SUBDIVISION
+                                    <span ng-show="sortType == 'subdivisionName' && !sortReverse" class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType == 'subdivisionName' && sortReverse" class="fa fa-caret-up"></span>
+                                </a>
+                            </th>
+                            <th nowrap>
+                                <a href="" ng-click="sortType = 'neighborhoodCodeAndExt'; sortReverse = !sortReverse">
+                                    NEIGHBORHOOD
+                                    <span ng-show="sortType == 'neighborhoodCodeAndExt' && !sortReverse" class="fa fa-caret-down"></span>
+                                    <span ng-show="sortType == 'neighborhoodCodeAndExt' && sortReverse" class="fa fa-caret-up"></span>
+                                </a>
+                            </th>
+                        </tr>
                     </thead>
                     <tbody>
                     <tr ng-repeat="parcel in matchedParcels | orderBy:sortType:sortReverse" ng-class-odd="'odd'">

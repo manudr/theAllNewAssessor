@@ -86,7 +86,7 @@ public class AccountDAOImpl implements AccountDAO {
         List<String> allPropertyAddresses = new ArrayList<String>();
         EntityManager entityManager = getEntityManager();
         try {
-            Query query = entityManager.createNativeQuery("select " +
+            String sqlQuery = "select " +
                     "ISNULL(TBLACCT.ACCOUNTNO, '') + " +
                     "' ' + ISNULL(TBLACCT.PARCELNO, '') + " +
                     "' ' + ISNULL(TBLACCT.BUSINESSNAME, '') + " +
@@ -100,7 +100,9 @@ public class AccountDAOImpl implements AccountDAO {
                     "from " +
                     "encompass.TBLACCT TBLACCT " +
                     "join encompass.TBLACCTPROPERTYADDRESS TBLACCTPROPERTYADDRESS on TBLACCTPROPERTYADDRESS.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
-                    "where TBLACCT.verend = 99999999999 and TBLACCTPROPERTYADDRESS.verend = 99999999999 order by TBLACCT.ACCOUNTNO desc ");
+                    "where TBLACCT.verend = 99999999999 and TBLACCTPROPERTYADDRESS.verend = 99999999999 order by TBLACCT.ACCOUNTNO desc ";
+            log.info("sqlQuery: " + sqlQuery);
+            Query query = entityManager.createNativeQuery(sqlQuery);
             query.setMaxResults(maxResults);
             allPropertyAddresses = query.getResultList();
         } catch (Exception ex) {
@@ -116,7 +118,7 @@ public class AccountDAOImpl implements AccountDAO {
         List<NeighborhoodSale> allSalesByZip = new ArrayList<NeighborhoodSale>();
         EntityManager entityManager = getEntityManager();
         try {
-            Query query = entityManager.createNativeQuery("SELECT DISTINCT TBLSALE.RECEPTIONNO AS RECEPTIONNO, " +
+            String sqlQuery = "SELECT DISTINCT TBLSALE.RECEPTIONNO AS RECEPTIONNO, " +
                     "TBLSALE.SALEDATE AS SALEDATE, " +
                     "TBLSALE.GRANTOR AS GRANTOR, " +
                     "TBLSALE.GRANTEE AS GRANTEE, " +
@@ -156,7 +158,9 @@ public class AccountDAOImpl implements AccountDAO {
                     "AND TBLACCTNBHD.NBHDCODE  LIKE '%" + neighborhood + "%' " +
                     "AND TBNSUBDIVISION.SUBNAME  LIKE '%" + subdivision + "%' " +
                     "AND TBLACCTPROPERTYADDRESS.PROPERTYZIPCODE LIKE '%" + zipCode + "%' " +
-                    "ORDER BY SALEDATE DESC", NeighborhoodSale.class);
+                    "ORDER BY SALEDATE DESC";
+            log.info("sqlQuery: " + sqlQuery);
+            Query query = entityManager.createNativeQuery(sqlQuery, NeighborhoodSale.class);
             query.setMaxResults(maxResults);
             allSalesByZip = query.getResultList();
             log.info("allSalesByZip.size(): " + allSalesByZip.size());
@@ -174,7 +178,7 @@ public class AccountDAOImpl implements AccountDAO {
         List<NeighborhoodSale> allNeighborhoodSales = new ArrayList<NeighborhoodSale>();
         EntityManager entityManager = getEntityManager();
         try {
-            Query query = entityManager.createNativeQuery("SELECT DISTINCT TBLSALE.RECEPTIONNO AS RECEPTIONNO, " +
+            String sqlQuery = "SELECT DISTINCT TBLSALE.RECEPTIONNO AS RECEPTIONNO, " +
                     "TBLSALE.SALEDATE AS SALEDATE, " +
                     "TBLSALE.GRANTOR AS GRANTOR, " +
                     "TBLSALE.GRANTEE AS GRANTEE, " +
@@ -211,7 +215,9 @@ public class AccountDAOImpl implements AccountDAO {
                     "AND TBLACCTNBHD.VEREND = 99999999999 " +
                     "AND TBLSUBACCOUNT.VEREND = 99999999999 " +
                     "AND TBLSALE.VEREND = 99999999999 " +
-                    "ORDER BY SALEDATE DESC", NeighborhoodSale.class);
+                    "ORDER BY SALEDATE DESC";
+            log.info("sqlQuery: " + sqlQuery);
+            Query query = entityManager.createNativeQuery(sqlQuery, NeighborhoodSale.class);
             //query.setMaxResults(maxResults);
             allNeighborhoodSales = query.getResultList();
             log.info("allNeighborhoodSales.size(): " + allNeighborhoodSales.size());
@@ -228,7 +234,7 @@ public class AccountDAOImpl implements AccountDAO {
         List<String> allSearchableStrings = new ArrayList<String>();
         EntityManager entityManager = getEntityManager();
         try {
-            Query query = entityManager.createNativeQuery("select " +
+            String sqlQuery = "select " +
                     "ISNULL(TBLACCT.ACCOUNTNO, '') + ':' + " +
                     "ISNULL(TBLACCT.PARCELNO, '') + ':' + " +
                     "ISNULL(TBLPERSONSECURE.NAME1, '') + ' ' + ISNULL(TBLPERSONSECURE.NAME2, '') + ':' + " +
@@ -257,7 +263,9 @@ public class AccountDAOImpl implements AccountDAO {
                     "and TBLACCTNBHD.verend = 99999999999 " +
                     "and TBLACCTLEGAL.verend = 99999999999 " +
                     "and TBLSUBACCOUNT.verend = 99999999999 " +
-                    "order by TBLACCT.ACCOUNTNO desc, TBLACCT.PARCELNO desc");
+                    "order by TBLACCT.ACCOUNTNO desc, TBLACCT.PARCELNO desc";
+            log.info("sqlQuery: " + sqlQuery);
+            Query query = entityManager.createNativeQuery(sqlQuery);
             //query.setMaxResults(maxResults); //TODO This should pull all of them
             allSearchableStrings = query.getResultList();
             log.info("allSearchableStrings.size(): " + allSearchableStrings.size());
@@ -317,7 +325,7 @@ public class AccountDAOImpl implements AccountDAO {
         log.info("getPropertyAddress()...");
         EntityManager entityManager = getEntityManager();
         try {
-            Query query = entityManager.createNativeQuery("SELECT " +
+            String sqlQuery = "SELECT " +
                     "TBLACCT.ACCOUNTNO, " +
                     "ISNULL(TBLACCTPROPERTYADDRESS.PREDIRECTION, '') AS PREDIRECTION, " +
                     "ISNULL(TBLACCTPROPERTYADDRESS.POSTDIRECTION, '') AS POSTDIRECTION, " +
@@ -333,7 +341,9 @@ public class AccountDAOImpl implements AccountDAO {
                     "JOIN ENCOMPASS.TBLACCTPROPERTYADDRESS TBLACCTPROPERTYADDRESS ON TBLACCTPROPERTYADDRESS.ACCOUNTNO = TBLACCT.ACCOUNTNO " +
                     "WHERE TBLACCT.VEREND = 99999999999 AND TBLACCTPROPERTYADDRESS.VEREND = 99999999999 " +
                     "AND TBLACCT.ACCOUNTNO = :accountNo " +
-                    "ORDER BY TBLACCT.ACCOUNTNO DESC", PropertyAddress.class);
+                    "ORDER BY TBLACCT.ACCOUNTNO DESC";
+            log.info("sqlQuery: " + sqlQuery);
+            Query query = entityManager.createNativeQuery(sqlQuery, PropertyAddress.class);
             query.setMaxResults(maxResults);
             query.setParameter("accountNo", accountNo);
             List<PropertyAddress> addressList = query.getResultList();
@@ -421,6 +431,7 @@ public class AccountDAOImpl implements AccountDAO {
                     "AND TBLSUBACCOUNT.VEREND = 99999999999 " +
                     "AND TBLPERSONSECURE.VEREND = 99999999999 " +
                     "AND TBLACCT.ACCOUNTNO = :accountNo ";
+            log.info("sqlQuery: " + sqlQuery);
             Query query = entityManager.createNativeQuery(sqlQuery, Account.class);
             query.setMaxResults(maxResults);
             query.setParameter("accountNo", accountNo);
@@ -554,7 +565,7 @@ public class AccountDAOImpl implements AccountDAO {
         log.info("getSale()...");
         EntityManager entityManager = getEntityManager();
         try {
-            Query query = entityManager.createNativeQuery("SELECT TBLSALE.*, TBLSALEACCT.*, TBNSALEINVENTORY.* " +
+            String sqlQuery = "SELECT TBLSALE.*, TBLSALEACCT.*, TBNSALEINVENTORY.* " +
                     "FROM ENCOMPASS.TBLSALE TBLSALE " +
                     "JOIN ENCOMPASS.TBLSALEACCT TBLSALEACCT ON TBLSALEACCT.RECEPTIONNO = TBLSALE.RECEPTIONNO " +
                     "JOIN ENCOMPASS.TBNSALEINVENTORY TBNSALEINVENTORY ON TBNSALEINVENTORY.RECEPTIONNO = TBLSALE.RECEPTIONNO " +
@@ -563,7 +574,9 @@ public class AccountDAOImpl implements AccountDAO {
                     "  ON TBLSALEACCT.ACCOUNTNO = TM.ACCOUNTNO AND TBLSALEACCT.INVENTORYEFFECTIVEDATE = TM.MAXDATE " +
                     "WHERE TBLSALEACCT.VEREND = 99999999999 " +
                     "AND TBLSALE.VEREND = 99999999999 " +
-                    "AND TBLSALEACCT.ACCOUNTNO = :accountNo ORDER BY TBLSALE.SALEDATE DESC", Sale.class);
+                    "AND TBLSALEACCT.ACCOUNTNO = :accountNo ORDER BY TBLSALE.SALEDATE DESC";
+            log.info("sqlQuery: " + sqlQuery);
+            Query query = entityManager.createNativeQuery(sqlQuery, Sale.class);
             query.setMaxResults(maxResults);
             query.setParameter("accountNo", accountNo);
             List<Sale> saleList = query.getResultList();
@@ -610,11 +623,10 @@ public class AccountDAOImpl implements AccountDAO {
         Connection connection = null;
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            String dbURL = "jdbc:sqlserver://dvrwsql.dcgd.douglas.co.us:1433;databaseName=DVRW_Patch;user=manu;password=manu";
+            String dbURL = "jdbc:sqlserver://dvrwsql.dcgd.douglas.co.us:1433;databaseName=PRRW_Test;user=manu;password=manu";
             connection = DriverManager.getConnection(dbURL);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
-
         }
         return connection;
     }
@@ -639,7 +651,7 @@ public class AccountDAOImpl implements AccountDAO {
         List<BasicAccountInfo> allSearchableParcels = new ArrayList<BasicAccountInfo>();
         EntityManager entityManager = getEntityManager();
         try {
-            Query query = entityManager.createNativeQuery("select " +
+            String sqlQuery = "select " +
                     "ISNULL(TBLACCT.ACCOUNTNO, '') as accountNo, " +
                     "ISNULL(TBLACCT.PARCELNO, '') as parcelNo, " +
                     "ISNULL(TBLPERSONSECURE.NAME1, '') + ' ' + ISNULL(TBLPERSONSECURE.NAME2, '') as ownerName, " +
@@ -669,7 +681,9 @@ public class AccountDAOImpl implements AccountDAO {
                     "and TBLACCTNBHD.verend = 99999999999 " +
                     "and TBLACCTLEGAL.verend = 99999999999 " +
                     "and TBLSUBACCOUNT.verend = 99999999999 " +
-                    "order by TBLACCT.ACCOUNTNO asc", BasicAccountInfo.class);
+                    "order by TBLACCT.ACCOUNTNO asc";
+            log.info("sqlQuery: " + sqlQuery);
+            Query query = entityManager.createNativeQuery(sqlQuery, BasicAccountInfo.class);
             allSearchableParcels = query.getResultList();
             log.info("allSearchableParcels.size(): " + allSearchableParcels.size());
         } catch (Exception ex) {

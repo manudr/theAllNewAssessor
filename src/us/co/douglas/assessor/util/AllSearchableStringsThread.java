@@ -54,7 +54,7 @@ public class AllSearchableStringsThread implements Runnable {
                 log.info("Number of lists in main list: " + accountNumListOfLists.size());
 
                 //for (List list : accountNumListOfLists) { //TODO remove the comments //
-                    AllParcelsThread allParcelsThread = new AllParcelsThread(accountNumListOfLists.get(1));
+                    AllParcelsThread allParcelsThread = new AllParcelsThread(accountNumListOfLists.get(15));
                     Thread allParcelsT = new Thread(allParcelsThread);
                     allParcelsT.start();
                 //}
