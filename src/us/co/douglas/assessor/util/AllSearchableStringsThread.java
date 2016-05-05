@@ -22,7 +22,7 @@ public class AllSearchableStringsThread implements Runnable {
     private static SimpleDateFormat dateFormat = new SimpleDateFormat();
     private static List<String> allSearchableStrings = null;
     private static List<BasicAccountInfo> allSearchableParcels = null;
-    private static Integer maxAccountsPerThread = 25;
+    private static Integer maxAccountsPerThread = 50;
 
     public void run() {
         try {
@@ -54,7 +54,7 @@ public class AllSearchableStringsThread implements Runnable {
                 log.info("Number of lists in main list: " + accountNumListOfLists.size());
 
                 //for (List list : accountNumListOfLists) { //TODO remove the comments //
-                    AllParcelsThread allParcelsThread = new AllParcelsThread(accountNumListOfLists.get(15));
+                    AllParcelsThread allParcelsThread = new AllParcelsThread(accountNumListOfLists.get(25));
                     Thread allParcelsT = new Thread(allParcelsThread);
                     allParcelsT.start();
                 //}
